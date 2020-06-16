@@ -101,7 +101,7 @@ client.on("guildMemberAdd", member => {
 	const channel = member.guild.channels.cache.find(channel => channel.name === "welcome-goodbye");
 	if(!channel) return;
 
-	channel.send(`Welcome to ${server}, ${member}`);
+	channel.send(`${member} just joined! Give them a warm welcome :wave:`);
 });
 
 client.on("guildMemberRemove", member => {
@@ -109,7 +109,7 @@ client.on("guildMemberRemove", member => {
 	const channel = member.guild.channels.cache.find(channel => channel.name === "welcome-goodbye");
 	if(!channel) return;
 
-	channel.send(`${member} just left`);
+	channel.send(`${member} just left :cry:`);
 });
 
 client.on("messageUpdate", async(oldMessage, newMessage) => {
