@@ -14,7 +14,7 @@ client.on("message", message => {
 	}
 
 	if(message.content === "d!help") {
-		message.member.send(":smile: **FUN** \n d!say \n :scroll: **INFO** \n d!help \n d!version \n d!discord \n d!creator \n :wave: **WELCOME & GOODBYE** \n d!join leave setup");
+		message.member.send(":smile: **FUN** \n d!say \n \n :hammer: **MODERATION** \n d!kick (user) (reason) \n d!ban (user) (reason) \n \n :scroll: **INFO** \n d!help \n d!version \n d!discord \n d!creator \n \n :wave: **WELCOME & GOODBYE** \n d!join leave setup");
 	}
 
 	if(message.content === "d!nuke") {
@@ -71,6 +71,49 @@ client.on("message", message => {
 
 
 	}
+
+		// KICK AND BAN
+		mention = message.mentions.users.first();
+
+		if(message.startsWith (PREFIX + "ban")){
+			if(!message.member.hasPermission("BAN_MEMBERS")){
+				message.channel.send("You do not have the BAN_MEMBERS permission!")
+				return;
+			}
+			if(mention == null){
+				message.channel.send("You need to mention the member you want to ban!")
+				return;
+			}
+			if(message.guild.member(mention).hasPermission("ADMINISTRATOR")){
+				message.channel.send("You cannot ban this person.")
+				return;
+			}
+			let reason = message.content.slice (PREFIX.length + mention.toString().length + 5);
+			message.channel.send(mention.username + "has been banned :hammer:");
+			mention.message.send("You have been banned because \n" + reason).then (d_msg => {
+				message.guild.member(mention).ban(reason);
+			})
+		}
+	
+		if(message.startsWith (PREFIX + "kick")){
+			if(!message.member.hasPermission("KICK_MEMBERS")){
+				message.channel.send("You do not have the KICK_MEMBERS permission!")
+				return;
+			}
+			if(mention == null){
+				message.channel.send("You need to mention the member you want to kick!")
+				return;
+			}
+			if(message.guild.member(mention).hasPermission("ADMINISTRATOR")){
+				message.channel.send("You cannot kick this person.")
+				return;
+			}
+			let reason = message.content.slice (PREFIX.length + mention.toString().length + 5);
+			message.channel.send(mention.username + "has been kicked :hammer:");
+			mention.message.send("You have been kicked because \n" + reason).then (d_msg => {
+				message.guild.member(mention).kick(reason);
+			})
+		}
 
 });
 
