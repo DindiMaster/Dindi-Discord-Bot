@@ -76,13 +76,13 @@ client.on("message", message => {
 	if(message.content.startsWith(PREFIX + "8ball")){
 		var ListAnswers = ["Yes", "No", "Maybe", "I don't know", "Cool", "Maybe yes", "Maybe no", "Probably", "Probably not", "Ask again later"];
 		var answers = Math.floor((Math.random() * ListAnswers.length));
-		var args = message.content.split(" ").slice(1).join(" ");
-		if(!args)return message.reply("Specify your question.");
+		var arguments = message.content.split(" ").slice(1).join(" ");
+		if(!arguments)return message.reply("Specify your question.");
 		var embed = new Discord.RichEmbed()
 		.setColor("BLUE")
 		.setTitle("8Ball")
 		.setThumbnail(message.author.avatarURL)
-		.addField("Question", args, false)
+		.addField("Question", arguments, false)
 		.addField("asked by", message.author.tag, false)
 		.addField("Answer:", answers[ListAnswers], false)
 		.setFooter(message.author.tag, message.author.avatarURL)
