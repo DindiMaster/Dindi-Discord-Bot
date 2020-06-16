@@ -37,7 +37,7 @@ client.on("message", message => {
 		message.channel.send("Oh no! Now im sad :crying_cat_face:");
 	}
 
-	if(message.conten === "d!creator") {
+	if(message.content === "d!creator") {
 		message.channel.send("This bot is made by **Dindi**, you can visit his youtube channel on https://www.youtube.com/channel/UCjqnUsIVtXHGyCd3q_qvqYQ");
 	}
 
@@ -72,11 +72,21 @@ client.on("message", message => {
 	}
 
 	// 8ball
-	let replies = ["Yes", "No", "Maybe", "I don't know", "Cool", "Maybe yes", "Maybe no", "Probably", "Probably not", "Ask again later"];
-	let result = Math.floor((Math.random() * replies.length));
+	if(message.content.startsWith(PREFIX + "8ball")){
+		var ListAnswers = ["Yes", "No", "Maybe", "I don't know", "Cool", "Maybe yes", "Maybe no", "Probably", "Probably not", "Ask again later"];
+		var answers = Math.floor((Math.random() * ListAnswers.length));
+		var args = message.content.split(" ").slice(1).join(" ");
+		if(!args)return message.reply("Specify your question.");
+		var embed = new Discord.RichEmbed()
+		.setColor("BLUE")
+		.setTitle("8Ball")
+		.setThumbnail(message.author.avatarURL)
+		.addField("Question", args, false)
+		.addField("asked by", message.author.tag, false)
+		.addField("Answer:", answers[ListAnswers], false)
+		.setFooter(message.author.tag, message.author.avatarURL)
 
-	if(message.content === "d!8ball") {
-		message.channel.send(result);
+		message.channel.send(embed);
 	}
 
 	// Say Command
@@ -118,7 +128,7 @@ client.on("messageUpdate", async(oldMessage, newMessage) => {
 	if(oldMessage.content === newMessage.content){
 		return;
 	}
-	var logChannel = channels.find(channel => channel.name === "logs");
+	var logChannel = client.channels.find(channel => channel.name === "logs");
 	let logEmbed = new Discord.RichEmbed()
 	.setAuthor(oldMessage.setAuthor.tag, oldMessage.author.avatarURL)
 	.setThumbnail(oldMessage.author.avatarURL)
@@ -130,7 +140,7 @@ client.on("messageUpdate", async(oldMessage, newMessage) => {
 })
 
 client.on("messageDelete", async message => {
-	var logChannel = channels.find(channel => channel.name === "logs");
+	var logChannel = client.channels.find(channel => channel.name === "logs");
 	let logEmbed = new Discord.RichEmbed()
 	.setAuthor(oldMessage.setAuthor.tag, oldMessage.author.avatarURL)
 	.setThumbnail(oldMessage.author.avatarURL)
