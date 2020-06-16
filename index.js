@@ -14,6 +14,7 @@ client.on("message", message => {
 	}
 
 	if(message.content === "d!help") {
+		message.channel.send("Help is sent your way!");
 		message.member.send(":smile: **FUN** \n d!say \n d!8ball (text) \n d!randomnumber \n d!howcoolami \n \n :scroll: **INFO** \n d!help \n d!version \n d!discord \n d!creator \n d!logs setup \n \n :wave: **WELCOME & GOODBYE** \n d!join leave setup");
 	}
 
