@@ -118,7 +118,7 @@ client.on("messageUpdate", async(oldMessage, newMessage) => {
 	if(oldMessage.content === newMessage.content){
 		return;
 	}
-	var logChannel = guild.channels.cache.find(channel => channel.name === "logs");
+	var logChannel = channels.find(channel => channel.name === "logs");
 	let logEmbed = new Discord.RichEmbed()
 	.setAuthor(oldMessage.setAuthor.tag, oldMessage.author.avatarURL)
 	.setThumbnail(oldMessage.author.avatarURL)
@@ -130,7 +130,7 @@ client.on("messageUpdate", async(oldMessage, newMessage) => {
 })
 
 client.on("messageDelete", async message => {
-	var logChannel = guild.channels.cache.find(channel => channel.name === "logs");
+	var logChannel = channels.find(channel => channel.name === "logs");
 	let logEmbed = new Discord.RichEmbed()
 	.setAuthor(oldMessage.setAuthor.tag, oldMessage.author.avatarURL)
 	.setThumbnail(oldMessage.author.avatarURL)
