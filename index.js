@@ -14,7 +14,7 @@ client.on("message", message => {
 	}
 
 	if(message.content === "d!help") {
-		message.member.send(":smile: **FUN** \n d!say \n d!time \n d!randomnumber \n d!howcoolami \n \n :scroll: **INFO** \n d!help \n d!version \n d!discord \n d!creator \n d!logs setup \n \n :wave: **WELCOME & GOODBYE** \n d!join leave setup");
+		message.member.send(":smile: **FUN** \n d!say \n d!8ball (text) \n d!randomnumber \n d!howcoolami \n \n :scroll: **INFO** \n d!help \n d!version \n d!discord \n d!creator \n d!logs setup \n \n :wave: **WELCOME & GOODBYE** \n d!join leave setup");
 	}
 
 	if(message.content === "d!nuke") {
@@ -51,14 +51,14 @@ client.on("message", message => {
 	}
 
 	if(message.content === "d!version") {
-		message.channel.send("The current version is **0.1.2**");
+		message.channel.send("The current version is **0.1.25**");
 	}
 
 	if(message.content === "d!logs setup") {
 		message.channel.send("Create a channel named logs, the bot should automatically start sending edit/delted messages logs. If it doesn't, check if the channel name is correct.");
 	}
 
-	if(message.content === "d!time") {
+	if(message.content === "d!8ball") {
 		message.channel.send((new Date()).toString);
 	}
 
@@ -67,8 +67,16 @@ client.on("message", message => {
 	}
 
 	if(message.content === "d!howcoolami") {
-		coolness = (Math.floor(Math.random() * 10 + 1));
-		message.channel.send("You are" + coolness + "percent cool");
+		coolness = (Math.floor(Math.random() * 100 + 1));
+		message.channel.send("You are " + coolness + "% cool");
+	}
+
+	// 8ball
+	let replies = ["Yes", "No", "Maybe", "I don't know", "Cool", "Maybe yes", "Maybe no", "Probably", "Probably not", "Ask again later"];
+	let result = Math.floor((Math.random() * replies.length));
+
+	if(message.content === "d!8ball") {
+		message.channel.send(result);
 	}
 
 	// Say Command
@@ -110,8 +118,8 @@ client.on("messageUpdate", async(oldMessage, newMessage) => {
 	if(oldMessage.content === newMessage.content){
 		return;
 	}
-	const logChannel = member.guild.channels.cache.find(channel => channel.name === "logs");
-	var logEmbed = new Discord.RichEmbed()
+	var logChannel = member.guild.channels.cache.find(channel => channel.name === "logs");
+	let logEmbed = new Discord.RichEmbed()
 	.setAuthor(oldMessage.setAuthor.tag, oldMessage.author.avatarURL)
 	.setThumbnail(oldMessage.author.avatarURL)
 	.setcolor("BLUE")
@@ -122,8 +130,8 @@ client.on("messageUpdate", async(oldMessage, newMessage) => {
 })
 
 client.on("messageDelete", async message => {
-	const logChannel = member.guild.channels.cache.find(channel => channel.name === "logs");
-	var logEmbed = new Discord.RichEmbed()
+	var logChannel = member.guild.channels.cache.find(channel => channel.name === "logs");
+	let logEmbed = new Discord.RichEmbed()
 	.setAuthor(oldMessage.setAuthor.tag, oldMessage.author.avatarURL)
 	.setThumbnail(oldMessage.author.avatarURL)
 	.setcolor("RED")
