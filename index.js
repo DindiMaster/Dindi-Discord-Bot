@@ -9,7 +9,6 @@ client.once("ready", () => {
 client.login(process.env.token);
 
 client.on("message", message => {
-	console.log(message.content);
 	if(message.content === "ping") {
 		message.channel.send("Pong!");
 	}
