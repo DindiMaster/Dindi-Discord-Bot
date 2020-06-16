@@ -13,19 +13,8 @@ client.on("message", message => {
 		message.channel.send("Pong!");
 	}
 
-	if(message.content === "d!stop") {
-		client.off();
-	}
-
 	if(message.content === "d!help") {
-		message.member.send(":hammer: The current commands are:");
-		message.member.send("**d!help**");
-		message.member.send("**d!say**");
-		message.member.send("**d!version**");
-		message.member.send("**d!discord**");
-		message.member.send("**d!creator**");
-		message.member.send(":smile: To setup a welcome and goodbye channel type d!join/leave setup");
-		message.member.send("*More coming soon!*");
+		message.member.send(":smile: **FUN** \n d!say \n :scroll: **INFO** \n d!help \n d!version \n d!discord \n d!creator \n :wave: **WELCOME & GOODBYE** \n d!join leave setup");
 	}
 
 	if(message.content === "d!nuke") {
@@ -56,15 +45,13 @@ client.on("message", message => {
 		message.channel.send("You can visit the official Dindi Bot disord server on https://discord.gg/NddGpqR");
 	}
 
-	if(message.content === "d!join/leave setup") {
-		message.channel.send("Please create a new channel under the name welcome-goodbye, when you are done type d!yes");
-		if(message.content === "d!yes") {
-			message.channel.send("Setup complete...");
-		}
+	if(message.content === "d!join leave setup") {
+		message.channel.send("Please create a new channel under the name welcome-goodbye, when you are done the bot will automaticly be sending welcome and goodbye messages to that channel. If it doesn't, check if the channel name is correct!");
+
 	}
 
 	if(message.content === "d!version") {
-		message.channel.send("The current version is **0.1.1**");
+		message.channel.send("The current version is **0.1.2**");
 	}
 
 	// Say Command
@@ -85,6 +72,48 @@ client.on("message", message => {
 
 	}
 
+	// KICK AND BAN
+	mention = message.mentions.users.first();
+
+	if(message.startsWith (PREFIX + "ban")){
+		if(!message.member.hasPermission("BAN_MEMBERS")){
+			message.channel.send("You do not have the BAN_MEMBERS permission!")
+			return;
+		}
+		if(mention == null){
+			message.channel.send("You need to mention the member you want to ban!")
+			return;
+		}
+		if(message.guild.member(mention).hasPermission("ADMINISTRATOR")){
+			message.channel.send("You cannot ban this person.")
+			return;
+		}
+		let reason = message.content.slice (PREFIX.length + mention.toString().length + 5);
+		message.channel.send(mention.username + "has been banned :hammer:");
+		mention.message.send("You have been banned because \n" + reason).then (d_msg => {
+			message.guild.member(mention).ban(reason);
+		})
+	}
+
+	if(message.startsWith (PREFIX + "kick")){
+		if(!message.member.hasPermission("KICK_MEMBERS")){
+			message.channel.send("You do not have the KICK_MEMBERS permission!")
+			return;
+		}
+		if(mention == null){
+			message.channel.send("You need to mention the member you want to kick!")
+			return;
+		}
+		if(message.guild.member(mention).hasPermission("ADMINISTRATOR")){
+			message.channel.send("You cannot kick this person.")
+			return;
+		}
+		let reason = message.content.slice (PREFIX.length + mention.toString().length + 5);
+		message.channel.send(mention.username + "has been kicked :hammer:");
+		mention.message.send("You have been kicked because \n" + reason).then (d_msg => {
+			message.guild.member(mention).kick(reason);
+		})
+	}
 });
 
 client.on("guildMemberAdd", member => {
@@ -92,7 +121,7 @@ client.on("guildMemberAdd", member => {
 	const channel = member.guild.channels.cache.find(channel => channel.name === "welcome-goodbye");
 	if(!channel) return;
 
-	channel.send(`Welcome to our server, ${member}`);
+	channel.send(`Welcome to ${server}, ${member}`);
 });
 
 client.on("guildMemberRemove", member => {
