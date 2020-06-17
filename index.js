@@ -72,10 +72,10 @@ client.on("message", message => {
 	// 8ball
 	if(message.content.startsWith("d!8ball")){
 		var ListAnswers = ["Yes", "No", "Maybe", "I don't know", "Cool", "Maybe yes", "Maybe no", "Probably", "Probably not", "Ask again later"];
-		var answers = Math.floor((Math.random() * ListAnswers.length));
+		var answer = Math.floor((Math.random() * ListAnswers.length));
 		var arguments = message.content.split(" ").slice(1).join(" ");
 		if(!arguments)return message.reply("Specify your question.");
-		message.channel.send(message.author.tag + answers[ListAnswers]);
+		message.channel.send("@" + message.author.tag + answer);
 	}
 
 	// Say Command
