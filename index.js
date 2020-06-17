@@ -111,9 +111,7 @@ client.on("message", message => {
 		}
 		let reason = message.content.slice (PREFIX.length + mention.toString().length + 5);
 		message.channel.send(mention.username + "has been banned :hammer:");
-		message.mention.send("You have been banned because \n" + reason).then (d_msg => {
 			message.guild.member(mention).ban(reason);
-		})
 	}
 
 	if(message.content.startsWith (PREFIX + "kick")){
@@ -131,9 +129,7 @@ client.on("message", message => {
 		}
 		let reason = message.content.slice (PREFIX.length + mention.toString().length + 5);
 		message.channel.send(mention.username + " has been kicked :hammer:");
-		message.mention.send("You have been kicked because \n" + reason).then (d_msg => {
-			message.guild.member(mention).kick(reason);
-		})
+		message.guild.member(mention).kick(reason);
 	}
 });
 
