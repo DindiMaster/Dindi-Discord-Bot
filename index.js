@@ -148,7 +148,7 @@ client.on("message", message => {
 		var pollargs = message.content.split(" ").slice(1).join(" ");
 		if(!pollargs[0]) return message.channel.send("Proper Usage: d!poll (question)");
 		var pollembed = new Discord.MessageEmbed()
-		.setTitle(`Poll by ${message.author,username}`)
+		.setTitle(`Poll by ${message.author.username}`)
 		.setFooter("React to vote.")
 		.setDescription(pollargs.join(" "))
 		
