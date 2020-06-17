@@ -9,6 +9,7 @@ client.once("ready", () => {
 client.login(process.env.token);
 
 client.on("message", message => {
+
 	if(message.content === "ping") {
 		message.channel.send("Pong!");
 	}
@@ -59,10 +60,6 @@ client.on("message", message => {
 		message.channel.send("Create a channel named logs, the bot should automatically start sending edit/delted messages logs. If it doesn't, check if the channel name is correct.");
 	}
 
-	if(message.content === "d!8ball") {
-		message.channel.send((new Date()).toString);
-	}
-
 	if(message.content === "d!randomnumber") {
 		message.channel.send(Math.floor(Math.random() * 1000000 + 1));
 	}
@@ -73,7 +70,7 @@ client.on("message", message => {
 	}
 
 	// 8ball
-	if(message.content.startsWith("!8ball")){
+	if(message.content.startsWith("d!8ball")){
 		message.channel.send("8Ball coming soon...")
 	}
 
@@ -99,7 +96,7 @@ client.on("message", message => {
 	// BAN/KICK
 	mention = message.mentions.users.first();
 
-	if(message.startsWith ("d!ban")){
+	if(message.content.startsWith (PREFIX + "ban")){
 		if(!message.member.hasPermission("BAN_MEMBERS")){
 			message.channel.send("You do not have the BAN_MEMBERS permission!")
 			return;
@@ -119,7 +116,7 @@ client.on("message", message => {
 		})
 	}
 
-	if(message.startsWith ("d!kick")){
+	if(message.content.startsWith (PREFIX + "kick")){
 		if(!message.member.hasPermission("KICK_MEMBERS")){
 			message.channel.send("You do not have the KICK_MEMBERS permission!")
 			return;
