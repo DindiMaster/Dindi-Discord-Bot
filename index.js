@@ -91,7 +91,7 @@ client.on("message", message => {
 	if(args.content === "@everyone" || args.content === "@here"){
 		return;
 	}
-	if(message == bot.message){
+	if(message === bot.message){
 		return;
 	}
 
