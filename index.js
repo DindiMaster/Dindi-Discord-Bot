@@ -8,6 +8,7 @@ client.once("ready", () => {
 
 client.login(process.env.token);
 
+
 client.on("message", message => {
 
 	if(message.content === "ping") {
@@ -63,7 +64,16 @@ client.on("message", message => {
 	}
 
 	if(message.content === "d!logs setup") {
-		message.channel.send("Create a channel named logs, the bot should automatically start sending edit/delted messages logs. If it doesn't, check if the channel name is correct.");
+		message.channel.send("Create a channel where your logs will be put. After that do d!logs channel config (channelid) and you will be ready to go!");
+	}
+
+	if(message.content.startsWith("d!logs channel config")){
+		if(!message.member.hasPermission("ADMINISTRATOR")){
+			message.channel.send("You do not have the ADMINISTRATOR permission!")
+			return;
+		}
+		var logsetupargs = message.content.split(" ").slice(1).join(" ");
+		var logchannelid = logsetupargs;
 	}
 
 	if(message.content === "d!randomnumber") {
@@ -167,7 +177,7 @@ client.on("messageUpdate", async(oldMessage, newMessage) => {
 	if(oldMessage.content === newMessage.content){
 		return;
 	}
-	var logChannel = client.channels.find(channel => channel.name === "logs");
+	var logChannel = client.channels.get(logchannelid);
 	const logEmbed = new Discord.MessageEmbed()
 	.setAuthor(oldMessage.setAuthor.tag, oldMessage.author.avatarURL)
 	.setThumbnail(oldMessage.author.avatarURL)
@@ -178,7 +188,7 @@ client.on("messageUpdate", async(oldMessage, newMessage) => {
 })
 
 client.on("messageDelete", async message => {
-	var logChannel = client.channels.find(channel => channel.name === "logs");
+	var logChannel = client.channels.find(logchannelid);
 	const logEmbed = new Discord.MessageEmbed()
 	.setAuthor(oldMessage.setAuthor.tag, oldMessage.author.avatarURL)
 	.setThumbnail(oldMessage.author.avatarURL)
