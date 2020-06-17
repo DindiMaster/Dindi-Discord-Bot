@@ -81,7 +81,7 @@ client.on("message", async message => {
 			return;
 		}
 		message.channel.send("Welcome/goodbye channel created! Do not change the channel name or the welcome and goodbye messages wont work. You can change the permissions for every role except the role named Dindi Bot. You can also move the channel to wherever you want. If the bot isn't sending welcome and goodbye messages in that channel or the bot failed to create the channel please type in d!greetings support");
-		bot.guild.createChannel("👋-welcome-goodbye", {
+		bot.guild.channel.create("👋-welcome-goodbye", {
 			type: "text",
 			position: 0,
 			topic: "Say a warm welcome and a cold goodbye!",
