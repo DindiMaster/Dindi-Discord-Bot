@@ -192,10 +192,9 @@ client.on("message", async message => {
 	}
 });
 
-client.on("guildMemberAdd", "message", member, message => {
+client.on("guildMemberAdd", member + "message", message => {
 	// eslint-disable-next-line no-shadow
 	var channelIdGet;
-
 	if(message.content.startsWith("d!welcomechannelsetup")){
 		var welcomeargs = message.content.split(" ").slice(1).join(" ");
 		if(!message.member.hasPermission("MANAGE_CHANNELS")){
@@ -212,7 +211,7 @@ client.on("guildMemberAdd", "message", member, message => {
 	channel.send(`${member} just joined! Give them a warm welcome :wave:`);
 });
 
-client.on("guildMemberRemove", member => {
+client.on("guildMemberRemove", member + "message", message => {
 	// eslint-disable-next-line no-shadow
 	var channelIdGet2;
 
