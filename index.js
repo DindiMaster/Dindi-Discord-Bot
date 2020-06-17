@@ -16,12 +16,11 @@ client.on("message", message => {
 
 	if(message.content === "d!help") {
 		message.channel.send("Help is sent your way!");
-		message.member.send(":smile: **FUN** \n d!say \n d!8ball (text) \n d!randomnumber \n d!howcoolami \n \n :hammer: **MODERATION** \n d!kick (user) (reason) \n d!ban (user) (reason) \n \n :scroll: **INFO** \n d!help \n d!version \n d!discord \n d!creator \n d!logs setup \n \n :wave: **WELCOME & GOODBYE** \n d!join leave setup");
 		const helpembed = new Discord.MessageEmbed()
 		.setTitle("HELP MENU")
-		.addField(":smile: **FUN**", "d!say", "d!8ball (text)", "d!randomnumber", "d!howcoolami")
-		.addField(":hammer: **MODERATION**", "d!kick (user) (reason)", "d!ban (user) (reason)")
-		.addField(":scroll: **INFO**", "d!help", "d!version", "d!discord", "d!creator", "d!logs setup")
+		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami")
+		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
+		.addField(":scroll: **INFO**", "d!help \n d!version \n d!discord \n d!creator \n d!logs setup")
 		.addField(":wave: **WELCOME & GOODBYE**", "d!join leave setup")
 		message.member.send(helpembed);
 	}
