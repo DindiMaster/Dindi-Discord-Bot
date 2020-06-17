@@ -154,8 +154,8 @@ client.on("message", message => {
 
 		message.channel.send(pollembed);
 
-		message.react(":white_check_mark:");
-		message.react(":no_entry_sign:")
+		message.react("✅");
+		message.react("🚫")
 
 		message.delete({timeout: 1000});
 	}
