@@ -75,15 +75,20 @@ client.on("message", async message => {
 	}
 
 	if(message.content === "d!greetings setup") {
-		if(member.guild.channels.cache.find(channel => channel.name === "👋-welcome-goodbye")){
-			message.channel.send("You already have a welcome goodbye channel set up! If it isn't working, type the following command **d!greetings support");
+		if(!message.author.hasPermission("MANAGE_CHANNELS")){
+			message.channel.send("You do not have the MANAGE_CHANNELS permission!")
+			return;
+		}
+		if(!client.hasPermission("MANAGE_CHANNELS")){
+			message.channel.send("I do not have the MANAGE_CHANNELS permission! Please enable it and retry.")
+			return;
 		}
 		member.guild.createChannel("👋-welcome-goodbye", {
 			type: "text",
 			position: 0,
 			topic: "Say a warm welcome and a cold goodbye!",
 			permissionOverwrites: [{
-				id: user.guild.id,
+				id: member.guild.id,
 				allow: ["READ_MESSAGE_HISTORY", "READ_MESSAGES"],
 				deny: ["SEND_MESSAGES"]
 			}]
