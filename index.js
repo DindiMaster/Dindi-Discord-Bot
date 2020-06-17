@@ -118,8 +118,7 @@ client.on("message", async message => {
 
 	if(message.content.startsWith(PREFIX + "howcoolis")) {
 		coolness = (Math.floor(Math.random() * 100 + 1));
-		let personcoolness = message.content.slice (PREFIX.length + mention.toString().length + 5);
-		message.channel.send(personcoolness + " is " + coolness + "% cool");
+		message.channel.send("They are " + coolness + "% cool");
 	}
 
 	if(message.content.startsWith("d!react")){
