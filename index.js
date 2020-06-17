@@ -153,7 +153,7 @@ client.on("message", message => {
 		.setDescription(pollargs)
 
 		message.channel.send(pollembed);
-		message.channel({timeout: 1000});
+		message.channel.send({timeout: 1000});
 		message.react("✅");
 		message.react("🚫");
 
