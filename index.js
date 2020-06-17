@@ -75,16 +75,7 @@ client.on("message", message => {
 		var answers = Math.floor((Math.random() * ListAnswers.length));
 		var arguments = message.content.split(" ").slice(1).join(" ");
 		if(!arguments)return message.reply("Specify your question.");
-		var embed = new Discord.RichEmbed()
-		.setColor("BLUE")
-		.setTitle("8Ball")
-		.setThumbnail(message.author.avatarURL)
-		.addField("Question", arguments, false)
-		.addField("asked by", message.author.tag, false)
-		.addField("Answer:", answers[ListAnswers], false)
-		.setFooter(message.author.tag, message.author.avatarURL)
-
-		message.channel.send(embed);
+		message.channel.send(message.author.avatarURL + answers[ListAnswers]);
 	}
 
 	// Say Command
