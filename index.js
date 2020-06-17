@@ -21,7 +21,7 @@ client.on("message", async message => {
 		.setTitle("HELP MENU")
 		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!react (message)")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
-		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator")
+		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
 		.addField(":wave: **WELCOME & GOODBYE**", "d!join leave setup")
 		message.member.send(helpembed);
 	}
@@ -65,6 +65,10 @@ client.on("message", async message => {
 
 	if(message.content === "d!version") {
 		message.channel.send("The current version is **0.1.4**");
+	}
+
+	if(message.content === "d!invitelink") {
+		message.member.send("You can invite Dindi Bot to your own server via the following link: \n https://discord.com/oauth2/authorize?client_id=722395531971657738&scope=bot&permissions=2146958847");
 	}
 
 	// FUN COMMANDS
