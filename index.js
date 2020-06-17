@@ -8,7 +8,7 @@ client.once("ready", () => {
 
 client.login(process.env.token);
 
-client.on("message", message => {
+client.on("message", async message => {
 
 	if(message.content === "ping") {
 		message.channel.send("Pong!");
@@ -159,8 +159,8 @@ client.on("message", message => {
 
 		message.channel.send(pollembed);
 		message.delete().then(messageReaction => {
-			message.react("👍");
-			message.react("👎");
+			await message.react("👍");
+			await message.react("👎");
 		});
 	}
 });
