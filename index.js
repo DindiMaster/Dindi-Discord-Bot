@@ -196,7 +196,7 @@ client.on("message", async message => {
 	}
 });
 
-client.on("guildMemberAdd", member + "message", message => {
+client.on("guildMemberAdd", member => {
 	// eslint-disable-next-line no-shadow
 	var channelIdGet;
 	/*if(message.content.startsWith("d!welcomechannelsetup")){
@@ -215,7 +215,7 @@ client.on("guildMemberAdd", member + "message", message => {
 	channel.send(`${member} just joined! Give them a warm welcome :wave:`);
 });
 
-client.on("guildMemberRemove", member + "message", message => {
+client.on("guildMemberRemove", member => {
 	// eslint-disable-next-line no-shadow
 	var channelIdGet2;
 
