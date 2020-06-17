@@ -91,9 +91,6 @@ client.on("message", message => {
 	if(args.content === "@everyone" || args.content === "@here"){
 		return;
 	}
-	if(message === bot.message){
-		return;
-	}
 
 	switch(args[0]) {
 	case "say":
