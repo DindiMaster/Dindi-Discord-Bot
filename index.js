@@ -144,7 +144,7 @@ client.on("message", message => {
 
 	// POLLS
 	if(message.content.startsWith("d!poll")) {
-		if(!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("This command requires the role: **Polls**");
+		if(!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("This command requires the permission: **Administrator**");
 		var pollargs = message.content.split(" ").slice(1).join(" ");
 		if(!pollargs[0]) return message.channel.send("Proper Usage: d!poll (question)");
 		var pollembed = new Discord.MessageEmbed()
@@ -154,9 +154,10 @@ client.on("message", message => {
 
 		message.delete();
 		message.channel.send(pollembed);
-		message.channel.send("_ _");
-		message.react("✅");
-		message.react("⛔");
+		pollmsg = pollembed;
+
+		pollmsg.react("✅");
+		pollmsg.react("⛔");
 	}
 });
 
