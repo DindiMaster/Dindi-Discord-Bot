@@ -15,7 +15,7 @@ client.on("message", message => {
 	}
 
 	if(message.content === "d!help") {
-		message.channel.send("Help is sent your way!");
+		reply("Help is sent your way!");
 		const helpembed = new Discord.MessageEmbed()
 		.setTitle("HELP MENU")
 		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami")
@@ -155,10 +155,8 @@ client.on("message", message => {
 		message.delete();
 		message.channel.send(pollembed);
 
-		message.react("✅");
-		message.react("🚫");
-
-
+		bot.message.react("✅");
+		bot.message.react("🚫");
 	}
 });
 
