@@ -155,8 +155,8 @@ client.on("message", message => {
 		message.delete();
 		message.channel.send(pollembed);
 
-		bot.message.react("✅");
-		bot.message.react("🚫");
+		message.react({timeout: 1000}, "✅");
+		message.react({timeout: 1500}, "⛔");
 	}
 });
 
