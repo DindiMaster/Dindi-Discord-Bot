@@ -153,6 +153,7 @@ client.on("message", message => {
 		.setDescription(pollargs)
 		
 		let pollmsg = message.channel.send(pollembed);
+		message.channel.send(pollmsg);
 
 		message.channel.react(":white_check_mark:");
 		message.channel.react(":no_entry_sign:")
