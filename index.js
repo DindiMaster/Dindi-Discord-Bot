@@ -28,7 +28,7 @@ client.on("message", async message => {
 		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!react (message)")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
-		.addField(":wave: **WELCOME & GOODBYE**", "d!greetings setup \n d!greetings support")
+		.addField(":wave: **WELCOME & GOODBYE**", "d!welcomechannelsetup (channel ID) \n d!goodbyechannelsetup (channel ID)")
 		message.member.send(helpembed);
 		message.channel.send("Help menu sent! If you don't get a DM with it try to type d!helpinchannel to show the help menu in your current channel!")
 	}
@@ -39,7 +39,7 @@ client.on("message", async message => {
 		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!react (message)")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
-		.addField(":wave: **WELCOME & GOODBYE**", "d!join leave setup")
+		.addField(":wave: **WELCOME & GOODBYE**", "d!welcomechannelsetup (channel ID) \n d!goodbyechannelsetup (channel ID)")
 		message.channel.send(helpembed);
 	}
 
@@ -73,24 +73,6 @@ client.on("message", async message => {
 
 	if(message.content === "d!discord") {
 		message.channel.send("You can visit the official Dindi Bot disord server on https://discord.gg/NddGpqR");
-	}
-
-	if(message.content === "d!greetings setup") {
-		if(!message.member.hasPermission("MANAGE_CHANNELS")){
-			message.channel.send("You do not have the MANAGE_CHANNELS permission!")
-			return;
-		}
-		message.channel.send("Welcome/goodbye channel created! Do not change the channel name or the welcome and goodbye messages wont work. You can change the permissions for every role except the role named Dindi Bot. You can also move the channel to wherever you want. If the bot isn't sending welcome and goodbye messages in that channel or the bot failed to create the channel please type in d!greetings support");
-		message.guild.channels.create("👋-welcome-goodbye", {
-			type: "text",
-			position: 0,
-			topic: "Say a warm welcome and a cold goodbye!",
-			permissionOverwrites: [{
-				id: users.guild.id,
-				allow: ["READ_MESSAGE_HISTORY", "READ_MESSAGES"],
-				deny: ["SEND_MESSAGES"]
-			}]
-			})
 	}
 
 	if(message.content === "d!greetings support"){
@@ -210,9 +192,21 @@ client.on("message", async message => {
 	}
 });
 
-client.on("guildMemberAdd", member => {
+client.on("guildMemberAdd", "message", member, message => {
 	// eslint-disable-next-line no-shadow
-	const channel = member.guild.channels.cache.find(channel => channel.name === "👋-welcome-goodbye");
+	var channelIdGet;
+
+	if(message.content.startsWith("d!welcomechannelsetup")){
+		var welcomeargs = message.content.split(" ").slice(1).join(" ");
+		if(!message.member.hasPermission("MANAGE_CHANNELS")){
+			message.channel.send("You do not have the MANAGE_CHANNELS permission!")
+			return;
+		}
+		if(!welcomeargs)return message.reply("Insert the channel ID");
+		var channelIdGet = welcomeargs;
+		message.channel.send("Welcome channel setup! If the bot isn't sending welcome messages in that channel or the bot failed to create the channel please type in d!greetings support");
+	}
+	const channel = member.guild.channels.cache.find(channel => channel.id === channelIdGet);
 	if(!channel) return;
 
 	channel.send(`${member} just joined! Give them a warm welcome :wave:`);
@@ -220,7 +214,19 @@ client.on("guildMemberAdd", member => {
 
 client.on("guildMemberRemove", member => {
 	// eslint-disable-next-line no-shadow
-	const channel = member.guild.channels.cache.find(channel => channel.name === "👋-welcome-goodbye");
+	var channelIdGet2;
+
+	if(message.content.startsWith("d!goodbyechannelsetup")){
+		var goodbyeargs = message.content.split(" ").slice(1).join(" ");
+		if(!message.member.hasPermission("MANAGE_CHANNELS")){
+			message.channel.send("You do not have the MANAGE_CHANNELS permission!")
+			return;
+		}
+		if(!goodbyeargs)return message.reply("Insert the channel ID");
+		channelIdGet2 = goodbyeargs;
+		message.channel.send("Goodbye channel setup! If the bot isn't sending goodbye messages in that channel or the bot failed to create the channel please type in d!greetings support");
+	}
+	const channel = member.guild.channels.cache.find(channel => channel.id === channelIdGet2);
 	if(!channel) return;
 
 	channel.send(`${member} just left :cry:`);
