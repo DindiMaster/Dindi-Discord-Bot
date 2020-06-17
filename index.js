@@ -150,7 +150,7 @@ client.on("message", message => {
 		var pollembed = new Discord.MessageEmbed()
 		.setTitle(`Poll by ${message.author.username}`)
 		.setFooter("React to vote.")
-		.setDescription(pollargs.join(" "))
+		.setDescription(pollargs)
 		
 		let pollmsg = message.channel.send(pollembed);
 
