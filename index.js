@@ -25,7 +25,7 @@ client.on("message", async message => {
 	if(message.content === "d!help") {
 		const helpembed = new Discord.MessageEmbed()
 		.setTitle("HELP MENU")
-		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!react (message)")
+		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
 		.addField(":wave: **WELCOME & GOODBYE**", "d!greetings setup")
@@ -36,7 +36,7 @@ client.on("message", async message => {
 	if(message.content === "d!helpinchannel") {
 		const helpembed = new Discord.MessageEmbed()
 		.setTitle("HELP MENU")
-		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!react (message)")
+		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
 		.addField(":wave: **WELCOME & GOODBYE**", "d!greetings setup")
