@@ -102,7 +102,7 @@ client.on("message", async message => {
 		message.channel.send("You are " + coolness + "% cool");
 	}
 
-	if(message.content.startsWith(PREFIX + "howcoolis")) {
+	if(message.content.startsWith("d!howcoolis")) {
 		coolness = (Math.floor(Math.random() * 100 + 1));
 		message.channel.send("They are " + coolness + "% cool");
 	}
