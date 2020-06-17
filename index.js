@@ -72,10 +72,16 @@ client.on("message", message => {
 	// 8ball
 	if(message.content.startsWith("d!8ball")){
 		var ListAnswers = ["Yes", "No", "Maybe", "I don't know", "Cool", "Maybe yes", "Maybe no", "Probably", "Probably not", "Ask again later"];
-		var answer = Math.floor((Math.random() * ListAnswers.length));
+		var answer = ListAnswers[Math.floor(Math.random() * ListAnswers.length)-1];
 		var arguments = message.content.split(" ").slice(1).join(" ");
 		if(!arguments)return message.reply("Specify your question.");
-		message.channel.send("@" + message.author.tag + answer);
+		let ballembed = new MessageEmbed()
+		.setAuthor(arguments.setAuthor.tag, arguments.author.avatarURL)
+		.setTitle("8Ball")
+		.setcolor("BLUE")
+		.addField("Your question: " + arguments)
+		.addField("My answer: " + answer)
+		message.channel.send(ballembed);
 	}
 
 	// Say Command
@@ -158,7 +164,7 @@ client.on("messageUpdate", async(oldMessage, newMessage) => {
 		return;
 	}
 	var logChannel = client.channels.find(channel => channel.name === "logs");
-	let logEmbed = new Discord.RichEmbed()
+	let logEmbed = new MessageEmbed()
 	.setAuthor(oldMessage.setAuthor.tag, oldMessage.author.avatarURL)
 	.setThumbnail(oldMessage.author.avatarURL)
 	.setcolor("BLUE")
@@ -170,7 +176,7 @@ client.on("messageUpdate", async(oldMessage, newMessage) => {
 
 client.on("messageDelete", async message => {
 	var logChannel = client.channels.find(channel => channel.name === "logs");
-	let logEmbed = new Discord.RichEmbed()
+	let logEmbed = new MessageEmbed()
 	.setAuthor(oldMessage.setAuthor.tag, oldMessage.author.avatarURL)
 	.setThumbnail(oldMessage.author.avatarURL)
 	.setcolor("RED")
