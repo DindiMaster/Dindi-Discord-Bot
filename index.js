@@ -8,7 +8,6 @@ client.once("ready", () => {
 
 client.login(process.env.token);
 
-
 client.on("message", message => {
 
 	if(message.content === "ping") {
@@ -21,7 +20,7 @@ client.on("message", message => {
 		.setTitle("HELP MENU")
 		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
-		.addField(":scroll: **INFO**", "d!help \n d!version \n d!discord \n d!creator \n d!logs setup")
+		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator")
 		.addField(":wave: **WELCOME & GOODBYE**", "d!join leave setup")
 		message.member.send(helpembed);
 	}
@@ -61,19 +60,6 @@ client.on("message", message => {
 
 	if(message.content === "d!version") {
 		message.channel.send("The current version is **0.1.3**");
-	}
-
-	if(message.content === "d!logs setup") {
-		message.channel.send("Create a channel where your logs will be put. After that do d!logs channel config (channelid) and you will be ready to go!");
-	}
-
-	if(message.content.startsWith("d!logs channel config")){
-		if(!message.member.hasPermission("ADMINISTRATOR")){
-			message.channel.send("You do not have the ADMINISTRATOR permission!")
-			return;
-		}
-		logsetupargs = message.content.split(" ").slice(1).join(" ");
-		message.channel.send("Logs channel is ready!")
 	}
 
 	if(message.content === "d!randomnumber") {
@@ -155,6 +141,24 @@ client.on("message", message => {
 		message.channel.send(mention.username + " has been kicked :hammer: for " + reason);
 		message.guild.member(mention).kick(reason);
 	}
+
+	// POLLS
+	if(message.content.startsWith("d!poll")) {
+		if(!message.member.roles.find(r => r.name === "Polls")) return message.channel.send("This command requires the role: **Polls**");
+		var pollargs = message.content.split(" ").slice(1).join(" ");
+		if(!pollargs[0]) return message.channel.send("Proper Usage: d!poll (question)");
+		var pollembed = new Discord.MessageEmbed()
+		.setTitle(`Poll by ${message.author,username}`)
+		.setFooter("React to vote.")
+		.setDescription(pollargs.join(" "))
+		
+		let pollmsg = message.channel.send(pollembed);
+
+		pollmsg.react(":white_check_mark:");
+		pollmsg.react(":no_entry_sign:")
+
+		message.delete({timeout: 1000});
+	}
 });
 
 client.on("guildMemberAdd", member => {
@@ -172,28 +176,3 @@ client.on("guildMemberRemove", member => {
 
 	channel.send(`${member} just left :cry:`);
 });
-
-client.on("messageUpdate", async(oldMessage, newMessage) => {
-	var logchannelid = logsetupargs;
-	if(oldMessage.content === newMessage.content){
-		return;
-	}
-	var logChannel = client.channels.get(logchannelid);
-	const logEmbed = new Discord.MessageEmbed()
-	.setAuthor(oldMessage.setAuthor.tag, oldMessage.author.avatarURL)
-	.setThumbnail(oldMessage.author.avatarURL)
-	.setDescription("Message Edited")
-	.addField("Before", oldMessage.content, true)
-	.addField("After", newMessage.content, true)
-	logChannel.send(logEmbed);
-})
-
-client.on("messageDelete", async message => {
-	var logChannel = client.channels.find(logchannelid);
-	const logEmbed = new Discord.MessageEmbed()
-	.setAuthor(oldMessage.setAuthor.tag, oldMessage.author.avatarURL)
-	.setThumbnail(oldMessage.author.avatarURL)
-	.setDescription(":no_entry_sign: Message Deleted")
-	.addField("Message", message.content, true)
-	logChannel.send(logEmbed);
-})
