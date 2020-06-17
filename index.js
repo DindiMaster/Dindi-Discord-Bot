@@ -75,7 +75,7 @@ client.on("message", async message => {
 	}
 
 	if(message.content === "d!greetings setup") {
-		if(!message.author.hasPermission("MANAGE_CHANNELS")){
+		if(!message.member.hasPermission("MANAGE_CHANNELS")){
 			message.channel.send("You do not have the MANAGE_CHANNELS permission!")
 			return;
 		}
@@ -97,7 +97,7 @@ client.on("message", async message => {
 	}
 
 	if(message.content === "d!greetings support"){
-		message.channel.send("**These are the following problems that could be blocking Dindi Bot from sending welcome and goodbye messages: \n \n \n **You changed the channel name** \n In this case you need to delete your welcome-goodbye channel and run the d!greetings setup command again! \n \n **The bot doesn't have the permission to send or view messages in the 👋-welcome-goodbye channel \n in this case you need to go to the channels permission settings and enable the following permissions for the Dindi Bot role: **Read Messages** and **Send Messages** \n \n If you did both things and the bot still isn't working type d!discord and join the Dindi Bot discord support server, you will get direct help from there.");
+		message.channel.send("**These are the following problems that could be blocking Dindi Bot from sending welcome and goodbye messages:** \n \n \n **You changed the channel name** \n In this case you need to delete your welcome-goodbye channel and run the d!greetings setup command again! \n \n **The bot doesn't have the permission to send or view messages in the 👋-welcome-goodbye channel** \n in this case you need to go to the channels permission settings and enable the following permissions for the Dindi Bot role: **Read Messages** and **Send Messages** \n \n If you did both things and the bot still isn't working type d!discord and join the Dindi Bot discord support server, you will get direct help from there.");
 	}
 
 	if(message.content === "d!version") {
