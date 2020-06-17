@@ -76,7 +76,6 @@ client.on("message", message => {
 		var arguments = message.content.split(" ").slice(1).join(" ");
 		if(!arguments)return message.reply("Specify your question.");
 		const ballembed = new Discord.MessageEmbed()
-		.setAuthor(arguments.setAuthor.tag, arguments.author.avatarURL)
 		.setTitle("8Ball")
 		.setcolor("BLUE")
 		.addField("Your question: " + arguments)
