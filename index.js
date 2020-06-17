@@ -159,8 +159,8 @@ client.on("message", async message => {
 
 		message.channel.send(pollembed);
 		message.delete().then(messageReaction => {
-			await message.react("👍");
-			await message.react("👎");
+			pollembed.message.react("👍");
+			pollembed.message.react("👎");
 		});
 	}
 });
