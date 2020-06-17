@@ -153,8 +153,8 @@ client.on("message", message => {
 
 		message.channel.send(pollembed);
 		message.delete().then(messageReaction => {
-			message.react("👍");
-			message.react("👎");
+			message.channel.react("👍");
+			message.channel.react("👎");
 		});
 	}
 });
