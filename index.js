@@ -8,6 +8,11 @@ client.once("ready", () => {
 
 client.login(process.env.token);
 
+
+client.on("ready", () => {
+	bot.user.setActivity("d!help", {type: "STREAMING"});
+})
+
 client.on("message", async message => {
 
 	// EASTER EGG/MAIN COMMANDS
