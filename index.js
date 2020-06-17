@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
+const bot = new Discord.Client();
 
 client.once("ready", () => {
 	console.log("I am online!");
@@ -80,7 +81,7 @@ client.on("message", async message => {
 			return;
 		}
 		message.channel.send("Welcome/goodbye channel created! Do not change the channel name or the welcome and goodbye messages wont work. You can change the permissions for every role except the role named Dindi Bot. You can also move the channel to wherever you want. If the bot isn't sending welcome and goodbye messages in that channel or the bot failed to create the channel please type in d!greetings support");
-		guild.createChannel("👋-welcome-goodbye", {
+		bot.guild.createChannel("👋-welcome-goodbye", {
 			type: "text",
 			position: 0,
 			topic: "Say a warm welcome and a cold goodbye!",
