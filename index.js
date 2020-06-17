@@ -111,7 +111,7 @@ client.on("message", message => {
 		}
 		let reason = message.content.slice (PREFIX.length + mention.toString().length + 5);
 		message.channel.send(mention.username + "has been banned :hammer:");
-		mention.message.send("You have been banned because \n" + reason).then (d_msg => {
+		message.channel.send.send("You have been banned because \n" + reason).then (d_msg => {
 			message.guild.member(mention).ban(reason);
 		})
 	}
@@ -131,7 +131,7 @@ client.on("message", message => {
 		}
 		let reason = message.content.slice (PREFIX.length + mention.toString().length + 5);
 		message.channel.send(mention.username + "has been kicked :hammer:");
-		mention.message.send("You have been kicked because \n" + reason).then (d_msg => {
+		message.channel.send("You have been kicked because \n" + reason).then (d_msg => {
 			message.guild.member(mention).kick(reason);
 		})
 	}
