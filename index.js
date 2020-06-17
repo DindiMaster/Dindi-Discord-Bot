@@ -88,6 +88,12 @@ client.on("message", message => {
 	const PREFIX = "d!";
 	const args = message.content.substring(PREFIX.length).split(" ");
 	const args2 = message.content.slice(sayPrefix.length).trim().split();
+	if(args.content === "@everyone" || args.content === "@here"){
+		return;
+	}
+	if(message == bot.message){
+		return;
+	}
 
 	switch(args[0]) {
 	case "say":
@@ -153,8 +159,8 @@ client.on("message", message => {
 
 		message.channel.send(pollembed);
 		message.delete().then(messageReaction => {
-			message.channel.react("👍");
-			message.channel.react("👎");
+			message.react("👍");
+			message.react("👎");
 		});
 	}
 });
