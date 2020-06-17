@@ -86,7 +86,6 @@ client.on("message", async message => {
 			position: 0,
 			topic: "Say a warm welcome and a cold goodbye!",
 			permissionOverwrites: [{
-				id: member.guild.id,
 				allow: ["READ_MESSAGE_HISTORY", "READ_MESSAGES"],
 				deny: ["SEND_MESSAGES"]
 			}]
@@ -114,6 +113,12 @@ client.on("message", async message => {
 	if(message.content === "d!howcoolami") {
 		coolness = (Math.floor(Math.random() * 100 + 1));
 		message.channel.send("You are " + coolness + "% cool");
+	}
+
+	if(message.content.startsWith(PREFIX + "howcoolis")) {
+		coolness = (Math.floor(Math.random() * 100 + 1));
+		let personcoolness = message.content.slice (PREFIX.length + mention.toString().length + 5);
+		message.channel.send(personcoolness + " is " + coolness + "% cool");
 	}
 
 	if(message.content.startsWith("d!react")){
