@@ -24,6 +24,17 @@ client.on("message", async message => {
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
 		.addField(":wave: **WELCOME & GOODBYE**", "d!join leave setup")
 		message.member.send(helpembed);
+		message.channel.send("Help menu sent! If you don't get a DM with it try to type d!helpinchannel to show the help menu in your current channel!")
+	}
+
+	if(message.content === "d!helpinchannel") {
+		const helpembed = new Discord.MessageEmbed()
+		.setTitle("HELP MENU")
+		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!react (message)")
+		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
+		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
+		.addField(":wave: **WELCOME & GOODBYE**", "d!join leave setup")
+		message.channel.send(helpembed);
 	}
 
 	if(message.content === "d!nuke") {
@@ -112,6 +123,8 @@ client.on("message", async message => {
 	if(message.author.bot){
 		return;
 	}
+
+	message.delete();
 
 	switch(args[0]) {
 	case "say":
