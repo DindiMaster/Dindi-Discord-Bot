@@ -151,10 +151,10 @@ client.on("message", message => {
 		.setFooter("React to vote.")
 		.setDescription(pollargs)
 
-		message.channel.send(pollembed).then(messageReaction => {
+		message.channel.send(pollembed);
+		message.delete().then(messageReaction => {
 			message.react("👍");
 			message.react("👎");
-			message.delete({ timeout: 1000 });
 		});
 	}
 });
