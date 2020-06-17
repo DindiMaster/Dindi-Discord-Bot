@@ -151,12 +151,11 @@ client.on("message", message => {
 		.setTitle(`Poll by ${message.author.username}`)
 		.setFooter("React to vote.")
 		.setDescription(pollargs)
-		
-		let pollmsg = message.channel.send(pollembed);
-		message.channel.send(pollmsg);
 
-		message.channel.react(":white_check_mark:");
-		message.channel.react(":no_entry_sign:")
+		message.channel.send(pollembed);
+
+		message.react(":white_check_mark:");
+		message.react(":no_entry_sign:")
 
 		message.delete({timeout: 1000});
 	}
