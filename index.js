@@ -83,7 +83,7 @@ client.on("message", async message => {
 			position: 0,
 			topic: "Say a warm welcome and a cold goodbye!",
 			permissionOverwrites: [{
-				id: member.guild.id,
+				id: user.guild.id,
 				allow: ["READ_MESSAGE_HISTORY", "READ_MESSAGES"],
 				deny: ["SEND_MESSAGES"]
 			}]
