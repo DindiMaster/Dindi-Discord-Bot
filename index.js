@@ -27,7 +27,7 @@ client.on("message", async message => {
 		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!react (message)")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
-		.addField(":wave: **WELCOME & GOODBYE**", "d!join leave setup")
+		.addField(":wave: **WELCOME & GOODBYE**", "d!greetings setup \n d!greetings support")
 		message.member.send(helpembed);
 		message.channel.send("Help menu sent! If you don't get a DM with it try to type d!helpinchannel to show the help menu in your current channel!")
 	}
@@ -74,9 +74,25 @@ client.on("message", async message => {
 		message.channel.send("You can visit the official Dindi Bot disord server on https://discord.gg/NddGpqR");
 	}
 
-	if(message.content === "d!join leave setup") {
-		message.channel.send("Please create a new channel under the name welcome-goodbye, when you are done the bot will automaticly be sending welcome and goodbye messages to that channel. If it doesn't, check if the channel name is correct!");
+	if(message.content === "d!greetings setup") {
+		if(member.guild.channels.cache.find(channel => channel.name === "👋-welcome-goodbye")){
+			message.channel.send("You already have a welcome goodbye channel set up! If it isn't working, type the following command **d!greetings support");
+		}
+		member.guild.createChannel("👋-welcome-goodbye", {
+			type: "text",
+			position: 0,
+			topic: "Say a warm welcome and a cold goodbye!",
+			permissionOverwrites: [{
+				id: member.guild.id,
+				allow: ["READ_MESSAGE_HISTORY", "READ_MESSAGES"],
+				deny: ["SEND_MESSAGES"]
+			}]
+			})
+		message.channel.send("Welcome/goodbye channel created! Do not change the channel name or the welcome and goodbye messages wont work. You can change the permissions for every role except the role named Dindi Bot. You can also move the channel to wherever you want. If the bot isn't sending welcome and goodbye messages in that channel please type in d!greetings support");
+	}
 
+	if(message.content === "d!greetings support"){
+		message.channel.send("**These are the following problems that could be blocking Dindi Bot from sending welcome and goodbye messages: \n \n \n **You changed the channel name** \n In this case you need to delete your welcome-goodbye channel and run the d!greetings setup command again! \n \n **The bot doesn't have the permission to send or view messages in the 👋-welcome-goodbye channel \n in this case you need to go to the channels permission settings and enable the following permissions for the Dindi Bot role: **Read Messages** and **Send Messages** \n \n If you did both things and the bot still isn't working type d!discord and join the Dindi Bot discord support server, you will get direct help from there.");
 	}
 
 	if(message.content === "d!version") {
@@ -189,7 +205,7 @@ client.on("message", async message => {
 
 client.on("guildMemberAdd", member => {
 	// eslint-disable-next-line no-shadow
-	const channel = member.guild.channels.cache.find(channel => channel.name === "welcome-goodbye");
+	const channel = member.guild.channels.cache.find(channel => channel.name === "👋-welcome-goodbye");
 	if(!channel) return;
 
 	channel.send(`${member} just joined! Give them a warm welcome :wave:`);
@@ -197,7 +213,7 @@ client.on("guildMemberAdd", member => {
 
 client.on("guildMemberRemove", member => {
 	// eslint-disable-next-line no-shadow
-	const channel = member.guild.channels.cache.find(channel => channel.name === "welcome-goodbye");
+	const channel = member.guild.channels.cache.find(channel => channel.name === "👋-welcome-goodbye");
 	if(!channel) return;
 
 	channel.send(`${member} just left :cry:`);
