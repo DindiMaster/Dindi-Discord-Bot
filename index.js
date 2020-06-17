@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const superagent = require("superagent");
-const api = require("imageapi.js");
+
 
 client.once("ready", () => {
 	console.log("I am online!");
@@ -20,7 +19,7 @@ client.on("message", async message => {
 	if(message.content === "d!help") {
 		const helpembed = new Discord.MessageEmbed()
 		.setTitle("HELP MENU")
-		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami")
+		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!randomemoji")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator")
 		.addField(":wave: **WELCOME & GOODBYE**", "d!join leave setup")
@@ -77,6 +76,12 @@ client.on("message", async message => {
 	if(message.content === "d!howcoolami") {
 		coolness = (Math.floor(Math.random() * 100 + 1));
 		message.channel.send("You are " + coolness + "% cool");
+	}
+
+	if(message.content === "d!randomreaction"){
+		var reactions = ["😄", "😎", "🤡", "😂", "👍", "👎", "😢", "👏", "⭐", "🤦‍♂️"];
+		var reaction = reactions[Math.floor(Math.random() * reactions.length)-1];
+		message.react(reaction);
 	}
 
 	// 8ball
@@ -154,20 +159,6 @@ client.on("message", async message => {
 		let reason = message.content.slice (PREFIX.length + mention.toString().length + 5);
 		message.channel.send(mention.username + " has been kicked :hammer: for " + reason);
 		message.guild.member(mention).kick(reason);
-	}
-
-	// MEMES
-	if(message.content === "d!meme"){
-		run: async(bot, message, memeargs)=>{
-			let subreddits = ["comedyheaven", "dank", "meme", "memes"]
-		}
-		let subreddit = subreddits[Math.floor(Math.random()*(subreddits.length)-1)];
-		let img = await api(subreddit);
-		const memeembed = new Discord.MessageEmbed()
-		.setTitle(`A meme from ${subreddit}`)
-		.setURL(`https://reddit.com/r/${subreddit}`)
-		.setImage(i)
-		message.channel.send(memeembed);
 	}
 
 	// POLLS
