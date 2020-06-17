@@ -19,7 +19,7 @@ client.on("message", async message => {
 	if(message.content === "d!help") {
 		const helpembed = new Discord.MessageEmbed()
 		.setTitle("HELP MENU")
-		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!randomemoji")
+		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!react (message)")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator")
 		.addField(":wave: **WELCOME & GOODBYE**", "d!join leave setup")
@@ -64,7 +64,7 @@ client.on("message", async message => {
 	}
 
 	if(message.content === "d!version") {
-		message.channel.send("The current version is **0.1.3**");
+		message.channel.send("The current version is **0.1.4**");
 	}
 
 	// FUN COMMANDS
@@ -78,7 +78,7 @@ client.on("message", async message => {
 		message.channel.send("You are " + coolness + "% cool");
 	}
 
-	if(message.content === "d!randomreaction"){
+	if(message.content.startsWith === "d!react"){
 		var reactions = ["😄", "😎", "🤡", "😂", "👍", "👎", "😢", "👏", "⭐", "🤦‍♂️"];
 		var reaction = reactions[Math.floor(Math.random() * reactions.length)-1];
 		message.react(reaction);
