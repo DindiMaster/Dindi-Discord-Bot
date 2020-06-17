@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const pollEmbed = require('discord.js-poll-embed');
 const superagent = require("superagent");
 const api = require("imageapi.js");
 
@@ -167,7 +166,7 @@ client.on("message", async message => {
 		const memeembed = new Discord.MessageEmbed()
 		.setTitle(`A meme from ${subreddit}`)
 		.setURL(`https://reddit.com/r/${subreddit}`)
-		.setImage(img)
+		.setImage(i)
 		message.channel.send(memeembed);
 	}
 
