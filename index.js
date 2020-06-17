@@ -79,7 +79,7 @@ client.on("message", async message => {
 			message.channel.send("You do not have the MANAGE_CHANNELS permission!")
 			return;
 		}
-		if(!client.hasPermission("MANAGE_CHANNELS")){
+		if(!user.hasPermission("MANAGE_CHANNELS")){
 			message.channel.send("I do not have the MANAGE_CHANNELS permission! Please enable it and retry.")
 			return;
 		}
