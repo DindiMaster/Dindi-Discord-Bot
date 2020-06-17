@@ -10,7 +10,7 @@ client.login(process.env.token);
 
 
 client.on("ready", () => {
-	bot.user.setActivity("d!help", {type: "STREAMING"});
+	client.user.setActivity('d!help' , { type: 'STREAMING'})
 })
 
 client.on("message", async message => {
@@ -129,15 +129,13 @@ client.on("message", async message => {
 		return;
 	}
 
-	message.delete();
-
 	switch(args[0]) {
 	case "say":
 		if(!message.client.bot) {
 			message.channel.send(args2);
 		}
 
-
+		message.delete();
 		break;
 
 
