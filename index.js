@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-
+const pollEmbed = require('discord.js-poll-embed');
+const superagent = require("superagent");
+const api = require("imageapi.js");
 
 client.once("ready", () => {
 	console.log("I am online!");
@@ -9,6 +11,8 @@ client.once("ready", () => {
 client.login(process.env.token);
 
 client.on("message", async message => {
+
+	// EASTER EGG/MAIN COMMANDS
 
 	if(message.content === "ping") {
 		message.channel.send("Pong!");
@@ -28,6 +32,8 @@ client.on("message", async message => {
 		message.channel.send("LOL YOU THOUGHT, banned l o l");
 	}
 
+	// CONVERSATION COMMANDS
+
 	if(message.content === "Hi") {
 		message.channel.send("Yo, hi!");
 	}
@@ -43,6 +49,8 @@ client.on("message", async message => {
 	if(message.content === "Im bad" || message.content === "Im sad" || message.content === "Im auful") {
 		message.channel.send("Oh no! Now im sad :crying_cat_face:");
 	}
+
+	// INFORMATION COMMANDS
 
 	if(message.content === "d!creator") {
 		message.channel.send("This bot is made by **Dindi**, you can visit his youtube channel on https://www.youtube.com/channel/UCjqnUsIVtXHGyCd3q_qvqYQ");
@@ -60,6 +68,8 @@ client.on("message", async message => {
 	if(message.content === "d!version") {
 		message.channel.send("The current version is **0.1.3**");
 	}
+
+	// FUN COMMANDS
 
 	if(message.content === "d!randomnumber") {
 		message.channel.send(Math.floor(Math.random() * 1000000 + 1));
@@ -147,22 +157,23 @@ client.on("message", async message => {
 		message.guild.member(mention).kick(reason);
 	}
 
+	// MEMES
+	if(message.content === "d!meme"){
+		run: async(bot, message, memeargs)=>{
+			let subreddits = ["comedyheaven", "dank", "meme", "memes"]
+		}
+		let subreddit = subreddits[Math.floor(Math.random()*(subreddits.length)-1)];
+		let img = await api(subreddit);
+		const memeembed = new Discord.MessageEmbed()
+		.setTitle(`A meme from ${subreddit}`)
+		.setURL(`https://reddit.com/r/${subreddit}`)
+		.setImage(img)
+		message.channel.send(memeembed);
+	}
+
 	// POLLS
 	if(message.content.startsWith("d!poll")) {
-		if(!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("This command requires the permission: **Administrator**");
-		var pollargs = message.content.split(" ").slice(1).join(" ");
-		if(!pollargs[0]) return message.channel.send("Proper Usage: d!poll (question)");
-		var pollembed = new Discord.MessageEmbed()
-		.setTitle(`Poll by ${message.author.username}`)
-		.setFooter("React to vote.")
-		.setDescription(pollargs)
-
-		message.channel.send(pollembed);
-		message.delete().then(messageReaction => {
-			message.channel.send("_ _");
-			MessageEmbed.message.react("👍");
-			MessageEmbed.message.react("👎");
-		});
+		message.channel.send("Poll command coming soon...")
 	}
 });
 
