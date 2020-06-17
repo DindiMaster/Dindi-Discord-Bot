@@ -16,7 +16,7 @@ client.on("message", message => {
 
 	if(message.content === "d!help") {
 		message.channel.send("Help is sent your way!");
-		message.member.send(":smile: **FUN** \n d!say \n d!8ball (text) \n d!randomnumber \n d!howcoolami \n \n :scroll: **INFO** \n d!help \n d!version \n d!discord \n d!creator \n d!logs setup \n \n :wave: **WELCOME & GOODBYE** \n d!join leave setup");
+		message.member.send(":smile: **FUN** \n d!say \n d!8ball (text) \n d!randomnumber \n d!howcoolami \n \n :hammer: **MODERATION** \n d!kick (user) (reason) \n d!ban (user) (reason) \n \n :scroll: **INFO** \n d!help \n d!version \n d!discord \n d!creator \n d!logs setup \n \n :wave: **WELCOME & GOODBYE** \n d!join leave setup");
 	}
 
 	if(message.content === "d!nuke") {
@@ -71,7 +71,20 @@ client.on("message", message => {
 
 	// 8ball
 	if(message.content.startsWith("d!8ball")){
-		message.channel.send("8Ball coming soon...")
+		var ListAnswers = ["Yes", "No", "Maybe", "I don't know", "Cool", "Maybe yes", "Maybe no", "Probably", "Probably not", "Ask again later"];
+		var answers = Math.floor((Math.random() * ListAnswers.length));
+		var arguments = message.content.split(" ").slice(1).join(" ");
+		if(!arguments)return message.reply("Specify your question.");
+		var embed = new Discord.RichEmbed()
+		.setColor("BLUE")
+		.setTitle("8Ball")
+		.setThumbnail(message.author.avatarURL)
+		.addField("Question", arguments, false)
+		.addField("asked by", message.author.tag, false)
+		.addField("Answer:", answers[ListAnswers], false)
+		.setFooter(message.author.tag, message.author.avatarURL)
+
+		message.channel.send(embed);
 	}
 
 	// Say Command
@@ -110,7 +123,7 @@ client.on("message", message => {
 			return;
 		}
 		let reason = message.content.slice (PREFIX.length + mention.toString().length + 5);
-		message.channel.send(mention.username + "has been banned :hammer:");
+		message.channel.send(mention.username + " has been banned :hammer: for " + reason);
 			message.guild.member(mention).ban(reason);
 	}
 
@@ -128,7 +141,7 @@ client.on("message", message => {
 			return;
 		}
 		let reason = message.content.slice (PREFIX.length + mention.toString().length + 5);
-		message.channel.send(mention.username + " has been kicked :hammer:");
+		message.channel.send(mention.username + " has been kicked :hammer: for " + reason);
 		message.guild.member(mention).kick(reason);
 	}
 });
