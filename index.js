@@ -160,8 +160,8 @@ client.on("message", async message => {
 		message.channel.send(pollembed);
 		message.delete().then(messageReaction => {
 			message.channel.send("_ _");
-			message.react("👍");
-			message.react("👎");
+			MessageEmbed.message.react("👍");
+			MessageEmbed.message.react("👎");
 		});
 	}
 });
