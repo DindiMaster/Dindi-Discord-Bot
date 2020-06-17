@@ -72,8 +72,8 @@ client.on("message", message => {
 			message.channel.send("You do not have the ADMINISTRATOR permission!")
 			return;
 		}
-		var logsetupargs = message.content.split(" ").slice(1).join(" ");
-		var logchannelid = logsetupargs;
+		logsetupargs = message.content.split(" ").slice(1).join(" ");
+		message.channel.send("Logs channel is ready!")
 	}
 
 	if(message.content === "d!randomnumber") {
@@ -174,6 +174,7 @@ client.on("guildMemberRemove", member => {
 });
 
 client.on("messageUpdate", async(oldMessage, newMessage) => {
+	var logchannelid = logsetupargs;
 	if(oldMessage.content === newMessage.content){
 		return;
 	}
