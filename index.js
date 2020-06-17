@@ -17,6 +17,13 @@ client.on("message", message => {
 	if(message.content === "d!help") {
 		message.channel.send("Help is sent your way!");
 		message.member.send(":smile: **FUN** \n d!say \n d!8ball (text) \n d!randomnumber \n d!howcoolami \n \n :hammer: **MODERATION** \n d!kick (user) (reason) \n d!ban (user) (reason) \n \n :scroll: **INFO** \n d!help \n d!version \n d!discord \n d!creator \n d!logs setup \n \n :wave: **WELCOME & GOODBYE** \n d!join leave setup");
+		const helpembed = new Discord.MessageEmbed()
+		.setTitle("HELP MENU")
+		.addField(":smile: **FUN**", "d!say", "d!8ball (text)", "d!randomnumber", "d!howcoolami")
+		.addField(":hammer: **MODERATION**", "d!kick (user) (reason)", "d!ban (user) (reason)")
+		.addField(":scroll: **INFO**", "d!help", "d!version", "d!discord", "d!creator", "d!logs setup")
+		.addField(":wave: **WELCOME & GOODBYE**", "d!join leave setup")
+		message.member.send(helpembed);
 	}
 
 	if(message.content === "d!nuke") {
@@ -53,7 +60,7 @@ client.on("message", message => {
 	}
 
 	if(message.content === "d!version") {
-		message.channel.send("The current version is **0.1.25**");
+		message.channel.send("The current version is **0.1.3**");
 	}
 
 	if(message.content === "d!logs setup") {
@@ -165,7 +172,6 @@ client.on("messageUpdate", async(oldMessage, newMessage) => {
 	const logEmbed = new Discord.MessageEmbed()
 	.setAuthor(oldMessage.setAuthor.tag, oldMessage.author.avatarURL)
 	.setThumbnail(oldMessage.author.avatarURL)
-	.setcolor("BLUE")
 	.setDescription("Message Edited")
 	.addField("Before", oldMessage.content, true)
 	.addField("After", newMessage.content, true)
@@ -177,7 +183,6 @@ client.on("messageDelete", async message => {
 	const logEmbed = new Discord.MessageEmbed()
 	.setAuthor(oldMessage.setAuthor.tag, oldMessage.author.avatarURL)
 	.setThumbnail(oldMessage.author.avatarURL)
-	.setcolor("RED")
 	.setDescription(":no_entry_sign: Message Deleted")
 	.addField("Message", message.content, true)
 	logChannel.send(logEmbed);
