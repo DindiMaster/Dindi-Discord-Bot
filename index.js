@@ -153,11 +153,10 @@ client.on("message", message => {
 		.setDescription(pollargs)
 
 		message.delete();
-		message.channel.send(pollembed).then(messageReaction => {
-			message.react("👍");
-			message.react("👎");
-			message.delete({ timeout: 1000 });
-		});
+		message.channel.send(pollembed);
+		message.react("👍");
+		message.react("👎");
+		message.delete({ timeout: 1000 });
 	}
 });
 
