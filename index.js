@@ -20,11 +20,8 @@ client.on("ready", () => {
 
 client.on("message", async message => {
 
-	// EASTER EGG/MAIN COMMANDS
 
-	if(message.content === "ping") {
-		message.channel.send("Pong!");
-	}
+	// HELP COMMANDS
 
 	if(message.content === "d!help") {
 		const helpembed = new Discord.MessageEmbed()
@@ -32,7 +29,7 @@ client.on("message", async message => {
 		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
-		.addField(":wave: **WELCOME & GOODBYE**", "d!greetings setup")
+		.addField(":wave: **WELCOME & GOODBYE**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel)")
 		message.member.send(helpembed);
 		message.channel.send("Help menu sent! If you don't get a DM with it try to type d!helpinchannel to show the help menu in your current channel!")
 	}
@@ -43,12 +40,8 @@ client.on("message", async message => {
 		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
-		.addField(":wave: **WELCOME & GOODBYE**", "d!welcomechannelsetup (channel) \n d!goodbyechannelsetup (channel)")
+		.addField(":wave: **WELCOME & GOODBYE**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel)")
 		message.channel.send(helpembed);
-	}
-
-	if(message.content === "d!nuke") {
-		message.channel.send("LOL YOU THOUGHT, banned l o l");
 	}
 
 	// CONVERSATION COMMANDS
@@ -79,12 +72,13 @@ client.on("message", async message => {
 		message.channel.send("You can visit the official Dindi Bot disord server on https://discord.gg/NddGpqR");
 	}
 
-	if(message.content === "d!greetings setup"){
-		message.channel.send("Create a channel named welcome-goodbye. After that the bot will automaticaly be sending join and leave messages to the channel. If the bot isn't sending welcome messages in that channel or the bot failed to create the channel please type in d!greetings support");
+	if(message.content === "d!servercount"){
+		var scount = client.guilds.size;
+		message.channel.send("Dindi Bot is currently on " + scount + " servers!");
 	}
 
 	if(message.content === "d!greetings support"){
-		message.channel.send("**These are the following problems that could be blocking Dindi Bot from sending welcome and goodbye messages:** \n \n \n **You changed the channel name** \n In this case you need to delete your welcome-goodbye channel and run the d!greetings setup command again! \n \n **The bot doesn't have the permission to send or view messages in the 👋-welcome-goodbye channel** \n in this case you need to go to the channels permission settings and enable the following permissions for the Dindi Bot role: **Read Messages** and **Send Messages** \n \n **The Dindi Bot role doesn't have the Manage Channels permission** \n in this case you need to go to your server role permission settings and enable the Manage Channel permission \n \n If you did both things and the bot still isn't working type d!discord and join the Dindi Bot discord support server, you will get direct help from there.");
+		message.channel.send("**These are the following problems that could be blocking Dindi Bot from sending welcome and goodbye messages:** \n \n \n **The bot doesn't have the permission to send or view messages in the 👋-welcome-goodbye channel** \n in this case you need to go to the channels permission settings and enable the following permissions for the Dindi Bot role: **Read Messages** and **Send Messages** \n \n If you everything on the list and the bot still isn't working type d!discord and join the Dindi Bot discord support server, you will get direct help from there.");
 	}
 
 	if(message.content === "d!version") {
@@ -155,35 +149,34 @@ client.on("message", async message => {
 	}
 
 	// WELCOME & GOODBYE SETUP
-	if(message.member.hasPermission(['MANAGE_CHANNELS']))
-    {
-        if(message.content.startsWith(`${prefix}welcomechannelsetup`))
-        {
-            let numberOfLine =    message.content.slice(prefix.lenght).split(" ");
-            let args = numberOfLine.slice(1);
 
-            let channelSet = args[0].replace("<#", "");
-            channelSet = channelSet.replace(">", "");
-            welcomeChannel = channelSet;
-            
-            message.channel.send("#"+welcomeChannel + " now set as the welcome channel! If the bot isn't sending welcome messages do d!greetings support.");
-        }
+	if(message.content.startsWith(`${prefix}welcomechannelsetup`))
+	{
+		if(!message.member.hasPermission(['MANAGE_CHANNELS']))return message.channel.send("You do not have the Manage Channels permission!");
+
+		let numberOfLine =    message.content.slice(prefix.lenght).split(" ");
+		let args = numberOfLine.slice(1);
+
+		let channelSet = args[0].replace("<#", "");
+		channelSet = channelSet.replace(">", "");
+		welcomeChannel = channelSet;
+		
+		message.channel.send("#"+welcomeChannel + " now set as the welcome channel! If the bot isn't sending welcome messages do d!greetings support.");
 	}
-	
-	if(message.member.hasPermission(['MANAGE_CHANNELS']))
-    {
-        if(message.content.startsWith(`${prefix}goodbyechannelsetup`))
-        {
-            let numberOfLine =    message.content.slice(prefix.lenght).split(" ");
-            let args = numberOfLine.slice(1);
 
-            let channelSet2 = args[0].replace("<#", "");
-            channelSet2 = channelSet2.replace(">", "");
-            goodbyeChannel = channelSet2;
-            
-            message.channel.send("#"+goodbyeChannel + " now set as the goodbye channel! If the bot isn't sending goodbye messages do d!greetings support.");
-        }
-    }
+	if(message.content.startsWith(`${prefix}goodbyechannelsetup`))
+	{
+		if(!message.member.hasPermission(['MANAGE_CHANNELS']))return message.channel.send("You do not have the Manage Channels permission!");
+
+		let numberOfLine =    message.content.slice(prefix.lenght).split(" ");
+		let args = numberOfLine.slice(1);
+
+		let channelSet2 = args[0].replace("<#", "");
+		channelSet2 = channelSet2.replace(">", "");
+		goodbyeChannel = channelSet2;
+		
+		message.channel.send("#"+goodbyeChannel + " now set as the goodbye channel! If the bot isn't sending goodbye messages do d!greetings support.");
+	}
 
 	// BAN/KICK
 	mention = message.mentions.users.first();
