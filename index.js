@@ -78,7 +78,7 @@ client.on("message", async message => {
 	}
 
 	if(message.content === "d!version") {
-		message.channel.send("The current version is **0.1.4**");
+		message.channel.send("The current version is **0.1.5**");
 	}
 
 	if(message.content === "d!invitelink") {
