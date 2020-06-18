@@ -231,14 +231,14 @@ client.on("message", async message => {
 });
 
 client.on("guildMemberAdd", member => {
-	const channel = member.guild.channels.cache.find(channel => channel.name === welcomeChannel);
+	const channel = member.guild.channels.cache.find(channel => channel.id === welcomeChannel);
 	if(!channel) return;
 
 	channel.send(`${member} just joined! Give them a warm welcome :wave:`);
 });
 
 client.on("guildMemberRemove", member => {
-	const channel = member.guild.channels.cache.find(channel => channel.name === goodbyeChannel);
+	const channel = member.guild.channels.cache.find(channel => channel.id === goodbyeChannel);
 	if(!channel) return;
 
 	channel.send(`${member} just left :cry:`);
