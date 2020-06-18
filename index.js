@@ -108,7 +108,7 @@ client.on("message", async message => {
 		const quizdata = await quizresponce.json();
 		var length = quizdata.results.length;
 		var randomquiznumber = Math.floor(Math.random() * length);
-		var randomQuestion = data.results[randomquiznumber];
+		var randomQuestion = quizdata.results[randomquiznumber];
 		var question = randomQuestion.question;
 		var correctAnswer = randomQuestion.correct_answer;
 
