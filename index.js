@@ -106,7 +106,7 @@ client.on("message", async message => {
 	if(message.content === ("d!quiz")){
 		const quizresponce = await fetch("https://opentdb.com/api.php?amount=5&difficulty=easy&type=boolean");
 		const quizdata = await quizresponce.json();
-		var length = data.results.length;
+		var length = quizdata.results.length;
 		var randomquiznumber = Math.floor(Math.random() * length);
 		var randomQuestion = data.results[randomquiznumber];
 		var question = randomQuestion.question;
