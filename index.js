@@ -2,6 +2,10 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 
 const bot = new Discord.Client();
+const prefix = "d!"
+
+let { welcomeChannel } = require('./channel.json')
+let { goodbyeChannel } = require('./channel.json')
 
 client.once("ready", () => {
 	console.log("I am online!");
@@ -39,7 +43,7 @@ client.on("message", async message => {
 		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
-		.addField(":wave: **WELCOME & GOODBYE**", "d!greetings setup")
+		.addField(":wave: **WELCOME & GOODBYE**", "d!welcomechannelsetup (channel) \n d!goodbyechannelsetup (channel)")
 		message.channel.send(helpembed);
 	}
 
@@ -150,6 +154,36 @@ client.on("message", async message => {
 
 	}
 
+	// WELCOME & GOODBYE SETUP
+	if(message.member.hasPermission(['MANAGE_CHANNELS']))
+    {
+        if(message.content.startsWith(`${prefix}welcomechannelsetup`))
+        {
+            let numberOfLine =    message.content.slice(prefix.lenght).split(" ");
+            let args = numberOfLine.slice(1);
+
+            let channelSet = args[0].replace("<#", "");
+            channelSet = channelSet.replace(">", "");
+            welcomeChannel = channelSet;
+            
+            message.channel.send("#"+welcomeChannel + " now set as the welcome channel! If the bot isn't sending welcome messages do d!greetings support.");
+        }
+	}
+	
+	if(message.member.hasPermission(['MANAGE_CHANNELS']))
+    {
+        if(message.content.startsWith(`${prefix}goodbyechannelsetup`))
+        {
+            let numberOfLine =    message.content.slice(prefix.lenght).split(" ");
+            let args = numberOfLine.slice(1);
+
+            let channelSet2 = args[0].replace("<#", "");
+            channelSet2 = channelSet2.replace(">", "");
+            goodbyeChannel = channelSet2;
+            
+            message.channel.send("#"+goodbyeChannel + " now set as the goodbye channel! If the bot isn't sending goodbye messages do d!greetings support.");
+        }
+    }
 
 	// BAN/KICK
 	mention = message.mentions.users.first();
@@ -197,39 +231,14 @@ client.on("message", async message => {
 });
 
 client.on("guildMemberAdd", member => {
-	// eslint-disable-next-line no-shadow
-	var channelIdGet;
-	/*if(message.content.startsWith("d!welcomechannelsetup")){
-		var welcomeargs = message.content.split(" ").slice(1).join(" ");
-		if(!message.member.hasPermission("MANAGE_CHANNELS")){
-			message.channel.send("You do not have the MANAGE_CHANNELS permission!")
-			return;
-		}
-		if(!welcomeargs)return message.reply("Insert the channel ID");
-		var channelIdGet = welcomeargs;
-		message.channel.send("Welcome channel setup! If the bot isn't sending welcome messages in that channel or the bot failed to create the channel please type in d!greetings support");
-	} */
-	const channel = member.guild.channels.cache.find(channel => channel.name === "welcome-goodbye");
+	const channel = member.guild.channels.cache.find(channel => channel.name === welcomeChannel);
 	if(!channel) return;
 
 	channel.send(`${member} just joined! Give them a warm welcome :wave:`);
 });
 
 client.on("guildMemberRemove", member => {
-	// eslint-disable-next-line no-shadow
-	var channelIdGet2;
-
-	/*if(message.content.startsWith("d!goodbyechannelsetup")){
-		var goodbyeargs = message.content.split(" ").slice(1).join(" ");
-		if(!message.member.hasPermission("MANAGE_CHANNELS")){
-			message.channel.send("You do not have the MANAGE_CHANNELS permission!")
-			return;
-		}
-		if(!goodbyeargs)return message.reply("Insert the channel ID");
-		channelIdGet2 = goodbyeargs;
-		message.channel.send("Goodbye channel setup! If the bot isn't sending goodbye messages in that channel or the bot failed to create the channel please type in d!greetings support");
-	} */
-	const channel = member.guild.channels.cache.find(channel => channel.name === "welcome-goodbye");
+	const channel = member.guild.channels.cache.find(channel => channel.name === goodbyeChannel);
 	if(!channel) return;
 
 	channel.send(`${member} just left :cry:`);
