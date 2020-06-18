@@ -20,7 +20,7 @@ client.on("ready", () => {
 })
 
 client.on("message", async message => {
-
+	const bot = new Discord.Client();
 
 	// HELP COMMANDS
 
@@ -90,10 +90,10 @@ client.on("message", async message => {
 		if(!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("This command requires the permission: **Administrator**");
 		var pollargs = message.content.split(" ").slice(1).join(" ");
 		if(!pollargs[0]) return message.channel.send("Proper Usage: d!poll (question)");
-		message.delete();
+		message.member.delete();
 		message.channel.send(`Poll by ${message.author} \n Question:  **${pollargs}** \n \n react to answer`);
-		message.react("👍");
-		message.react("👎");
+		bot.message.react("👍");
+		bot.message.react("👎");
 
 	}
 
