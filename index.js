@@ -72,11 +72,6 @@ client.on("message", async message => {
 		message.channel.send("You can visit the official Dindi Bot disord server on https://discord.gg/NddGpqR");
 	}
 
-	if(message.content === "d!servercount"){
-		var scount = client.shard.fetch('guilds.cache.size');
-		message.channel.send("Dindi Bot is currently on " + scount + " servers!");
-	}
-
 	if(message.content === "d!greetings support"){
 		message.channel.send("**These are the following problems that could be blocking Dindi Bot from sending welcome and goodbye messages:** \n \n \n **The bot doesn't have the permission to send or view messages in the 👋-welcome-goodbye channel** \n in this case you need to go to the channels permission settings and enable the following permissions for the Dindi Bot role: **Read Messages** and **Send Messages** \n \n If you everything on the list and the bot still isn't working type d!discord and join the Dindi Bot discord support server, you will get direct help from there.");
 	}
