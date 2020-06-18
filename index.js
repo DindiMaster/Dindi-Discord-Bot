@@ -207,7 +207,7 @@ client.on("message", async message => {
 		}
 		let reason = message.content.slice (PREFIX.length + mention.toString().length + 5);
 		message.channel.send(mention.username + " has been banned :hammer: for " + reason);
-		mention.ban({reason: "you were bad!"});
+		message.guild.member(mention).ban(reason);
 		const logchannel = message.guild.channels.cache.find(channel => channel.id === logsChannel);
 		if(!logchannel) return;
 		logchannel.send(mention.username + " has been banned for " + reason);
@@ -228,7 +228,7 @@ client.on("message", async message => {
 		}
 		let reason = message.content.slice (PREFIX.length + mention.toString().length + 5);
 		message.channel.send(mention.username + " has been kicked :hammer: for " + reason);
-		mention.kick({reason: "you were bad!"});
+		message.guild.member(mention).kick(reason);
 		const logchannel = message.guild.channels.cache.find(channel => channel.id === logsChannel);
 		if(!logchannel) return;
 		logchannel.send(mention.username + " has been kicked for " + reason);
