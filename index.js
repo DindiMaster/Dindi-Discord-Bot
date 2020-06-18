@@ -91,9 +91,9 @@ client.on("message", async message => {
 		var pollargs = message.content.split(" ").slice(1).join(" ");
 		if(!pollargs[0]) return message.channel.send("Proper Usage: d!poll (question)");
 		message.channel.send(`Poll by ${message.author} \n Question:  **${pollargs}** \n \n react to answer`);
-		bot.message.react("👍");
-		bot.message.react("👎");
-		message.delete({timeout: 1000});
+		message.react("👍");
+		message.react("👎");
+		message.delete();
 
 	}
 
