@@ -112,9 +112,9 @@ client.on("message", async message => {
 		var question = randomQuestion.question;
 		var correctAnswer = randomQuestion.correct_answer;
 
-		message.channel.send("Answer with **true** or **false in the next 20 seconds. Your question is: \n" + question);
+		message.channel.send("Answer with **true** or **false** in the next 20 seconds. Your question is: \n" + question);
 		const filter = m => m.author.id === message.author.id;
-		const answer = message.channel.awaitMessages(filter, { maxMatches: 1, time: 20000, errors: ["time", "maxMatches"]});
+		const answer = await message.channel.awaitMessages(filter, { maxMatches: 1, time: 20000, errors: ["time", "maxMatches"]});
 		const ans = answer.first();
 		if(ans.content.toLowerCase() === correctAnswer.toLowerCase()){
 			message.channel.send("Correct answer!");
