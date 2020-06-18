@@ -186,7 +186,7 @@ client.on("message", async message => {
 		channelSet3 = channelSet3.replace(">", "");
 		logsChannel = channelSet3;
 		
-		message.channel.send("#"+logs + " now set as the logs channel! If the bot isn't sending log messages do d!greetings support.");
+		message.channel.send("#"+logsChannel + " now set as the logs channel! If the bot isn't sending log messages do d!greetings support.");
 	}
 
 	// BAN/KICK
