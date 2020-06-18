@@ -90,10 +90,10 @@ client.on("message", async message => {
 		if(!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("This command requires the permission: **Administrator**");
 		var pollargs = message.content.split(" ").slice(1).join(" ");
 		if(!pollargs[0]) return message.channel.send("Proper Usage: d!poll (question)");
-		message.member.delete();
 		message.channel.send(`Poll by ${message.author} \n Question:  **${pollargs}** \n \n react to answer`);
 		bot.message.react("👍");
 		bot.message.react("👎");
+		message.delete({timeout: 1000});
 
 	}
 
