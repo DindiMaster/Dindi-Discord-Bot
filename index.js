@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const fetch = require("node-fetch");
 const client = new Discord.Client();
 
 const bot = new Discord.Client();
@@ -21,13 +22,14 @@ client.on("ready", () => {
 
 client.on("message", async message => {
 	const bot = new Discord.Client();
+	if(message.author.bot) return;
 
 	// HELP COMMANDS
 
-	if(message.content === "d!help") {
+	if(message.content.toLowerCase("d!help")) {
 		const helpembed = new Discord.MessageEmbed()
 		.setTitle("HELP MENU")
-		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
+		.addField(":smile: **FUN**", "d!say \n d!quiz \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
 		.addField(":wave: **WELCOME & GOODBYE**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support")
@@ -35,10 +37,10 @@ client.on("message", async message => {
 		message.channel.send("Help menu sent! If you don't get a DM with it try to type d!helpinchannel to show the help menu in your current channel!")
 	}
 
-	if(message.content === "d!helpinchannel") {
+	if(message.content.toLowerCase("d!helpinchannel")) {
 		const helpembed = new Discord.MessageEmbed()
 		.setTitle("HELP MENU")
-		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
+		.addField(":smile: **FUN**", "d!say \n d!quiz \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
 		.addField(":wave: **WELCOME & GOODBYE**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support")
@@ -65,23 +67,23 @@ client.on("message", async message => {
 
 	// INFORMATION COMMANDS
 
-	if(message.content === "d!creator") {
+	if(message.content.toLowerCase("d!creator")) {
 		message.channel.send("This bot is made by **Dindi**, you can visit his youtube channel on https://www.youtube.com/channel/UCjqnUsIVtXHGyCd3q_qvqYQ");
 	}
 
-	if(message.content === "d!discord") {
+	if(message.content.toLowerCase("d!discord")) {
 		message.channel.send("You can visit the official Dindi Bot disord server on https://discord.gg/NddGpqR");
 	}
 
-	if(message.content === "d!greetings support"){
-		message.channel.send("**These are the following problems that could be blocking Dindi Bot from sending welcome and goodbye messages:** \n \n \n **The bot doesn't have the permission to send or view messages in the 👋-welcome-goodbye channel** \n in this case you need to go to the channels permission settings and enable the following permissions for the Dindi Bot role: **Read Messages** and **Send Messages** \n \n **A bot got a new update and the channels reset** \n In this case you just need to reset the welcome/goodbye channel with d!welcomechannelsetup and d!goodbyechannelsetup commands \n \n If you everything on the list and the bot still isn't working type d!discord and join the Dindi Bot discord support server, you will get direct help from there.");
+	if(message.content.toLowerCase("d!greetings support")){
+		message.channel.send("**These are the following problems that could be blocking Dindi Bot from sending welcome and goodbye messages:** \n \n \n **The bot doesn't have the permission to send or view messages in the 👋-welcome-goodbye channel** \n in this case you need to go to the channels permission settings and enable the following permissions for the Dindi Bot role: **Read Messages** and **Send Messages** \n \n **The bot got a new update and the channels reset** \n In this case you just need to reset the welcome/goodbye channel with d!welcomechannelsetup and d!goodbyechannelsetup commands \n \n If you everything on the list and the bot still isn't working type d!discord and join the Dindi Bot discord support server, you will get direct help from there.");
 	}
 
-	if(message.content === "d!version") {
+	if(message.content.toLowerCase("d!version")) {
 		message.channel.send("The current version is **0.1.5**");
 	}
 
-	if(message.content === "d!invitelink") {
+	if(message.content.toLowerCase("d!invitelink")) {
 		message.member.send("You can invite Dindi Bot to your own server via the following link: \n https://discord.com/oauth2/authorize?client_id=722395531971657738&scope=bot&permissions=2146958847");
 	}
 
@@ -100,11 +102,33 @@ client.on("message", async message => {
 
 	// FUN COMMANDS
 
-	if(message.content === "d!randomnumber") {
+	// QUIZ
+	if(message.toLowerCase().startsWith("d!quiz")){
+		const quizresponce = await fetch("https://opentdb.com/api.php?amount=5&difficulty=easy&type=boolean");
+		const quizdata = await quizresponce.json();
+		var length = data.results.length;
+		var randomquiznumber = Math.floor(Math.random() * length);
+		var randomQuestion = data.results[randomquiznumber];
+		var question = randomQuestion.question;
+		var correctAnswer = randomQuestion.correct_answer;
+
+		message.channel.send("Answer with **true** or **false in the next 20 seconds. Your question is: \n" + question);
+		const filter = m => m.author.id === message.author.id;
+		message.channel.awaitMessages(filter, { maxMatches: 1, time: 20000, errors: ["time", "maxMatches"]});
+		const ans = answer.first();
+		if(ans.content.toLowerCase() === correctAnswer.toLowerCase()){
+			message.channel.send("Correct answer!");
+		}
+		else{
+			message.channel.send("Incorrect answer.");
+		}
+	}
+
+	if(message.content.toLowerCase("d!randomnumber")) {
 		message.channel.send(Math.floor(Math.random() * 1000000 + 1));
 	}
 
-	if(message.content === "d!howcoolami") {
+	if(message.content.toLowerCase("d!howcoolami")) {
 		coolness = (Math.floor(Math.random() * 100 + 1));
 		message.channel.send("You are " + coolness + "% cool");
 	}
@@ -121,7 +145,7 @@ client.on("message", async message => {
 	}
 
 	// 8ball
-	if(message.content.startsWith("d!8ball")){
+	if(message.content.toLowerCase().startsWith("d!8ball")){
 		var ListAnswers = ["Yes", "No", "Maybe", "I don't know", "Cool", "Maybe yes", "Maybe no", "Probably", "Probably not", "Ask again later"];
 		var answer = ListAnswers[Math.floor(Math.random() * ListAnswers.length)-1];
 		var arguments = message.content.split(" ").slice(1).join(" ");
@@ -159,7 +183,7 @@ client.on("message", async message => {
 
 	// WELCOME & GOODBYE SETUP
 
-	if(message.content.startsWith(`${prefix}welcomechannelsetup`))
+	if(message.content.toLowerCase().startsWith(`${prefix}welcomechannelsetup`))
 	{
 		if(!message.member.hasPermission(['MANAGE_CHANNELS']))return message.channel.send("You do not have the Manage Channels permission!");
 
@@ -173,7 +197,7 @@ client.on("message", async message => {
 		message.channel.send("#"+welcomeChannel + " now set as the welcome channel! If the bot isn't sending welcome messages do d!greetings support.");
 	}
 
-	if(message.content.startsWith(`${prefix}goodbyechannelsetup`))
+	if(message.content.toLowerCase().startsWith(`${prefix}goodbyechannelsetup`))
 	{
 		if(!message.member.hasPermission(['MANAGE_CHANNELS'])){
 			message.channel.send("You do not have the Manage Channels permission!");
@@ -190,7 +214,7 @@ client.on("message", async message => {
 	}
 
 	// LOGS CHANNEL SETUP
-	if(message.content.startsWith(`${prefix}logschannelsetup`))
+	if(message.content.toLowerCase().startsWith(`${prefix}logschannelsetup`))
 	{
 		if(!message.member.hasPermission(['MANAGE_CHANNELS']))return message.channel.send("You do not have the Manage Channels permission!");
 
@@ -207,7 +231,7 @@ client.on("message", async message => {
 	// BAN/KICK
 	mention = message.mentions.users.first();
 
-	if(message.content.startsWith (PREFIX + "ban")){
+	if(message.content.toLowerCase().startsWith (PREFIX + "ban")){
 		if(!message.member.hasPermission("BAN_MEMBERS")){
 			message.channel.send("You do not have the BAN_MEMBERS permission!")
 			return;
@@ -228,7 +252,7 @@ client.on("message", async message => {
 		logchannel.send(mention.username + " has been banned for " + reason);
 	}
 
-	if(message.content.startsWith (PREFIX + "kick")){
+	if(message.content.toLowerCase().startsWith (PREFIX + "kick")){
 		if(!message.member.hasPermission("KICK_MEMBERS")){
 			message.channel.send("You do not have the KICK_MEMBERS permission!")
 			return;
