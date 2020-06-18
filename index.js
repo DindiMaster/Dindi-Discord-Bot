@@ -6,6 +6,7 @@ const prefix = "d!"
 
 let { welcomeChannel } = require('./channel.json')
 let { goodbyeChannel } = require('./channel.json')
+let { logsChannel } = require('./channel.json')
 
 client.once("ready", () => {
 	console.log("I am online!");
@@ -173,6 +174,21 @@ client.on("message", async message => {
 		message.channel.send("#"+goodbyeChannel + " now set as the goodbye channel! If the bot isn't sending goodbye messages do d!greetings support.");
 	}
 
+	// LOGS CHANNEL SETUP
+	if(message.content.startsWith(`${prefix}logschannelsetup`))
+	{
+		if(!message.member.hasPermission(['MANAGE_CHANNELS']))return message.channel.send("You do not have the Manage Channels permission!");
+
+		let numberOfLine =    message.content.slice(prefix.lenght).split(" ");
+		let args = numberOfLine.slice(1);
+
+		let channelSet3 = args[0].replace("<#", "");
+		channelSet3 = channelSet3.replace(">", "");
+		logsChannel = channelSet3;
+		
+		message.channel.send("#"+logs + " now set as the logs channel! If the bot isn't sending log messages do d!greetings support.");
+	}
+
 	// BAN/KICK
 	mention = message.mentions.users.first();
 
@@ -191,7 +207,9 @@ client.on("message", async message => {
 		}
 		let reason = message.content.slice (PREFIX.length + mention.toString().length + 5);
 		message.channel.send(mention.username + " has been banned :hammer: for " + reason);
-			message.guild.member(mention).ban(reason);
+		const logchannel = member.guild.channels.cache.find(channel => channel.id === logsChannel);
+		if(!logchannel) return;
+		logchannel.send(mention.username + " has been banned for " + reason);
 	}
 
 	if(message.content.startsWith (PREFIX + "kick")){
@@ -209,7 +227,9 @@ client.on("message", async message => {
 		}
 		let reason = message.content.slice (PREFIX.length + mention.toString().length + 5);
 		message.channel.send(mention.username + " has been kicked :hammer: for " + reason);
-		message.guild.member(mention).kick(reason);
+		const logchannel = member.guild.channels.cache.find(channel => channel.id === logsChannel);
+		if(!logchannel) return;
+		logchannel.send(mention.username + " has been kicked for " + reason);
 	}
 
 	// POLLS

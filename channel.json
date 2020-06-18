@@ -1,4 +1,5 @@
 {
     "welcomeChannel" : "",
-    "goodbyeChannel" : ""
+    "goodbyeChannel" : "",
+    "logsChannel" : ""
 }
