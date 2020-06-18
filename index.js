@@ -73,7 +73,7 @@ client.on("message", async message => {
 	}
 
 	if(message.content === "d!servercount"){
-		var scount = client.shard.fetchClientValues('guilds.cache.size');
+		var scount = client.shard.fetch('guilds.cache.size');
 		message.channel.send("Dindi Bot is currently on " + scount + " servers!");
 	}
 
