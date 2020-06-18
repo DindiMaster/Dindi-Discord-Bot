@@ -103,7 +103,7 @@ client.on("message", async message => {
 	// FUN COMMANDS
 
 	// QUIZ
-	if(message.toLowerCase().startsWith("d!quiz")){
+	if(message.startsWith("d!quiz")){
 		const quizresponce = await fetch("https://opentdb.com/api.php?amount=5&difficulty=easy&type=boolean");
 		const quizdata = await quizresponce.json();
 		var length = data.results.length;
@@ -145,7 +145,7 @@ client.on("message", async message => {
 	}
 
 	// 8ball
-	if(message.content.toLowerCase().startsWith("d!8ball")){
+	if(message.content.startsWith("d!8ball")){
 		var ListAnswers = ["Yes", "No", "Maybe", "I don't know", "Cool", "Maybe yes", "Maybe no", "Probably", "Probably not", "Ask again later"];
 		var answer = ListAnswers[Math.floor(Math.random() * ListAnswers.length)-1];
 		var arguments = message.content.split(" ").slice(1).join(" ");
@@ -183,7 +183,7 @@ client.on("message", async message => {
 
 	// WELCOME & GOODBYE SETUP
 
-	if(message.content.toLowerCase().startsWith(`${prefix}welcomechannelsetup`))
+	if(message.content.startsWith(`${prefix}welcomechannelsetup`))
 	{
 		if(!message.member.hasPermission(['MANAGE_CHANNELS']))return message.channel.send("You do not have the Manage Channels permission!");
 
@@ -197,7 +197,7 @@ client.on("message", async message => {
 		message.channel.send("#"+welcomeChannel + " now set as the welcome channel! If the bot isn't sending welcome messages do d!greetings support.");
 	}
 
-	if(message.content.toLowerCase().startsWith(`${prefix}goodbyechannelsetup`))
+	if(message.content.startsWith(`${prefix}goodbyechannelsetup`))
 	{
 		if(!message.member.hasPermission(['MANAGE_CHANNELS'])){
 			message.channel.send("You do not have the Manage Channels permission!");
@@ -214,7 +214,7 @@ client.on("message", async message => {
 	}
 
 	// LOGS CHANNEL SETUP
-	if(message.content.toLowerCase().startsWith(`${prefix}logschannelsetup`))
+	if(message.content.startsWith(`${prefix}logschannelsetup`))
 	{
 		if(!message.member.hasPermission(['MANAGE_CHANNELS']))return message.channel.send("You do not have the Manage Channels permission!");
 
@@ -231,7 +231,7 @@ client.on("message", async message => {
 	// BAN/KICK
 	mention = message.mentions.users.first();
 
-	if(message.content.toLowerCase().startsWith (PREFIX + "ban")){
+	if(message.content.startsWith (PREFIX + "ban")){
 		if(!message.member.hasPermission("BAN_MEMBERS")){
 			message.channel.send("You do not have the BAN_MEMBERS permission!")
 			return;
@@ -252,7 +252,7 @@ client.on("message", async message => {
 		logchannel.send(mention.username + " has been banned for " + reason);
 	}
 
-	if(message.content.toLowerCase().startsWith (PREFIX + "kick")){
+	if(message.content.startsWith (PREFIX + "kick")){
 		if(!message.member.hasPermission("KICK_MEMBERS")){
 			message.channel.send("You do not have the KICK_MEMBERS permission!")
 			return;
