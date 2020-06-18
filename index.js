@@ -104,22 +104,7 @@ client.on("message", async message => {
 
 	// QUIZ
 	if(message.content === ("d!quiz")){
-		const quizresponce = await fetch("https://opentdb.com/api.php?amount=5&difficulty=easy&type=boolean");
-		const quizdata = await quizresponce.json();
-		var length = quizdata.results.length;
-		var randomquiznumber = Math.floor(Math.random() * length);
-		var randomQuestion = quizdata.results[randomquiznumber];
-		var question = randomQuestion.question;
-		var correctAnswer = await randomQuestion.correct_answer;
-
-		message.channel.send("Answer with **true** or **false** within the next 10 seconds. Your question is: \n" + question);
-		const filter = m => m.author.id === message.author.id;
-		if(message.content === correctAnswer()){
-			message.channel.send("Correct answer!");
-		}
-		else{
-			message.channel.send("Incorrect answer.");
-		}
+		message.channel.send("In the process of making...")
 	}
 
 	if(message.content === ("d!randomnumber")) {
