@@ -162,8 +162,10 @@ client.on("message", async message => {
 
 	if(message.content.startsWith(`${prefix}goodbyechannelsetup`))
 	{
-		if(!message.member.hasPermission(['MANAGE_CHANNELS']))return message.channel.send("You do not have the Manage Channels permission!");
-
+		if(!message.member.hasPermission(['MANAGE_CHANNELS'])){
+			message.channel.send("You do not have the Manage Channels permission!");
+			return;
+		}
 		let numberOfLine =    message.content.slice(prefix.lenght).split(" ");
 		let args = numberOfLine.slice(1);
 
