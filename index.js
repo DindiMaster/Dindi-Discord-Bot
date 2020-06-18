@@ -114,7 +114,7 @@ client.on("message", async message => {
 
 		message.channel.send("Answer with **true** or **false in the next 20 seconds. Your question is: \n" + question);
 		const filter = m => m.author.id === message.author.id;
-		message.channel.awaitMessages(filter, { maxMatches: 1, time: 20000, errors: ["time", "maxMatches"]});
+		const answer = message.channel.awaitMessages(filter, { maxMatches: 1, time: 20000, errors: ["time", "maxMatches"]});
 		const ans = answer.first();
 		if(ans.content.toLowerCase() === correctAnswer.toLowerCase()){
 			message.channel.send("Correct answer!");
