@@ -30,7 +30,7 @@ client.on("message", async message => {
 		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
-		.addField(":wave: **WELCOME & GOODBYE**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel)")
+		.addField(":wave: **WELCOME & GOODBYE**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support")
 		message.member.send(helpembed);
 		message.channel.send("Help menu sent! If you don't get a DM with it try to type d!helpinchannel to show the help menu in your current channel!")
 	}
@@ -41,7 +41,7 @@ client.on("message", async message => {
 		.addField(":smile: **FUN**", "d!say \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
-		.addField(":wave: **WELCOME & GOODBYE**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel)")
+		.addField(":wave: **WELCOME & GOODBYE**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support")
 		message.channel.send(helpembed);
 	}
 
@@ -74,7 +74,7 @@ client.on("message", async message => {
 	}
 
 	if(message.content === "d!greetings support"){
-		message.channel.send("**These are the following problems that could be blocking Dindi Bot from sending welcome and goodbye messages:** \n \n \n **The bot doesn't have the permission to send or view messages in the 👋-welcome-goodbye channel** \n in this case you need to go to the channels permission settings and enable the following permissions for the Dindi Bot role: **Read Messages** and **Send Messages** \n \n If you everything on the list and the bot still isn't working type d!discord and join the Dindi Bot discord support server, you will get direct help from there.");
+		message.channel.send("**These are the following problems that could be blocking Dindi Bot from sending welcome and goodbye messages:** \n \n \n **The bot doesn't have the permission to send or view messages in the 👋-welcome-goodbye channel** \n in this case you need to go to the channels permission settings and enable the following permissions for the Dindi Bot role: **Read Messages** and **Send Messages** \n \n **A bot got a new update and the channels reset** \n In this case you just need to reset the welcome/goodbye channel with d!welcomechannelsetup and d!goodbyechannelsetup commands \n \n If you everything on the list and the bot still isn't working type d!discord and join the Dindi Bot discord support server, you will get direct help from there.");
 	}
 
 	if(message.content === "d!version") {
@@ -84,6 +84,19 @@ client.on("message", async message => {
 	if(message.content === "d!invitelink") {
 		message.member.send("You can invite Dindi Bot to your own server via the following link: \n https://discord.com/oauth2/authorize?client_id=722395531971657738&scope=bot&permissions=2146958847");
 	}
+
+	// POLLS
+	if(message.content.startsWith("d!poll")){
+		if(!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("This command requires the permission: **Administrator**");
+		var pollargs = message.content.split(" ").slice(1).join(" ");
+		if(!pollargs[0]) return message.channel.send("Proper Usage: d!poll (question)");
+		message.delete();
+		message.channel.send(`Poll by ${message.author} \n Question: ` + pollargs + " \n React to answer.");
+		MessageEmbed.message.react("👍");
+		MessageEmbed.message.react("👎");
+
+	}
+
 
 	// FUN COMMANDS
 
@@ -234,11 +247,6 @@ client.on("message", async message => {
 		const logchannel = message.guild.channels.cache.find(channel => channel.id === logsChannel);
 		if(!logchannel) return;
 		logchannel.send(mention.username + " has been kicked for " + reason);
-	}
-
-	// POLLS
-	if(message.content.startsWith("d!poll")) {
-		message.channel.send("Poll command coming soon...")
 	}
 });
 
