@@ -190,7 +190,7 @@ client.on("message", async message => {
 	}
 
 	// BAN/KICK
-	mention = message.mentions.users.first();
+	mention = message.guild.members.catche.get(modargs[0]);
 
 	if(message.content.startsWith (PREFIX + "ban")){
 		if(!message.member.hasPermission("BAN_MEMBERS")){
