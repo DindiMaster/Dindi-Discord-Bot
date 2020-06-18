@@ -26,7 +26,7 @@ client.on("message", async message => {
 
 	// HELP COMMANDS
 
-	if(message.content.toLowerCase("d!help")) {
+	if(message.content === ("d!help")) {
 		const helpembed = new Discord.MessageEmbed()
 		.setTitle("HELP MENU")
 		.addField(":smile: **FUN**", "d!say \n d!quiz \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
@@ -37,7 +37,7 @@ client.on("message", async message => {
 		message.channel.send("Help menu sent! If you don't get a DM with it try to type d!helpinchannel to show the help menu in your current channel!")
 	}
 
-	if(message.content.toLowerCase("d!helpinchannel")) {
+	if(message.content === ("d!helpinchannel")) {
 		const helpembed = new Discord.MessageEmbed()
 		.setTitle("HELP MENU")
 		.addField(":smile: **FUN**", "d!say \n d!quiz \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
@@ -67,28 +67,28 @@ client.on("message", async message => {
 
 	// INFORMATION COMMANDS
 
-	if(message.content.toLowerCase("d!creator")) {
+	if(message.content === ("d!creator")) {
 		message.channel.send("This bot is made by **Dindi**, you can visit his youtube channel on https://www.youtube.com/channel/UCjqnUsIVtXHGyCd3q_qvqYQ");
 	}
 
-	if(message.content.toLowerCase("d!discord")) {
+	if(message.content === ("d!discord")) {
 		message.channel.send("You can visit the official Dindi Bot disord server on https://discord.gg/NddGpqR");
 	}
 
-	if(message.content.toLowerCase("d!greetings support")){
+	if(message.content === ("d!greetings support")){
 		message.channel.send("**These are the following problems that could be blocking Dindi Bot from sending welcome and goodbye messages:** \n \n \n **The bot doesn't have the permission to send or view messages in the 👋-welcome-goodbye channel** \n in this case you need to go to the channels permission settings and enable the following permissions for the Dindi Bot role: **Read Messages** and **Send Messages** \n \n **The bot got a new update and the channels reset** \n In this case you just need to reset the welcome/goodbye channel with d!welcomechannelsetup and d!goodbyechannelsetup commands \n \n If you everything on the list and the bot still isn't working type d!discord and join the Dindi Bot discord support server, you will get direct help from there.");
 	}
 
-	if(message.content.toLowerCase("d!version")) {
+	if(message.content === ("d!version")) {
 		message.channel.send("The current version is **0.1.5**");
 	}
 
-	if(message.content.toLowerCase("d!invitelink")) {
+	if(message.content === ("d!invitelink")) {
 		message.member.send("You can invite Dindi Bot to your own server via the following link: \n https://discord.com/oauth2/authorize?client_id=722395531971657738&scope=bot&permissions=2146958847");
 	}
 
 	// POLLS
-	if(message.content.startsWith("d!poll")){
+	if(message.content === ("d!poll")){
 		if(!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("This command requires the permission: **Administrator**");
 		var pollargs = message.content.split(" ").slice(1).join(" ");
 		if(!pollargs[0]) return message.channel.send("Proper Usage: d!poll (question)");
@@ -103,7 +103,7 @@ client.on("message", async message => {
 	// FUN COMMANDS
 
 	// QUIZ
-	if(message.startsWith("d!quiz")){
+	if(message.content === ("d!quiz")){
 		const quizresponce = await fetch("https://opentdb.com/api.php?amount=5&difficulty=easy&type=boolean");
 		const quizdata = await quizresponce.json();
 		var length = data.results.length;
@@ -124,11 +124,11 @@ client.on("message", async message => {
 		}
 	}
 
-	if(message.content.toLowerCase("d!randomnumber")) {
+	if(message.content === ("d!randomnumber")) {
 		message.channel.send(Math.floor(Math.random() * 1000000 + 1));
 	}
 
-	if(message.content.toLowerCase("d!howcoolami")) {
+	if(message.content === ("d!howcoolami")) {
 		coolness = (Math.floor(Math.random() * 100 + 1));
 		message.channel.send("You are " + coolness + "% cool");
 	}
