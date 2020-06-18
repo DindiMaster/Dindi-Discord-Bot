@@ -190,7 +190,7 @@ client.on("message", async message => {
 	}
 
 	// BAN/KICK
-	mention = message.guild.members.catche.get(modargs[0]);
+	mention = message.mentions.users.first();
 
 	if(message.content.startsWith (PREFIX + "ban")){
 		if(!message.member.hasPermission("BAN_MEMBERS")){
@@ -207,7 +207,7 @@ client.on("message", async message => {
 		}
 		let reason = message.content.slice (PREFIX.length + mention.toString().length + 5);
 		message.channel.send(mention.username + " has been banned :hammer: for " + reason);
-		mention.ban(reason);
+		message.guild.ban(mention);
 		const logchannel = message.guild.channels.cache.find(channel => channel.id === logsChannel);
 		if(!logchannel) return;
 		logchannel.send(mention.username + " has been banned for " + reason);
@@ -228,7 +228,7 @@ client.on("message", async message => {
 		}
 		let reason = message.content.slice (PREFIX.length + mention.toString().length + 5);
 		message.channel.send(mention.username + " has been kicked :hammer: for " + reason);
-		mention.kick(reason);
+		message.guild.kick(mention);
 		const logchannel = message.guild.channels.cache.find(channel => channel.id === logsChannel);
 		if(!logchannel) return;
 		logchannel.send(mention.username + " has been kicked for " + reason);
