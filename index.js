@@ -105,9 +105,9 @@ client.on("message", async message => {
 		var pollargs = message.content.split(" ").slice(1).join(" ");
 		if(!pollargs[0]) return message.channel.send("Proper Usage: d!poll (question)");
 		const pollembed = new Discord.MessageEmbed()
-		.setTitle(`Poll by ${message.author}`)
+		.setTitle(`Poll by ${message.author.tag}`)
 		.addField(`Question:`, `${pollargs}`)
-		.setFooter(`${message.author.displayAvatarURL}`)
+		.setFooter(`${message.author.avatarURL}`)
 		const pollmsg = await message.channel.send(pollembed);
 		pollmsg.react("👍");
 		pollmsg.react("👎");
