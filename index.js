@@ -2,6 +2,8 @@ const Discord = require('discord.js');
 const fetch = require("node-fetch");
 const client = new Discord.Client();
 
+const ms = require("ms");
+
 const bot = new Discord.Client();
 const prefix = "d!"
 
@@ -31,7 +33,7 @@ client.on("message", async message => {
 		.setTitle("HELP MENU")
 		.addField(":smile: **FUN**", "d!say \n d!quiz \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
-		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
+		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink \n d!uptime \n d!ping")
 		.addField(":wave: **WELCOME & GOODBYE**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support")
 		.addField(":e_mail: **LOGS**", "d!logschannelsetup #(channel)")
 		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website:***", "https://top.gg/bot/722395531971657738")
@@ -44,7 +46,7 @@ client.on("message", async message => {
 		.setTitle("HELP MENU")
 		.addField(":smile: **FUN**", "d!say \n d!quiz \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
-		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
+		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink \n d!uptime \n d!ping")
 		.addField(":wave: **WELCOME & GOODBYE**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support")
 		.addField(":e_mail: **LOGS**", "d!logschannelsetup #(channel)")
 		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website:***", "https://top.gg/bot/722395531971657738")
@@ -91,14 +93,28 @@ client.on("message", async message => {
 		message.channel.send("You can invite Dindi Bot to your own server via the following link: \n https://discord.com/oauth2/authorize?client_id=722395531971657738&scope=bot&permissions=2146958847");
 	}
 
+	if(message.content == ("d!uptime")){
+		message.channel.send(`My uptime is \`${ms(this.client.uptime, { long: true })}\``)
+	}
+
+	if(message.content == ("d!ping")){
+		const msg = await message.channel.send("Pinging...");
+		const latency = msg.createdTimestamp - message.createdTimestamp;
+		msg.edit(`My current latency is ${latency}ms`);
+	}
+
 	// POLLS
 	if(message.content === ("d!poll")){
 		if(!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("This command requires the permission: **Administrator**");
 		var pollargs = message.content.split(" ").slice(1).join(" ");
 		if(!pollargs[0]) return message.channel.send("Proper Usage: d!poll (question)");
-		message.channel.send(`Poll by ${message.author} \n Question:  **${pollargs}** \n \n react to answer`);
-		message.react("👍");
-		message.react("👎");
+		const pollembed = new Discord.MessageEmbed()
+		.setTitle(`Poll by ${message.author}`)
+		.addField(`Question:`, `${pollargs}`)
+		.setFooter(`${message.author.displayAvatarURL}`)
+		const pollmsg = await message.channel.send(pollembed);
+		pollmsg.react("👍");
+		pollmsg.react("👎");
 		message.delete();
 
 	}
