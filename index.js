@@ -34,7 +34,7 @@ client.on("message", async message => {
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
 		.addField(":wave: **WELCOME & GOODBYE**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support")
 		.addField(":e_mail: **LOGS**", "d!logschannelsetup #(channel)")
-		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website***", "https://top.gg/bot/722395531971657738")
+		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website:***", "https://top.gg/bot/722395531971657738")
 		message.member.send(helpembed);
 		message.channel.send("Help menu sent! If you don't get a DM with it try to type d!helpinchannel to show the help menu in your current channel!")
 	}
@@ -47,7 +47,7 @@ client.on("message", async message => {
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
 		.addField(":wave: **WELCOME & GOODBYE**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support")
 		.addField(":e_mail: **LOGS**", "d!logschannelsetup #(channel)")
-		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website***", "https://top.gg/bot/722395531971657738")
+		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website:***", "https://top.gg/bot/722395531971657738")
 		message.channel.send(helpembed);
 	}
 
@@ -84,11 +84,11 @@ client.on("message", async message => {
 	}
 
 	if(message.content === ("d!version")) {
-		message.channel.send("The current version is **0.1.5**");
+		message.channel.send("The current version is **0.1.6**");
 	}
 
 	if(message.content === ("d!invite")) {
-		message.member.send("You can invite Dindi Bot to your own server via the following link: \n https://discord.com/oauth2/authorize?client_id=722395531971657738&scope=bot&permissions=2146958847");
+		message.channel.send("You can invite Dindi Bot to your own server via the following link: \n https://discord.com/oauth2/authorize?client_id=722395531971657738&scope=bot&permissions=2146958847");
 	}
 
 	// POLLS
@@ -258,6 +258,17 @@ client.on("message", async message => {
 		const logchannel = message.guild.channels.cache.find(channel => channel.id === logsChannel);
 		if(!logchannel) return;
 		logchannel.send(mention.username + " has been kicked for " + reason);
+	}
+
+	// BAD WORDS
+	if(message.content.includes("nigga") || message.content.includes("niggar") || message.content.includes("ni gga") || message.content.includes("ni ggar")){
+		if(bot.hasPermission("MANAGE_MESSAGES")){
+			message.delete();
+			message.channel.send("Hey! Watch your language you racist 😠");
+		}
+		else{
+			message.channel.send("I do not have the Manage Messages permission");
+		}
 	}
 });
 
