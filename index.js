@@ -24,6 +24,7 @@ client.on("ready", () => {
 
 client.on("message", async message => {
 	const bot = new Discord.Client();
+	if(!client.hasPermission("EMBED_LINKS")) return message.channel.send("Please give Dindi Bot the Embed Links permission!");
 	if(message.author.bot) return;
 
 	// HELP COMMANDS
@@ -86,7 +87,7 @@ client.on("message", async message => {
 	}
 
 	if(message.content === ("d!version")) {
-		message.channel.send("The current version is **0.1.6**");
+		message.channel.send("The current version is **0.1.7**");
 	}
 
 	if(message.content === ("d!invite")) {
