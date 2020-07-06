@@ -100,7 +100,7 @@ client.on("message", async message => {
 	}
 
 	// POLLS
-	if(message.content === ("d!poll")){
+	if(message.content.startsWith("d!poll")){
 		if(!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("This command requires the permission: **Administrator**");
 		var pollargs = message.content.split(" ").slice(1).join(" ");
 		if(!pollargs[0]) return message.channel.send("Proper Usage: d!poll (question)");
