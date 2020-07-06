@@ -33,6 +33,8 @@ client.on("message", async message => {
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
 		.addField(":wave: **WELCOME & GOODBYE**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support")
+		.addField(":e_mail: **LOGS**", "d!logschannelsetup #(channel)")
+		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website***", "https://top.gg/bot/722395531971657738")
 		message.member.send(helpembed);
 		message.channel.send("Help menu sent! If you don't get a DM with it try to type d!helpinchannel to show the help menu in your current channel!")
 	}
@@ -44,6 +46,8 @@ client.on("message", async message => {
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink")
 		.addField(":wave: **WELCOME & GOODBYE**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support")
+		.addField(":e_mail: **LOGS**", "d!logschannelsetup #(channel)")
+		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website***", "https://top.gg/bot/722395531971657738")
 		message.channel.send(helpembed);
 	}
 
@@ -71,7 +75,7 @@ client.on("message", async message => {
 		message.channel.send("This bot is made by **Dindi**, you can visit his youtube channel on https://www.youtube.com/channel/UCjqnUsIVtXHGyCd3q_qvqYQ");
 	}
 
-	if(message.content === ("d!discord")) {
+	if(message.content === ("d!support")) {
 		message.channel.send("You can visit the official Dindi Bot disord server on https://discord.gg/NddGpqR");
 	}
 
@@ -83,7 +87,7 @@ client.on("message", async message => {
 		message.channel.send("The current version is **0.1.5**");
 	}
 
-	if(message.content === ("d!invitelink")) {
+	if(message.content === ("d!invite")) {
 		message.member.send("You can invite Dindi Bot to your own server via the following link: \n https://discord.com/oauth2/authorize?client_id=722395531971657738&scope=bot&permissions=2146958847");
 	}
 
