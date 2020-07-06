@@ -107,7 +107,8 @@ client.on("message", async message => {
 		const pollembed = new Discord.MessageEmbed()
 		.setTitle(`Poll by ${message.author.tag}`)
 		.addField(`Question:`, `${pollargs}`)
-		.setFooter(`${message.author.avatarURL}`)
+		.setImage(message.author.avatar)
+		.setFooter(`React to choose!`)
 		const pollmsg = await message.channel.send(pollembed);
 		pollmsg.react("👍");
 		pollmsg.react("👎");
