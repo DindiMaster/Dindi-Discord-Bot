@@ -262,13 +262,8 @@ client.on("message", async message => {
 
 	// BAD WORDS
 	if(message.content.includes("nigga") || message.content.includes("niggar") || message.content.includes("ni gga") || message.content.includes("ni ggar")){
-		if(bot.hasPermission("MANAGE_MESSAGES")){
-			message.delete();
-			message.channel.send("Hey! Watch your language you racist 😠");
-		}
-		else{
-			message.channel.send("I do not have the Manage Messages permission");
-		}
+		message.delete();
+		message.channel.send("Hey! Watch your language you racist 😠");
 	}
 });
 
