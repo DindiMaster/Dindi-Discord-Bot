@@ -261,7 +261,7 @@ client.on("message", async message => {
 	}
 
 	// BAD WORDS
-	if(message.content.includes("nigga") || message.content.includes("niggar") || message.content.includes("ni gga") || message.content.includes("ni ggar")){
+	if(message.content.includes("nigga") || message.content.includes("niggar") || message.content.includes("ni gga") || message.content.includes("ni ggar") || message.content.includes("Nigga") || message.content.includes("Niggar")){
 		message.delete();
 		message.channel.send("Hey! Watch your language you racist 😠");
 	}
