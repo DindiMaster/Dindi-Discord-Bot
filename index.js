@@ -86,7 +86,7 @@ client.on("message", async message => {
 	}
 
 	if(message.content === ("d!version")) {
-		message.channel.send("The current version is **0.1.7**");
+		message.channel.send("The current version is **0.1.6**");
 	}
 
 	if(message.content === ("d!invite")) {
@@ -101,10 +101,14 @@ client.on("message", async message => {
 
 	// POLLS
 	if(message.content.startsWith("d!poll")){
-		if(!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("This command requires the permission: **Administrator**");
+		if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send("This command requires the permission: **Manage Messages**");
 		var pollargs = message.content.split(" ").slice(1).join(" ");
 		if(!pollargs[0]) return message.channel.send("Proper Usage: d!poll (question)");
-		const pollmsg = await message.channel.send(`Poll by ${message.author} \n Question: \n ${pollargs}`);
+		const pollembed = new Discord.MessageEmbed()
+		.setTitle(`Poll by ${message.author}`)
+		.addField(`Question:`, `${pollargs}`)
+		.setFooter(`${message.author.displayAvatarURL}`)
+		const pollmsg = await message.channel.send(pollembed);
 		pollmsg.react("👍");
 		pollmsg.react("👎");
 		message.delete();
