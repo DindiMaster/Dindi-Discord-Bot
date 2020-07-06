@@ -24,7 +24,6 @@ client.on("ready", () => {
 
 client.on("message", async message => {
 	const bot = new Discord.Client();
-	if(!client.hasPermission("EMBED_LINKS")) return message.channel.send("Please give Dindi Bot the Embed Links permission!");
 	if(message.author.bot) return;
 
 	// HELP COMMANDS
