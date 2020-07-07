@@ -171,10 +171,10 @@ client.on("message", async message => {
 	// Say Command
 	if(message.content.startsWith(`${prefix}say`)){
 		if(!message.member.hasPermission('MANAGE_MESSAGES')){
-			message.channel.send("You do not have the Manage Messages permission!")
+			message.channel.send("You do not have the Manage Messages permission!");
 			return;
 		}
-		const sayargs = message.content.slice(prefix.lenght).split(" ");
+		const sayargs = message.content.split(" ");
 		message.channel.send(sayargs);
 	}
 
