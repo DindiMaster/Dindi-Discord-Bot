@@ -141,7 +141,7 @@ client.on("message", async message => {
 		if(!vc) return message.channel.send("You are not in a Voice Channel!");
 		if(!vc.channel.permissionsFor(client.user).has('CONNECT') || !vc.channel.permissionsFor(client.user).has('SPEAK')) return message.channel.send("I do not have the permission to Connect or Speak in this channel!");
 		
-		let songInfo = await ytdl.getInfo(url);
+		let songInfo = await ytdl.getInfo(musicargs);
 		let song = {
 			title: songInfo.title,
 			url: songInfo.video_url
