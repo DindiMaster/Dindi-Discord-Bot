@@ -43,12 +43,6 @@ client.on("message", async message => {
 	}
 
 	if(message.content === ("d!helpinchannel")) {
-		if(!message.guild.me.permissionsIn(message.member.channel) === 'EMBED_LINKS'){
-			console.log("I don't have this permission");
-			channel.message.send("I need the Embed Links permission to do this!");
-			return;
-		}
-		console.log("I have the permission");
 		const helpembed = new Discord.MessageEmbed()
 		.setTitle("HELP MENU")
 		.addField(":smile: **FUN**", "d!say \n d!quiz \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
@@ -58,7 +52,10 @@ client.on("message", async message => {
 		.addField(":e_mail: **LOGS**", "d!logschannelsetup #(channel)")
 		.addField("**Dindi Bot needs the following permissions for all the commands to work properly:**", "Read Messages \n Send Messages \n Embed Links \n Manage Messages \n Add Reactions \n Read Message History \n Ban Members \n Kick Members")
 		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website:***", "https://top.gg/bot/722395531971657738")
-		message.channel.send(helpembed);
+		if(!message.guild.me.permissionsIn(message.channel) === 'EMBED_LINKS'){
+            channel.message.send("I need the Embed Links permission to do this!");
+            return;
+        } else { message.channel.send(helpembed); }
 	}
 
 	// CONVERSATION COMMANDS
