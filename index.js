@@ -31,11 +31,10 @@ client.on("message", async message => {
 	if(message.content === (prefix + "help")) {
 		const helpembed = new Discord.MessageEmbed()
 		.setTitle("HELP MENU")
-		.addField(":smile: **FUN**", "d!say \n d!quiz \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
+		.addField(":smile: **FUN**", "d!say \n d!quiz \n d!8ball (question) \n d!randomnumber \n d!stats \n d!howcoolis (@user) \n d!react (message)")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink \n d!ping")
-		.addField(":wave: **WELCOME & GOODBYE**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support")
-		.addField(":e_mail: **LOGS**", "d!logschannelsetup #(channel)")
+		.addField(":e_mail: **Setup**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support \n d!logschannelsetup #(channel)")
 		.addField("**Dindi Bot needs the following permissions for all the commands to work properly:**", "Read Messages \n Send Messages \n Embed Links \n Manage Messages \n Add Reactions \n Read Message History \n Ban Members \n Kick Members")
 		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website:***", "https://top.gg/bot/722395531971657738")
 		message.member.send(helpembed).catch(error =>{
@@ -51,8 +50,7 @@ client.on("message", async message => {
 		.addField(":smile: **FUN**", "d!say \n d!quiz \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink \n d!ping")
-		.addField(":wave: **WELCOME & GOODBYE**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support")
-		.addField(":e_mail: **LOGS**", "d!logschannelsetup #(channel)")
+		.addField(":e_mail: **Setup**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support \n d!logschannelsetup #(channel)")
 		.addField("**Dindi Bot needs the following permissions for all the commands to work properly:**", "Read Messages \n Send Messages \n Embed Links \n Manage Messages \n Add Reactions \n Read Message History \n Ban Members \n Kick Members")
 		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website:***", "https://top.gg/bot/722395531971657738")
 		message.channel.send(helpembed).catch(error =>{
@@ -111,7 +109,8 @@ client.on("message", async message => {
 		var pollargs = message.content.split(" ").slice(1).join(" ");
 		if(!pollargs[0]) return message.channel.send("Proper Usage: d!poll (question)");
 		const pollembed = new Discord.MessageEmbed()
-		.setTitle(`Poll by ${message.author.tag}`)
+		.setTitle(`Poll by ${message.author.username}`)
+		.setThumbnail(`${message.author.displayAvatarURL()}`)
 		.addField(`Question:`, `${pollargs}`)
 		.setFooter("React to vote!")
 		const pollmsg = await message.channel.send(pollembed).catch(error =>{
@@ -143,12 +142,12 @@ client.on("message", async message => {
 		var ppsizes= ["8=D", "8==D", "8===D", "8====D", "8=====D", "8======D", "8=======D", "8========D", "8=========D", "8==========D"]
 		ppsize = ppsizes[Math.floor(Math.random() * ppsizes.length)-1];
 		const statsembed = new Discord.MessageEmbed()
-		.setTitle(`Stats for ${message.author}`)
+		.setTitle(`Stats for ${message.author.username}`)
 		.setThumbnail(`${message.author.displayAvatarURL()}`)
-		.addField("Coolness:", coolness)
-		.addField("Smartness:", smartness)
-		.addField("Logic:", logic)
-		.addField("Dumbness:", dumbness)
+		.addField("Coolness:", `${coolness}%`)
+		.addField("Smartness:", `${smartness}%`)
+		.addField("Logic:", `${logic}%`)
+		.addField("Dumbness:", `${dumbness}%`)
 		.addField("Favorite Number:", favnumber)
 		.addField("PP Size:", ppsize)
 		message.channel.send(statsembed).catch(error =>{
