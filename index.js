@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const fetch = require("node-fetch");
 const client = new Discord.Client();
+const randomPuppy = require("random-puppy")
 
 const ms = require("ms");
 
@@ -151,6 +152,20 @@ client.on("message", async message => {
 		.addField("Favorite Number:", favnumber)
 		.addField("PP Size:", ppsize)
 		message.channel.send(statsembed).catch(error =>{
+			message.channel.send("I need the Embed Links permission to do this.")
+		});
+	}
+
+	if(message.content.startsWith(prefix + "meme")){
+		const subReddits = ["meme", "dankmeme", "me_irl"];
+		const randomSubreddit = subReddits[Math.floor(Math.random() * subReddits.length)];
+		const memeImg = await randomPuppy(random);
+		const memeEmbed = new Discord.MessageEmbed()
+		.setTitle(`From /r/${random}`)
+		.setURL(`http://reddit.com/${random}`)
+		.setImage(memeImg)
+
+		message.channel.send(memeEmbed).catch(error =>{
 			message.channel.send("I need the Embed Links permission to do this.")
 		});
 	}
