@@ -38,8 +38,11 @@ client.on("message", async message => {
 		.addField(":e_mail: **LOGS**", "d!logschannelsetup #(channel)")
 		.addField("**Dindi Bot needs the following permissions for all the commands to work properly:**", "Read Messages \n Send Messages \n Embed Links \n Manage Messages \n Add Reactions \n Read Message History \n Ban Members \n Kick Members")
 		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website:***", "https://top.gg/bot/722395531971657738")
-		message.member.send(helpembed);
-		message.channel.send("Help menu sent! If you don't get a DM with it try to type d!helpinchannel to show the help menu in your current channel!")
+		message.member.send(helpembed).catch(error =>{
+			message.channel.send("I can't DM you, please use d!helpinchannel instead.")
+			return;
+		});
+		message.channel.send("Help menu sent!")
 	}
 
 	if(message.content === ("d!helpinchannel")) {
@@ -90,7 +93,7 @@ client.on("message", async message => {
 	}
 
 	if(message.content === ("d!version")) {
-		message.channel.send("The current version is **0.1.7**");
+		message.channel.send("The current version is **0.1.8**");
 	}
 
 	if(message.content === ("d!invite")) {
@@ -112,7 +115,10 @@ client.on("message", async message => {
 		.setTitle(`Poll by ${message.author.tag}`)
 		.addField(`Question:`, `${pollargs}`)
 		.setFooter("React to vote!")
-		const pollmsg = await message.channel.send(pollembed);
+		const pollmsg = await message.channel.send(pollembed).catch(error =>{
+			message.channel.send("I need the Embed Links permission to do this.")
+			return;
+		});
 		pollmsg.react("👍");
 		pollmsg.react("👎");
 		message.delete();
@@ -157,7 +163,9 @@ client.on("message", async message => {
 		.setTitle("8Ball")
 		.addField("Your question: ", arguments)
 		.addField("My answer: ", answer)
-		message.channel.send(ballembed);
+		message.channel.send(ballembed).catch(error =>{
+			message.channel.send("I need the Embed Links permission to do this.")
+		});
 	}
 
 	// Say Command
@@ -165,7 +173,12 @@ client.on("message", async message => {
 	const PREFIX = "d!";
 	const args = message.content.substring(PREFIX.length).split(" ");
 	const args2 = message.content.slice(sayPrefix.length).trim().split();
-	if(args.content === "@everyone" || args.content === "@here"){
+	if(!message.author.hasPermission('MANAGE_MESSAGES')){
+		message.channel.send("You do not have the Manage Messages permission!")
+		return;
+	}
+	if(args.content.includes === "@everyone" || args.content === "@here"){
+		message.channel.send("I wont ping everyone 😠")
 		return;
 	}
 	if(message.author.bot){
@@ -249,7 +262,10 @@ client.on("message", async message => {
 		}
 		let reason = message.content.slice (PREFIX.length + mention.toString().length + 5);
 		message.channel.send(mention.username + " has been banned :hammer: for " + reason);
-		message.guild.member(mention).ban(reason);
+		message.guild.member(mention).ban(reason).catch(error =>{
+			message.channel.send("I need the Ban Members permission to do this.")
+			return;
+		});
 		const logchannel = message.guild.channels.cache.find(channel => channel.id === logsChannel);
 		if(!logchannel) return;
 		logchannel.send(mention.username + " has been banned for " + reason);
@@ -270,7 +286,9 @@ client.on("message", async message => {
 		}
 		let reason = message.content.slice (PREFIX.length + mention.toString().length + 5);
 		message.channel.send(mention.username + " has been kicked :hammer: for " + reason);
-		message.guild.member(mention).kick(reason);
+		message.guild.member(mention).kick(reason).catch(error =>{
+			message.channel.send("I need the Kick Members permission to do this.")
+		});
 		const logchannel = message.guild.channels.cache.find(channel => channel.id === logsChannel);
 		if(!logchannel) return;
 		logchannel.send(mention.username + " has been kicked for " + reason);
@@ -278,7 +296,10 @@ client.on("message", async message => {
 
 	// BAD WORDS
 	if(message.content.includes("nigga") || message.content.includes("niggar") || message.content.includes("ni gga") || message.content.includes("ni ggar") || message.content.includes("Nigga") || message.content.includes("Niggar")){
-		message.delete();
+		message.delete().catch(error =>{
+			message.channel.send("I need the Manage Messages permission to stop racist messages.")
+			return;
+		});
 		message.channel.send("Hey! Watch your language you racist 😠");
 	}
 });
@@ -287,12 +308,16 @@ client.on("guildMemberAdd", member => {
 	const channel = member.guild.channels.cache.find(channel => channel.id === welcomeChannel);
 	if(!channel) return;
 
-	channel.send(`${member} just joined! Give them a warm welcome :wave:`);
+	channel.send(`${member} just joined! Give them a warm welcome :wave:`).catch(error =>{
+		return;
+	});
 });
 
 client.on("guildMemberRemove", member => {
 	const channel = member.guild.channels.cache.find(channel => channel.id === goodbyeChannel);
 	if(!channel) return;
 
-	channel.send(`${member} just left :cry:`);
+	channel.send(`${member} just left :cry:`).catch(error =>{
+		return;
+	});
 });
