@@ -43,7 +43,10 @@ client.on("message", async message => {
 	}
 
 	if(message.content === ("d!helpinchannel")) {
-		if(!message.guild.me.hasPermission("EMBED_LINKS"))return channel.message.send("I need the Embed Links permission to do this!");
+		if(!message.guild.me.hasPermission("EMBED_LINKS")){
+			channel.message.send("I need the Embed Links permission to do this!");
+			return;
+		}
 		const helpembed = new Discord.MessageEmbed()
 		.setTitle("HELP MENU")
 		.addField(":smile: **FUN**", "d!say \n d!quiz \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
