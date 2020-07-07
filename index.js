@@ -28,7 +28,7 @@ client.on("message", async message => {
 
 	// HELP COMMANDS
 
-	if(message.content === ("d!help")) {
+	if(message.content === (prefix + "help")) {
 		const helpembed = new Discord.MessageEmbed()
 		.setTitle("HELP MENU")
 		.addField(":smile: **FUN**", "d!say \n d!quiz \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
@@ -45,7 +45,7 @@ client.on("message", async message => {
 		message.channel.send("Help menu sent!")
 	}
 
-	if(message.content === ("d!helpinchannel")) {
+	if(message.content === (prefix + "helpinchannel")) {
 		const helpembed = new Discord.MessageEmbed()
 		.setTitle("HELP MENU")
 		.addField(":smile: **FUN**", "d!say \n d!quiz \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
@@ -80,34 +80,34 @@ client.on("message", async message => {
 
 	// INFORMATION COMMANDS
 
-	if(message.content === ("d!creator")) {
+	if(message.content === (prefix + "creator")) {
 		message.channel.send("This bot is made by **Dindi**, you can visit his youtube channel on https://www.youtube.com/channel/UCjqnUsIVtXHGyCd3q_qvqYQ");
 	}
 
-	if(message.content === ("d!support")) {
+	if(message.content === (prefix + "support")) {
 		message.channel.send("You can visit the official Dindi Bot disord server on https://discord.gg/NddGpqR");
 	}
 
-	if(message.content === ("d!greetings support")){
+	if(message.content === (prefix + "greetings support")){
 		message.channel.send("**These are the following problems that could be blocking Dindi Bot from sending welcome and goodbye messages:** \n \n \n **The bot doesn't have the permission to send or view messages in the 👋-welcome-goodbye channel** \n in this case you need to go to the channels permission settings and enable the following permissions for the Dindi Bot role: **Read Messages** and **Send Messages** \n \n **The bot got a new update and the channels reset** \n In this case you just need to reset the welcome/goodbye channel with d!welcomechannelsetup and d!goodbyechannelsetup commands \n \n If you everything on the list and the bot still isn't working type d!discord and join the Dindi Bot discord support server, you will get direct help from there.");
 	}
 
-	if(message.content === ("d!version")) {
+	if(message.content === (prefix + "version")) {
 		message.channel.send("The current version is **0.1.8**");
 	}
 
-	if(message.content === ("d!invite")) {
+	if(message.content === (prefix + "invite")) {
 		message.channel.send("You can invite Dindi Bot to your own server via the following link: \n https://discord.com/oauth2/authorize?client_id=722395531971657738&scope=bot&permissions=2146958847");
 	}
 
-	if(message.content == ("d!ping")){
+	if(message.content == (prefix + "ping")){
 		const msg = await message.channel.send("Pinging...");
 		const latency = msg.createdTimestamp - message.createdTimestamp;
 		msg.edit(`My current latency is ${latency}ms`);
 	}
 
 	// POLLS
-	if(message.content.startsWith("d!poll")){
+	if(message.content.startsWith(prefix + "poll")){
 		if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send("This command requires the permission: **Manage Messages**");
 		var pollargs = message.content.split(" ").slice(1).join(" ");
 		if(!pollargs[0]) return message.channel.send("Proper Usage: d!poll (question)");
@@ -129,32 +129,32 @@ client.on("message", async message => {
 	// FUN COMMANDS
 
 	// QUIZ
-	if(message.content === ("d!quiz")){
+	if(message.content === (prefix + "quiz")){
 		message.channel.send("In the process of making...")
 	}
 
-	if(message.content === ("d!randomnumber")) {
+	if(message.content === (prefix + "randomnumber")) {
 		message.channel.send(Math.floor(Math.random() * 1000000 + 1));
 	}
 
-	if(message.content === ("d!howcoolami")) {
+	if(message.content === (prefix + "howcoolami")) {
 		coolness = (Math.floor(Math.random() * 100 + 1));
 		message.channel.send("You are " + coolness + "% cool");
 	}
 
-	if(message.content.startsWith("d!howcoolis")) {
+	if(message.content.startsWith(preifx + "howcoolis")) {
 		coolness = (Math.floor(Math.random() * 100 + 1));
 		message.channel.send("They are " + coolness + "% cool");
 	}
 
-	if(message.content.startsWith("d!react")){
+	if(message.content.startsWith(prefix + "react")){
 		var reactions = ["😄", "😎", "🤡", "😂", "👍", "👎", "😢", "👏", "⭐", "🤦‍♂️"];
 		var reaction = reactions[Math.floor(Math.random() * reactions.length)-1];
 		message.react(reaction);
 	}
 
 	// 8ball
-	if(message.content.startsWith("d!8ball")){
+	if(message.content.startsWith(prefix + "8ball")){
 		var ListAnswers = ["Yes", "No", "Maybe", "I don't know", "Cool", "Maybe yes", "Maybe no", "Probably", "Probably not", "Ask again later"];
 		var answer = ListAnswers[Math.floor(Math.random() * ListAnswers.length)-1];
 		var arguments = message.content.split(" ").slice(1).join(" ");
@@ -228,7 +228,7 @@ client.on("message", async message => {
 	// BAN/KICK
 	mention = message.mentions.users.first();
 
-	if(message.content.startsWith (PREFIX + "ban")){
+	if(message.content.startsWith (prefix + "ban")){
 		if(!message.member.hasPermission("BAN_MEMBERS")){
 			message.channel.send("You do not have the BAN_MEMBERS permission!")
 			return;
@@ -252,7 +252,7 @@ client.on("message", async message => {
 		logchannel.send(mention.username + " has been banned for " + reason);
 	}
 
-	if(message.content.startsWith (PREFIX + "kick")){
+	if(message.content.startsWith (prefix + "kick")){
 		if(!message.member.hasPermission("KICK_MEMBERS")){
 			message.channel.send("You do not have the KICK_MEMBERS permission!")
 			return;
