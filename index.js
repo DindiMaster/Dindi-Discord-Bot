@@ -52,10 +52,9 @@ client.on("message", async message => {
 		.addField(":e_mail: **LOGS**", "d!logschannelsetup #(channel)")
 		.addField("**Dindi Bot needs the following permissions for all the commands to work properly:**", "Read Messages \n Send Messages \n Embed Links \n Manage Messages \n Add Reactions \n Read Message History \n Ban Members \n Kick Members")
 		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website:***", "https://top.gg/bot/722395531971657738")
-		if(!message.guild.me.permissionsIn(message.channel) === 'EMBED_LINKS'){
-            channel.message.send("I need the Embed Links permission to do this!");
-            return;
-        } else { message.channel.send(helpembed); }
+		message.channel.send(helpembed).catch(error =>{
+			message.channel.send("I need the Embed Links permission to do this.")
+		});
 	}
 
 	// CONVERSATION COMMANDS
