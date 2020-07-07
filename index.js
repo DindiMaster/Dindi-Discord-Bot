@@ -174,7 +174,7 @@ client.on("message", async message => {
 			message.channel.send("You do not have the Manage Messages permission!")
 			return;
 		}
-		const args = message.content.substring(PREFIX.length).split(" ");
+		message.content.slice(prefix.lenght).split(" ");
 		message.channel.send(args);
 	}
 
