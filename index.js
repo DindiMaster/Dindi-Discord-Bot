@@ -169,24 +169,13 @@ client.on("message", async message => {
 	}
 
 	// Say Command
-	const sayPrefix = "d!say";
-	const PREFIX = "d!";
-	const args = message.content.substring(PREFIX.length).split(" ");
-	const args2 = message.content.slice(sayPrefix.length).trim().split();
-	if(message.author.bot){
-		return;
-	}
-
-	switch(args[0]) {
-	case "say":
-		if(!message.client.bot) {
-			message.channel.send(args2);
+	if(message.content.startsWith("d!say")){
+		if(!message.member.hasPermission('MANAGE_MESSAGES')){
+			message.channel.send("You do not have the Manage Messages permission!")
+			return;
 		}
-
-		message.delete();
-		break;
-
-
+		const args = message.content.substring(PREFIX.length).split(" ");
+		message.channel.send(args);
 	}
 
 	// WELCOME & GOODBYE SETUP
