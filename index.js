@@ -258,11 +258,11 @@ client.on("message", async message => {
 			message.channel.send("You cannot ban this person.")
 			return;
 		}
+		let reason = message.content.slice (prefix.length + mention.toString().length + 5);
 		message.guild.member(mention).ban(reason).catch(error =>{
 			message.channel.send("I need the Ban Members permission to do this.")
 			return;
 		});
-		let reason = message.content.slice (prefix.length + mention.toString().length + 5);
 		message.channel.send(mention.username + " has been banned :hammer: for " + reason);
 		const logchannel = message.guild.channels.cache.find(channel => channel.id === logsChannel);
 		if(!logchannel) return;
