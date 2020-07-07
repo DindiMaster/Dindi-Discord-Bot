@@ -79,7 +79,6 @@ client.on("message", async message => {
 	}
 
 	// INFORMATION COMMANDS
-
 	if(message.content === (prefix + "creator")) {
 		message.channel.send("This bot is made by **Dindi**, you can visit his youtube channel on https://www.youtube.com/channel/UCjqnUsIVtXHGyCd3q_qvqYQ");
 	}
@@ -133,13 +132,32 @@ client.on("message", async message => {
 		message.channel.send("In the process of making...")
 	}
 
-	if(message.content === (prefix + "randomnumber")) {
-		message.channel.send(Math.floor(Math.random() * 1000000 + 1));
+	if(message.content === (prefix + "stats")){
+		coolness = (Math.floor(Math.random() * 100 + 1));
+		smartness = (Math.floor(Math.random() * 100 + 1));
+		logic = (Math.floor(Math.random() * 100 + 1));
+		dumbness = (Math.floor(Math.random() * 100 + 1));
+		looks = (Math.floor(Math.random() * 100 + 1));
+		var favnumbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+		favnumber = favnumbers[Math.floor(Math.random() * favnumbers.length)-1];
+		var ppsizes= ["8=D", "8==D", "8===D", "8====D", "8=====D", "8======D", "8=======D", "8========D", "8=========D", "8==========D"]
+		ppsize = ppsizes[Math.floor(Math.random() * ppsizes.length)-1];
+		const statsembed = new Discord.MessageEmbed()
+		.setTitle(`Stats for ${message.author}`)
+		.setThumbnail(`${message.author.displayAvatarURL()}`)
+		.addField("Coolness:", coolness)
+		.addField("Smartness:", smartness)
+		.addField("Logic:", logic)
+		.addField("Dumbness:", dumbness)
+		.addField("Favorite Number:", favnumber)
+		.addField("PP Size:", ppsize)
+		message.channel.send(statsembed).catch(error =>{
+			message.channel.send("I need the Embed Links permission to do this.")
+		});
 	}
 
-	if(message.content === (prefix + "howcoolami")) {
-		coolness = (Math.floor(Math.random() * 100 + 1));
-		message.channel.send("You are " + coolness + "% cool");
+	if(message.content === (prefix + "randomnumber")) {
+		message.channel.send(Math.floor(Math.random() * 1000000 + 1));
 	}
 
 	if(message.content.startsWith(prefix + "howcoolis")) {
