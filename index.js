@@ -258,12 +258,12 @@ client.on("message", async message => {
 			message.channel.send("You cannot ban this person.")
 			return;
 		}
-		let reason = message.content.slice (prefix.length + mention.toString().length + 5);
-		message.channel.send(mention.username + " has been banned :hammer: for " + reason);
 		message.guild.member(mention).ban(reason).catch(error =>{
 			message.channel.send("I need the Ban Members permission to do this.")
 			return;
 		});
+		let reason = message.content.slice (prefix.length + mention.toString().length + 5);
+		message.channel.send(mention.username + " has been banned :hammer: for " + reason);
 		const logchannel = message.guild.channels.cache.find(channel => channel.id === logsChannel);
 		if(!logchannel) return;
 		logchannel.send(mention.username + " has been banned for " + reason);
@@ -283,10 +283,11 @@ client.on("message", async message => {
 			return;
 		}
 		let reason = message.content.slice (prefix.length + mention.toString().length + 5);
-		message.channel.send(mention.username + " has been kicked :hammer: for " + reason);
 		message.guild.member(mention).kick(reason).catch(error =>{
 			message.channel.send("I need the Kick Members permission to do this.")
+			return;
 		});
+		message.channel.send(mention.username + " has been kicked :hammer: for " + reason);
 		const logchannel = message.guild.channels.cache.find(channel => channel.id === logsChannel);
 		if(!logchannel) return;
 		logchannel.send(mention.username + " has been kicked for " + reason);
