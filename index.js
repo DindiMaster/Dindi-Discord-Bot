@@ -32,7 +32,7 @@ client.on("message", async message => {
 	if(message.content === (prefix + "help")) {
 		const helpembed = new Discord.MessageEmbed()
 		.setTitle("HELP MENU")
-		.addField(":smile: **FUN**", "d!say \n d!quiz \n d!8ball (question) \n d!randomnumber \n d!stats \n d!howcoolis (@user) \n d!react (message)")
+		.addField(":smile: **FUN**", "d!say \n d!quiz \n d!8ball (question) \n d!randomnumber \n d!stats \n d!howcoolis (@user) \n d!react (message) \n d!meme \n d!cute \n d!cat \n d!dog \n d!funny")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink \n d!ping")
 		.addField(":e_mail: **Setup**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support \n d!logschannelsetup #(channel)")
@@ -48,7 +48,7 @@ client.on("message", async message => {
 	if(message.content === (prefix + "helpinchannel")) {
 		const helpembed = new Discord.MessageEmbed()
 		.setTitle("HELP MENU")
-		.addField(":smile: **FUN**", "d!say \n d!quiz \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message)")
+		.addField(":smile: **FUN**", "d!say \n d!quiz \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message) \n d!meme \n d!cute \n d!cat \n d!dog \n d!funny")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink \n d!ping")
 		.addField(":e_mail: **Setup**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support \n d!logschannelsetup #(channel)")
@@ -91,7 +91,7 @@ client.on("message", async message => {
 	}
 
 	if(message.content === (prefix + "version")) {
-		message.channel.send("The current version is **0.1.8**");
+		message.channel.send("The current version is **0.2.0**");
 	}
 
 	if(message.content === (prefix + "invite")) {
@@ -166,6 +166,62 @@ client.on("message", async message => {
 		.setImage(memeImg)
 
 		message.channel.send(memeEmbed).catch(error =>{
+			message.channel.send("I need the Embed Links permission to do this.")
+		});
+	}
+
+	if(message.content.startsWith(prefix + "cute")){
+		const subReddits = ["cute", "puppy"];
+		const randomSubreddit = subReddits[Math.floor(Math.random() * subReddits.length)];
+		const cuteImg = await randomPuppy(randomSubreddit);
+		const cuteEmbed = new Discord.MessageEmbed()
+		.setTitle(`From /r/${randomSubreddit}`)
+		.setURL(`http://reddit.com/${randomSubreddit}`)
+		.setImage(cuteImg)
+
+		message.channel.send(cuteEmbed).catch(error =>{
+			message.channel.send("I need the Embed Links permission to do this.")
+		});
+	}
+
+	if(message.content.startsWith(prefix + "dog")){
+		const subReddits = ["DOG", "dogswithjobs"];
+		const randomSubreddit = subReddits[Math.floor(Math.random() * subReddits.length)];
+		const dogImg = await randomPuppy(randomSubreddit);
+		const dogEmbed = new Discord.MessageEmbed()
+		.setTitle(`From /r/${randomSubreddit}`)
+		.setURL(`http://reddit.com/${randomSubreddit}`)
+		.setImage(dogImg)
+
+		message.channel.send(dogEmbed).catch(error =>{
+			message.channel.send("I need the Embed Links permission to do this.")
+		});
+	}
+
+	if(message.content.startsWith(prefix + "cat")){
+		const subReddits = ["cat", "cats"];
+		const randomSubreddit = subReddits[Math.floor(Math.random() * subReddits.length)];
+		const catImg = await randomPuppy(randomSubreddit);
+		const catEmbed = new Discord.MessageEmbed()
+		.setTitle(`From /r/${randomSubreddit}`)
+		.setURL(`http://reddit.com/${randomSubreddit}`)
+		.setImage(catImg)
+
+		message.channel.send(catEmbed).catch(error =>{
+			message.channel.send("I need the Embed Links permission to do this.")
+		});
+	}
+
+	if(message.content.startsWith(prefix + "funny")){
+		const subReddits = ["funny"];
+		const randomSubreddit = subReddits[Math.floor(Math.random() * subReddits.length)];
+		const funnyImg = await randomPuppy(randomSubreddit);
+		const funnyEmbed = new Discord.MessageEmbed()
+		.setTitle(`From /r/${randomSubreddit}`)
+		.setURL(`http://reddit.com/${randomSubreddit}`)
+		.setImage(funnyImg)
+
+		message.channel.send(funnyEmbed).catch(error =>{
 			message.channel.send("I need the Embed Links permission to do this.")
 		});
 	}
