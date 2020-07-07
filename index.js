@@ -142,7 +142,7 @@ client.on("message", async message => {
 		message.channel.send("You are " + coolness + "% cool");
 	}
 
-	if(message.content.startsWith(prefix + "howcoolis")) {
+	if(message.content.startsWith(preifx + "howcoolis")) {
 		coolness = (Math.floor(Math.random() * 100 + 1));
 		message.channel.send("They are " + coolness + "% cool");
 	}
@@ -171,11 +171,11 @@ client.on("message", async message => {
 	// Say Command
 	if(message.content.startsWith(`${prefix}say`)){
 		if(!message.member.hasPermission('MANAGE_MESSAGES')){
-			message.channel.send("You do not have the Manage Messages permission!");
+			message.channel.send("You do not have the Manage Messages permission!")
 			return;
 		}
-		const sayargs = message.content.split(" ");
-		message.channel.send(sayargs);
+		message.content.slice(message.lenght).split(" ");
+		message.channel.send(args);
 	}
 
 	// WELCOME & GOODBYE SETUP
