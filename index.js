@@ -131,7 +131,7 @@ client.on("message", async message => {
 
 	// MUSIC
 	if(message.content.startsWith(prefix + "play")){
-		musicargs = message.content.split(" ").slice(1).join(" ");
+		const musicargs = message.content.split(" ").slice(1).join(" ");
 		if(!musicargs[0]) return message.channel.send("Please give me a link of the song you want me to play!");
 		let url = musicargs.join(" ");
 		if(!url.match(/(youtube.com|youtu.be)\/(watch)?(\?v=)?(\S+)?/)) return message.channel.send("Please send a valid youtube link!")
