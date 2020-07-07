@@ -43,7 +43,7 @@ client.on("message", async message => {
 	}
 
 	if(message.content === ("d!helpinchannel")) {
-		if(!message.guild.me.hasPermission('EMBED_LINKS')){
+		if(!message.guild.me.permissionsIn('EMBED_LINKS')){
 			channel.message.send("I need the Embed Links permission to do this!");
 			return;
 		}
