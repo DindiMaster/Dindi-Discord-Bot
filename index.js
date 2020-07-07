@@ -1,7 +1,9 @@
 const Discord = require('discord.js');
 const fetch = require("node-fetch");
 const client = new Discord.Client();
-const randomPuppy = require("random-puppy")
+const randomPuppy = require("random-puppy");
+const ytdl = require("ytdl-core");
+var queue = new Map();
 
 const ms = require("ms");
 
@@ -126,6 +128,54 @@ client.on("message", async message => {
 
 
 	// FUN COMMANDS
+
+	// MUSIC
+	if(message.content.startsWith(prefix + "play")){
+		musicargs = message.content.split(" ").slice(1).join(" ");
+		if(!musicargs[0]) return message.channel.send("Please give me a link of the song you want me to play!");
+		let url = musicargs.join(" ");
+		if(!url.match(/(youtube.com|youtu.be)\/(watch)?(\?v=)?(\S+)?/)) return message.channel.send("Please send a valid youtube link!")
+
+		let serverQueue = queue.get(message.guild.id);
+		let vc = message.member.voice;
+
+		if(!vc) return message.channel.send("You are not in a Voice Channel!");
+		if(!vc.channel.permissionsFor(client.user).has('CONNECT') || !vc.channel.permissionsFor(client.user).has('SPEAK')) return message.channel.send("I do not have the permission to Connect or Speak in this channel!");
+		
+		let songInfo = await ytdl.getInfo(url);
+		let song = {
+			title: songInfo.title,
+			url: songInfo.video_url
+		}
+
+		if(!serverQueue) {
+			let queueConst = {
+				textChannel: message.channel,
+				voiceChannel: vc.channel,
+				connection: null,
+				songs: [],
+				volume: 5,
+				playing: true
+			};
+
+			queue.set(message.guild.id, queueConst);
+			queueConst.songs.push(song);
+
+			try {
+				let connection = await vc.channel.join();
+				queueConst.connection = connection;
+				playSong(message.guild, queueConst.songs[0]);
+			} catch (error) {
+				console.log("Music error");
+				queue.delete(message.guild.id);
+				return message.channel.send("There was an error playing the song!");
+			}
+		} else {
+			serverQueue.songs.push(song);
+			return message.channel.send(`**${song.title}** has been added to the queue!`);
+		}
+	}
+
 
 	// QUIZ
 	if(message.content === (prefix + "quiz")){
@@ -391,3 +441,27 @@ client.on("guildMemberRemove", member => {
 		return;
 	});
 });
+
+/**
+ * @param {Discord.guild} guild
+ * @param {Object} song
+ */
+async function playSong(guild, song){
+	let serverQueue = queue.get(guild.id);
+
+	if(!song){
+		serverQueue.voiceChannel.leave();
+		queue.delete(guild.id);
+		return;
+	}
+
+	const dispatcher = serverQueue.connection.play(ytdl(song.url)).on('end', () => {
+		serverQueue.songs.shift();
+		playSong(guild, serverQueue.songs[0]);
+	})
+	.on('error', () => {
+		console.log(error);
+	})
+	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+
+}
