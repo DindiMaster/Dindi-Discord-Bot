@@ -173,7 +173,7 @@ client.on("message", async message => {
 	const PREFIX = "d!";
 	const args = message.content.substring(PREFIX.length).split(" ");
 	const args2 = message.content.slice(sayPrefix.length).trim().split();
-	if(!message.author.hasPermission('MANAGE_MESSAGES')){
+	if(!message.member.hasPermission('MANAGE_MESSAGES')){
 		message.channel.send("You do not have the Manage Messages permission!")
 		return;
 	}
