@@ -159,10 +159,10 @@ client.on("message", async message => {
 	if(message.content.startsWith(prefix + "meme")){
 		const subReddits = ["meme", "dankmeme", "me_irl"];
 		const randomSubreddit = subReddits[Math.floor(Math.random() * subReddits.length)];
-		const memeImg = await randomPuppy(random);
+		const memeImg = await randomPuppy(randomSubreddit);
 		const memeEmbed = new Discord.MessageEmbed()
-		.setTitle(`From /r/${random}`)
-		.setURL(`http://reddit.com/${random}`)
+		.setTitle(`From /r/${randomSubreddit}`)
+		.setURL(`http://reddit.com/${randomSubreddit}`)
 		.setImage(memeImg)
 
 		message.channel.send(memeEmbed).catch(error =>{
