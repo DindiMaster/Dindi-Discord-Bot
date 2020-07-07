@@ -169,7 +169,7 @@ client.on("message", async message => {
 	}
 
 	// Say Command
-	if(message.content.startsWith("d!say")){
+	if(message.content.startsWith(`${prefix}say`)){
 		if(!message.member.hasPermission('MANAGE_MESSAGES')){
 			message.channel.send("You do not have the Manage Messages permission!")
 			return;
