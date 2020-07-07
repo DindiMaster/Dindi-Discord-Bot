@@ -16,6 +16,7 @@
     "@discordjs/opus": "^0.3.2",
     "avconv": "^3.1.0",
     "discord.js": "^12.2.0",
+    "ffbinaries": "^1.1.4",
     "ffmpeg": "0.0.4",
     "git": "^0.1.5",
     "github": "^14.0.0",
