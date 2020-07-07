@@ -177,10 +177,6 @@ client.on("message", async message => {
 		message.channel.send("You do not have the Manage Messages permission!")
 		return;
 	}
-	if(args.content.includes === "@everyone" || args.content === "@here"){
-		message.channel.send("I wont ping everyone 😠")
-		return;
-	}
 	if(message.author.bot){
 		return;
 	}
@@ -308,12 +304,16 @@ client.on("guildMemberAdd", member => {
 	const channel = member.guild.channels.cache.find(channel => channel.id === welcomeChannel);
 	if(!channel) return;
 
-	channel.send(`${member} just joined! Give them a warm welcome :wave:`);
+	channel.send(`${member} just joined! Give them a warm welcome :wave:`).catch(error =>{
+		return;
+	});
 });
 
 client.on("guildMemberRemove", member => {
 	const channel = member.guild.channels.cache.find(channel => channel.id === goodbyeChannel);
 	if(!channel) return;
 
-	channel.send(`${member} just left :cry:`);
+	channel.send(`${member} just left :cry:`).catch(error =>{
+		return;
+	});
 });
