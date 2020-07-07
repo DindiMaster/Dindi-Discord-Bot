@@ -21,6 +21,7 @@
     "ms": "^2.1.2",
     "node-fetch": "^2.6.0",
     "opusscript": "0.0.7",
+    "random-puppy": "^1.1.0",
     "ytdl-core": "^2.1.7"
   },
   "eslintConfig": {
