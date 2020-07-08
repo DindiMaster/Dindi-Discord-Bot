@@ -136,6 +136,7 @@ client.on("message", async message => {
 	if(message.content.startsWith(`${prefix}play`)){
 		const musicargs = message.content.substring(prefix.length).split(" ");
 		const voiceChannel = message.member.voice.channel;
+		if(!musicargs) return message.channel.send("Please give me a valid youtube link!");
 		if(!voiceChannel) return message.channel.send("You need to enter a voice channel!");
 		const permissions = voiceChannel.permissionsFor(message.client.user);
 		if(!permissions.has('CONNECT') || !permissions.has('SPEAK')) return message.channel.send("I need permission to speak and connect to that channel!");
@@ -163,7 +164,7 @@ client.on("message", async message => {
 				var connection = await voiceChannel.join();
 				queueConstruct.connection = connection;
 				play(message.guild, queueConstruct.songs[0]);
-				message.channel.send(`Now playing **${song.title}** \n link: **${song.video_url}`);
+				message.channel.send(`Now playing **${song.title}** \n link: **${musicargs}`);
 			} catch (error) {
 				console.log("There was an error connecting to this channel: " + error);
 				queue.delete(message.guild.id);
