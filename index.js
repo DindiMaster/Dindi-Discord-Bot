@@ -163,7 +163,9 @@ client.on("message", async message => {
 			try {
 				var connection = await voiceChannel.join();
 				queueConstruct.connection = connection;
-				play(message.guild, queueConstruct.songs[0]);
+				play(message.guild, queueConstruct.songs[0]).catch(error => {
+					message.channel.send("We are currently out of Rate Limit on Heroku, please wait before using music features!")
+				})
 				message.channel.send(`Now playing **${song.title}** \n link: **${musicargs}`);
 			} catch (error) {
 				console.log("There was an error connecting to this channel: " + error);
