@@ -158,7 +158,7 @@ client.on("message", async message => {
 			queueConstruct.songs.push(song);
 
 			try {
-				var connection = await voiceChannel.join;
+				var connection = await voiceChannel.join();
 				queueConstruct.connection = connection;
 				play(message.guild, queueConstruct.songs[0]);
 			} catch (error) {
@@ -457,6 +457,7 @@ client.on("guildMemberRemove", member => {
 
 function play(guild, song){
 	const serverQueue = queue.get(guild.id);
+
 
 	if(!song){
 		serverQueue.voiceChannel.leave();
