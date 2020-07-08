@@ -95,7 +95,7 @@ client.on("message", async message => {
 	}
 
 	if(message.content === (prefix + "version")) {
-		message.channel.send("The current version is **0.2.0**");
+		message.channel.send("The current version is **0.2.2**");
 	}
 
 	if(message.content === (prefix + "invite")) {
