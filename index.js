@@ -175,6 +175,10 @@ client.on("message", async message => {
 		}
 	}
 
+	if(message.content === prefix + "skip"){
+		queueConst.songs.push(song);
+	}
+
 
 	// QUIZ
 	if(message.content === (prefix + "quiz")){
