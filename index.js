@@ -38,6 +38,7 @@ client.on("message", async message => {
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink \n d!ping")
 		.addField(":e_mail: **Setup**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support \n d!logschannelsetup #(channel)")
+		.addField("🎵 **MUSIC**", "d!play (youtube url) \n d!skip \n d!stop")
 		.addField("**Dindi Bot needs the following permissions for all the commands to work properly:**", "Read Messages \n Send Messages \n Embed Links \n Manage Messages \n Add Reactions \n Read Message History \n Ban Members \n Kick Members")
 		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website:***", "https://top.gg/bot/722395531971657738")
 		message.member.send(helpembed).catch(error =>{
@@ -54,6 +55,7 @@ client.on("message", async message => {
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink \n d!ping")
 		.addField(":e_mail: **Setup**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support \n d!logschannelsetup #(channel)")
+		.addField("🎵 **MUSIC**", "d!play (youtube url) \n d!skip \n d!stop")
 		.addField("**Dindi Bot needs the following permissions for all the commands to work properly:**", "Read Messages \n Send Messages \n Embed Links \n Manage Messages \n Add Reactions \n Read Message History \n Ban Members \n Kick Members")
 		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website:***", "https://top.gg/bot/722395531971657738")
 		message.channel.send(helpembed).catch(error =>{
@@ -161,6 +163,7 @@ client.on("message", async message => {
 				var connection = await voiceChannel.join();
 				queueConstruct.connection = connection;
 				play(message.guild, queueConstruct.songs[0]);
+				message.channel.send(`Now playing **${song.title}** \n link: **${song.video_url}`);
 			} catch (error) {
 				console.log("There was an error connecting to this channel: " + error);
 				queue.delete(message.guild.id);
@@ -174,14 +177,14 @@ client.on("message", async message => {
 
 	} else if(message.content.startsWith(`${prefix}stop`)){
 		if(!message.member.voice.channel) return message.channel.send("You need to be in a voice channel!");
-		if(!serverQueue) return message.channel.send("There are no songs to play!");
+		if(!serverQueue) return message.channel.send("There are no songs to stop!");
 		serverQueue.songs = [];
 		serverQueue.connection.dispatcher.end();
 		message.channel.send("I have stopped the music!");
 		return undefined;
 	} else if(message.content.startsWith(`${prefix}skip`)){
 		if(!message.member.voice.channel) return message.channel.send("You need to be in a voice channel!");
-		if(!serverQueue) return message.channel.send("There are no songs to play!");
+		if(!serverQueue) return message.channel.send("There are no songs to skip!");
 		serverQueue.connection.dispatcher.end();
 		message.channel.send("Song skipped!");
 		return undefined;
