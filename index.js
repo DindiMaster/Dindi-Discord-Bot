@@ -164,7 +164,7 @@ client.on("message", async message => {
 				var connection = await voiceChannel.join();
 				queueConstruct.connection = connection;
 				play(message.guild, queueConstruct.songs[0])
-				message.channel.send(`Now playing **${song.title}** \n link: **${musicargs}`);
+				message.channel.send(`Now playing **${song.title}**`);
 			} catch (error) {
 				console.log("There was an error connecting to this channel: " + error);
 				queue.delete(message.guild.id);
