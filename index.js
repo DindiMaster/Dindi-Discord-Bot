@@ -44,7 +44,7 @@ client.on("message", async message => {
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!support \n d!creator \n d!invite \n d!ping")
 		.addField(":e_mail: **Setup**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support \n d!logschannelsetup #(channel)")
-		.addField("🎵 **MUSIC**", "d!play [youtube url/search] \n d!skip \n d!stop \n d!np \n d!pause \n d!resume \n d!queue \n d!volume \n d!loop \n d!unloop \n ❗ **WARNING** ❗ Dindi Bot is currently running on a free host Heroku so it has a limited Rate Limit, sometimes we are out of Rate Limit and music wont work, if thats the case wait 5-20 minutes to use music commands again!")
+		.addField("🎵 **MUSIC**", "d!play [youtube url/search] \n d!skip \n d!stop \n d!np \n d!pause \n d!resume \n d!queue \n d!loop \n d!unloop \n ❗ **WARNING** ❗ Dindi Bot is currently running on a free host Heroku so it has a limited Rate Limit, sometimes we are out of Rate Limit and music wont work, if thats the case wait 5-20 minutes to use music commands again!")
 		.addField("**Dindi Bot needs the following permissions for all the commands to work properly:**", "Read Messages \n Send Messages \n Embed Links \n Manage Messages \n Add Reactions \n Read Message History \n Ban Members \n Kick Members")
 		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website:***", "https://top.gg/bot/722395531971657738")
 		message.member.send(helpembed).catch(error =>{
@@ -61,7 +61,7 @@ client.on("message", async message => {
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!support \n d!creator \n d!invite \n d!ping")
 		.addField(":e_mail: **Setup**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support \n d!logschannelsetup #(channel)")
-		.addField("🎵 **MUSIC**", "d!play [youtube url/search] \n d!skip \n d!stop \n d!np \n d!pause \n d!resume \n d!queue \n d!volume \n d!loop \n d!unloop \n ❗ **WARNING** ❗ Dindi Bot is currently running on a free host Heroku so it has a limited Rate Limit, sometimes we are out of Rate Limit and music wont work, if thats the case wait 5-20 minutes to use music commands again!")
+		.addField("🎵 **MUSIC**", "d!play [youtube url/search] \n d!skip \n d!stop \n d!np \n d!pause \n d!resume \n d!queue \n d!loop \n d!unloop \n ❗ **WARNING** ❗ Dindi Bot is currently running on a free host Heroku so it has a limited Rate Limit, sometimes we are out of Rate Limit and music wont work, if thats the case wait 5-20 minutes to use music commands again!")
 		.addField("**Dindi Bot needs the following permissions for all the commands to work properly:**", "Read Messages \n Send Messages \n Embed Links \n Manage Messages \n Add Reactions \n Read Message History \n Ban Members \n Kick Members")
 		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website:***", "https://top.gg/bot/722395531971657738")
 		message.channel.send(helpembed).catch(error =>{
@@ -229,17 +229,6 @@ client.on("message", async message => {
 		if(!serverQueue) return message.channel.send("There is nothing to unloop!");
 		islooping = !islooping;
 		message.channel.send("Queue unlooped!");
-		return undefined;
-	}else if(message.content.startsWith(`${prefix}volume`)){
-		const volumeargs1 = message.content.substring(prefix.length).split(" ");
-		const volumeargs2 = volumeargs1.slice(1).join(" ");
-		const volume = volumeargs2 * 11;
-		if(!message.member.voice.channel) return message.channel.send("You need to be in a voice channel!");
-		if(!serverQueue) return message.channel.send("There is nothing playing");
-		if(!volumeargs2) return message.channel.send(`Current volume: **${serverQueue.volume}**`);
-		if(isNaN(volumeargs2[1])) return message.channel.send("You can't change the volume to that!")
-		serverQueue.volume = volume;
-		message.channel.send(`Volume changed to: ${serverQueue.volume} \n Change will appear after the current song!`);
 		return undefined;
 	}
 
