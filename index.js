@@ -6,7 +6,7 @@ const ytdl = require("ytdl-core");
 const YouTube = require('simple-youtube-api');
 var queue = new Map();
 var singleLoop = new Map();
-const issinglelooping = singleLoop.get(message.guild.id) || false;
+const issinglelooping = singleLoop.get(guild.id) || false;
 
 const ms = require("ms");
 
