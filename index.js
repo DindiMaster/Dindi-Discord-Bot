@@ -503,6 +503,7 @@ client.on("guildMemberRemove", member => {
 
 
 function play(guild, song){
+	console.log(song.url);
 	const serverQueue = queue.get(guild.id);
 
 
