@@ -3,12 +3,15 @@ const fetch = require("node-fetch");
 const client = new Discord.Client();
 const randomPuppy = require("random-puppy");
 const ytdl = require("ytdl-core");
+const YouTube = require('simple-youtube-api');
 var queue = new Map();
 
 const ms = require("ms");
 
 const bot = new Discord.Client();
 const prefix = "d!"
+
+const youtube = new YouTube("AIzaSyAzLytewTLXeFnOSGPe1vMW8GrgZb_6JrU");
 
 let { welcomeChannel } = require('./channel.json')
 let { goodbyeChannel } = require('./channel.json')
@@ -38,7 +41,7 @@ client.on("message", async message => {
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink \n d!ping")
 		.addField(":e_mail: **Setup**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support \n d!logschannelsetup #(channel)")
-		.addField("🎵 **MUSIC**", "d!play (youtube url) \n d!skip \n d!stop")
+		.addField("🎵 **MUSIC**", "d!play (youtube url) \n d!skip \n d!stop \n d!np \n d!pause \n d!resume \n d!queue \n ❗ **WARNING** ❗ Dindi Bot is currently running on a free host Heroku so it has a limited Rate Limit, sometimes we are out of Rate Limit and music wont work, if thats the case wait 5-20 minutes to use music commands again!")
 		.addField("**Dindi Bot needs the following permissions for all the commands to work properly:**", "Read Messages \n Send Messages \n Embed Links \n Manage Messages \n Add Reactions \n Read Message History \n Ban Members \n Kick Members")
 		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website:***", "https://top.gg/bot/722395531971657738")
 		message.member.send(helpembed).catch(error =>{
@@ -55,7 +58,7 @@ client.on("message", async message => {
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink \n d!ping")
 		.addField(":e_mail: **Setup**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support \n d!logschannelsetup #(channel)")
-		.addField("🎵 **MUSIC**", "d!play (youtube url) \n d!skip \n d!stop")
+		.addField("🎵 **MUSIC**", "d!play (youtube url) \n d!skip \n d!stop \n d!np \n d!pause \n d!resume \n d!queue \n ❗ **WARNING** ❗ Dindi Bot is currently running on a free host Heroku so it has a limited Rate Limit, sometimes we are out of Rate Limit and music wont work, if thats the case wait 5-20 minutes to use music commands again!")
 		.addField("**Dindi Bot needs the following permissions for all the commands to work properly:**", "Read Messages \n Send Messages \n Embed Links \n Manage Messages \n Add Reactions \n Read Message History \n Ban Members \n Kick Members")
 		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website:***", "https://top.gg/bot/722395531971657738")
 		message.channel.send(helpembed).catch(error =>{
@@ -135,16 +138,30 @@ client.on("message", async message => {
 	const serverQueue = queue.get(message.guild.id);
 	if(message.content.startsWith(`${prefix}play`)){
 		const musicargs = message.content.substring(prefix.length).split(" ");
+		const searchString = musicargs.slice(1).join(" ");
+		const url = args[1] ? args[1].replace(/<(.+)>/g, '$1'):""
 		const voiceChannel = message.member.voice.channel;
 		if(!musicargs) return message.channel.send("Please give me a valid youtube link!");
 		if(!voiceChannel) return message.channel.send("You need to enter a voice channel!");
 		const permissions = voiceChannel.permissionsFor(message.client.user);
 		if(!permissions.has('CONNECT') || !permissions.has('SPEAK')) return message.channel.send("I need permission to speak and connect to that channel!");
 
-		const songInfo = await ytdl.getInfo(musicargs[1]);
+		try {
+			var video = await youtube.getVideoByID(url);
+		} catch {
+			try {
+				var videos = await youtube.searchVideos(searchString, 1);
+				var video = await youtube.getVideoByID(videos[0].id);
+			} catch {
+				message.channel.send("I couldn't find any search results!")
+			}
+		}
+
+		
 		const song = {
-			title: songInfo.title,
-			url: songInfo.video_url
+			id: video.id,
+			title: Discord.Util.escapeMarkdown(video.title),
+			url: `https://www.youtube.com/watch?v=${video.id}`
 		}
 		
 		if(!serverQueue){
@@ -164,7 +181,6 @@ client.on("message", async message => {
 				var connection = await voiceChannel.join();
 				queueConstruct.connection = connection;
 				play(message.guild, queueConstruct.songs[0])
-				message.channel.send(`Now playing **${song.title}**`);
 			} catch (error) {
 				console.log("There was an error connecting to this channel: " + error);
 				queue.delete(message.guild.id);
@@ -181,7 +197,7 @@ client.on("message", async message => {
 		if(!serverQueue) return message.channel.send("There are no songs to stop!");
 		serverQueue.songs = [];
 		serverQueue.connection.dispatcher.end();
-		message.channel.send("I have stopped the music!");
+		message.channel.send("Music stopped!");
 		return undefined;
 	} else if(message.content.startsWith(`${prefix}skip`)){
 		if(!message.member.voice.channel) return message.channel.send("You need to be in a voice channel!");
@@ -189,9 +205,36 @@ client.on("message", async message => {
 		serverQueue.connection.dispatcher.end();
 		message.channel.send("Song skipped!");
 		return undefined;
+	} else if(message.content.startsWith(`${prefix}np`)){
+		if(!serverQueue) return message.channel.send("There is nothing playing!");
+		message.channel.send(`Now playing: **${serverQueue.songs[0].title}**`);
+		return undefined;
+	} else if(message.content.startsWith(`${prefix}queue`)){
+		if(!serverQueue) return message.channel.send("There is nothing playing!");
+		message.channel.send(`
+		__**Song Queue:**__
+		${serverQueue.songs.map(song => `**-** ${song.title}`).join('\n')}
+
+		**Now Playing:** ${serverQueue.songs[0].title}
+		`, { split: true });
+		return undefined;
+	} else if (message.content.startsWith(`${prefix}pause`)){
+		if(!message.member.voice.channel) return message.channel.send("You need to be in a voice channel!");
+		if(!serverQueue) return message.channel.send("There is nothing to pause!");
+		if(!serverQueue.playing) return message.channel.send("Music is already paused!");
+		serverQueue.playing = false;
+		serverQueue.connection.dispatcher.pause();
+		message.channel.send("Music paused!");
+		return undefined;
+	}else if (message.content.startsWith(`${prefix}resume`)){
+		if(!message.member.voice.channel) return message.channel.send("You need to be in a voice channel!");
+		if(!serverQueue) return message.channel.send("There is nothing to resume!");
+		if(serverQueue.playing) return message.channel.send("Music is already playing!");
+		serverQueue.playing = true;
+		serverQueue.connection.dispatcher.resume();
+		message.channel.send("Music resumed!");
+		return undefined;
 	}
-
-
 
 	// QUIZ
 	if(message.content === (prefix + "quiz")){
@@ -475,4 +518,5 @@ function play(guild, song){
 		play(guild, serverQueue.songs[0]);
 	})	
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+	serverQueue.textChannel.send(`Now playing **${song.title}**`);
 }
