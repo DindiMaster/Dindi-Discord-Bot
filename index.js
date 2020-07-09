@@ -5,8 +5,6 @@ const randomPuppy = require("random-puppy");
 const ytdl = require("ytdl-core");
 const YouTube = require('simple-youtube-api');
 var queue = new Map();
-var singleLoop = new Map();
-const issinglelooping = singleLoop.get(guild.id) || false;
 
 const ms = require("ms");
 
@@ -239,7 +237,7 @@ client.on("message", async message => {
 		serverQueue.connection.dispatcher.pause();
 		message.channel.send("Music paused!");
 		return undefined;
-	} else if (message.content.startsWith(`${prefix}resume`)){
+	}else if (message.content.startsWith(`${prefix}resume`)){
 		if(!message.member.voice.channel) return message.channel.send("You need to be in a voice channel!");
 		if(!serverQueue) return message.channel.send("There is nothing to resume!");
 		if(serverQueue.playing) return message.channel.send("Music is already playing!");
@@ -247,16 +245,6 @@ client.on("message", async message => {
 		serverQueue.connection.dispatcher.resume();
 		message.channel.send("Music resumed!");
 		return undefined;
-	} else if (message.content.startsWith(prefix + `loop`)){
-		const singleloopargs = message.content.split(" ").slice(1).join(" ");
-		if(!message.member.voice.channel) return message.channel.send("You need to be in a voice channel!");
-		if(!singleloopargs) return message.channel.send("Proper usage: d!loop [single]");
-		if(!serverQueue) return message.channel.send("There is nothing to loop!");
-		issinglelooping = true;
-	} else if (message.content.startsWith(prefix + "unloop")){
-		if(!message.member.voice.channel) return message.channel.send("You need to be in a voice channel!");
-		if(!serverQueue) return message.channel.send("There is nothing to unloop!");
-		issinglelooping = false;
 	}
 
 	// QUIZ
@@ -537,7 +525,6 @@ function play(guild, song){
 
 	const dispatcher = serverQueue.connection.play(ytdl(song.url))
 	.on('finish', () => {
-		if(issinglelooping === true) return;
 		serverQueue.songs.shift();
 		play(guild, serverQueue.songs[0]);
 	})	
