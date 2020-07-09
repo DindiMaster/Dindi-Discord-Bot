@@ -138,7 +138,7 @@ client.on("message", async message => {
 	// FUN COMMANDS
 
 	// MUSIC
-	islooping = loop.get(message.guild.id);
+	islooping = loop.get(message.guild.id) || false;
 	const serverQueue = queue.get(message.guild.id);
 	if(message.content.startsWith(`${prefix}play`)){
 		const musicargs = message.content.substring(prefix.length).split(" ");
