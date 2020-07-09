@@ -139,7 +139,7 @@ client.on("message", async message => {
 	if(message.content.startsWith(`${prefix}play`)){
 		const musicargs = message.content.substring(prefix.length).split(" ");
 		const searchString = musicargs.slice(1).join(" ");
-		const url = args[1] ? args[1].replace(/<(.+)>/g, '$1'):""
+		const url = musicargs[1] ? musicargs[1].replace(/<(.+)>/g, '$1'):""
 		const voiceChannel = message.member.voice.channel;
 		if(!musicargs) return message.channel.send("Please give me a valid youtube link!");
 		if(!voiceChannel) return message.channel.send("You need to enter a voice channel!");
