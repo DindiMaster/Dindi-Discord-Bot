@@ -237,8 +237,8 @@ client.on("message", async message => {
 		if(!serverQueue) return message.channel.send("There is nothing playing");
 		if(!volumeargs2) return message.channel.send(`Current volume: **${serverQueue.volume}**`);
 		if(isNaN(volumeargs2[1])) return message.channel.send("You can't change the volume to that!")
-		serverQueue.volume = volumeargs2[1];
-		message.channel.send(`Volume changed to: ${serverQueue.volume}`);
+		serverQueue.volume = volumeargs2[1] * 11;
+		message.channel.send(`Volume changed to: ${serverQueue.volume} \n Change will appear after the current song!`);
 		return undefined;
 	}
 
