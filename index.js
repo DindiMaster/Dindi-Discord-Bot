@@ -138,7 +138,6 @@ client.on("message", async message => {
 	// FUN COMMANDS
 
 	// MUSIC
-	islooping = loop.get(message.guild.id) || false;
 	const serverQueue = queue.get(message.guild.id);
 	if(message.content.startsWith(`${prefix}play`)){
 		const musicargs = message.content.substring(prefix.length).split(" ");
@@ -239,6 +238,7 @@ client.on("message", async message => {
 		message.channel.send("Music resumed!");
 		return undefined;
 	}else if (message.content.startsWith(`${prefix}loop`)){
+		islooping = loop.get(message.guild.id) || false;
 		if(!message.member.voice.channel) return message.channel.send("You need to be in a voice channel!");
 		if(!serverQueue) return message.channel.send("There is nothing to loop!");
 		islooping = !islooping;
