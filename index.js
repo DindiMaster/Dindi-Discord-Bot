@@ -154,7 +154,7 @@ client.on("message", async message => {
 			const videos = await playlist.getVideos();
 			for(const video of Object.values(videos)){
 				const video2 = await youtube.getVideoByID(video.id);
-				await handleVideo(video2, message, voiceChannel, true);
+				return handleVideo(video2, message, voiceChannel, true);
 			}
 		}else {
 			try {
