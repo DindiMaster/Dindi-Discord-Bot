@@ -96,7 +96,7 @@ client.on("message", async message => {
 		.setTitle("Dindi Bot Info")
 		.addField("Public Release Date:", "16 Jun 2020")
 		.addField("Server Count", `${serverNumber} servers`)
-		.addField("Server List", `${serverList}`.join("\n"))
+		.addField("Server List", `${serverList}`)
 
 		message.channel.send(botinfoembed);
 	}
