@@ -149,12 +149,12 @@ client.on("message", async message => {
 		const permissions = voiceChannel.permissionsFor(message.client.user);
 		if(!permissions.has('CONNECT') || !permissions.has('SPEAK')) return message.channel.send("I need permission to speak and connect to that channel!");
 
-		if(url.match(/https?:\/\/(www.youtube.com!youtube.com)\/playlist(.*)$/)){
+		if(url.content.includes("https://www.youtube.com/playlist?list")){
 			const playlist = await youtube.getPlaylist(url);
 			const videos = await playlist.getVideos();
 			for(const video of Object.values(videos)){
 				const video2 = await youtube.getVideoByID(video.id);
-				return handleVideo(video2, message, voiceChannel, true);
+				await handleVideo(video2, message, voiceChannel, true);
 			}
 		}else {
 			try {
