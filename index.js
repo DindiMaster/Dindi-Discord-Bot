@@ -518,6 +518,6 @@ function play(guild, song){
 		serverQueue.songs.shift();
 		play(guild, serverQueue.songs[0]);
 	})	
-	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 	serverQueue.textChannel.send(`Now playing **${song.title}**`);
+	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 }
