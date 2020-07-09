@@ -5,6 +5,7 @@ const randomPuppy = require("random-puppy");
 const ytdl = require("ytdl-core");
 const YouTube = require('simple-youtube-api');
 var queue = new Map();
+var loop = new map;
 
 const ms = require("ms");
 
@@ -18,6 +19,7 @@ const serverNumber = Client.guilds.cache.size;
 let { welcomeChannel } = require('./channel.json')
 let { goodbyeChannel } = require('./channel.json')
 let { logsChannel } = require('./channel.json')
+let { islooping } = require('./channel.json')
 
 client.once("ready", () => {
 	console.log("I am online!");
@@ -146,6 +148,7 @@ client.on("message", async message => {
 	// FUN COMMANDS
 
 	// MUSIC
+	islooping = loop.get(message.guild.id) || false;
 	const serverQueue = queue.get(message.guild.id);
 	if(message.content.startsWith(`${prefix}play`)){
 		const musicargs = message.content.substring(prefix.length).split(" ");
@@ -245,6 +248,16 @@ client.on("message", async message => {
 		serverQueue.connection.dispatcher.resume();
 		message.channel.send("Music resumed!");
 		return undefined;
+	}else if (message.content.startsWith(`${prefix}loop`)){
+		if(!message.member.voice.channel) return message.channel.send("You need to be in a voice channel!");
+		if(!serverQueue) return message.channel.send("There is nothing to loop!");
+		islooping = true;
+		message.channel.send("Now looping queue!");
+	} else if (message.content.startsWith(`${prefix}unloop`)){
+		if(!message.member.voice.channel) return message.channel.send("You need to be in a voice channel!");
+		if(!serverQueue) return message.channel.send("There is nothing to unloop!");
+		islooping = false;
+		message.channel.send("Queue unlooped!");
 	}
 
 	// QUIZ
@@ -525,7 +538,8 @@ function play(guild, song){
 
 	const dispatcher = serverQueue.connection.play(ytdl(song.url))
 	.on('finish', () => {
-		serverQueue.songs.shift();
+		if(islooping === true) serverQueue.songs.push(serverQueue.songs.shift());
+		else serverQueue.songs.shift();
 		play(guild, serverQueue.songs[0]);
 	})	
 	dispatcher.setVolumeLogarithmic(5 / 5);

@@ -1,5 +1,6 @@
 {
     "welcomeChannel" : "",
     "goodbyeChannel" : "",
-    "logsChannel" : ""
+    "logsChannel" : "",
+    "islooping" : false
 }
