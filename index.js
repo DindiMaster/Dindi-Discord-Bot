@@ -231,12 +231,13 @@ client.on("message", async message => {
 		message.channel.send("Queue unlooped!");
 		return undefined;
 	}else if(message.content.startsWith(`${prefix}volume`)){
-		const volumeargs = message.content.split(" ").slice(1).join(" ");
+		const volumeargs1 = message.content.substring(prefix.length).split(" ");
+		const volumeargs2 = musicargs.slice(1).join(" ");
 		if(!message.member.voice.channel) return message.channel.send("You need to be in a voice channel!");
 		if(!serverQueue) return message.channel.send("There is nothing playing");
-		if(!volumeargs) return message.channel.send(`Current volume: **${serverQueue.volume}**`);
-		if(isNaN(volumeargs[1])) return message.channel.send("You can't change the volume to that!")
-		serverQueue.volume = volumeargs[1];
+		if(!volumeargs2) return message.channel.send(`Current volume: **${serverQueue.volume}**`);
+		if(isNaN(volumeargs2[1])) return message.channel.send("You can't change the volume to that!")
+		serverQueue.volume = volumeargs2[1];
 		message.channel.send(`Volume changed to: ${serverQueue.volume}`);
 		return undefined;
 	}
