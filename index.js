@@ -42,7 +42,7 @@ client.on("message", async message => {
 		.setTitle("HELP MENU")
 		.addField(":smile: **FUN**", "d!say \n d!quiz \n d!8ball (question) \n d!randomnumber \n d!stats \n d!howcoolis (@user) \n d!react (message) \n d!meme \n d!cute \n d!cat \n d!dog \n d!funny")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
-		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink \n d!ping")
+		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!support \n d!creator \n d!invite \n d!ping")
 		.addField(":e_mail: **Setup**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support \n d!logschannelsetup #(channel)")
 		.addField("🎵 **MUSIC**", "d!play [youtube url/search] \n d!skip \n d!stop \n d!np \n d!pause \n d!resume \n d!queue \n d!loop \n d!unloop \n ❗ **WARNING** ❗ Dindi Bot is currently running on a free host Heroku so it has a limited Rate Limit, sometimes we are out of Rate Limit and music wont work, if thats the case wait 5-20 minutes to use music commands again!")
 		.addField("**Dindi Bot needs the following permissions for all the commands to work properly:**", "Read Messages \n Send Messages \n Embed Links \n Manage Messages \n Add Reactions \n Read Message History \n Ban Members \n Kick Members")
@@ -59,7 +59,7 @@ client.on("message", async message => {
 		.setTitle("HELP MENU")
 		.addField(":smile: **FUN**", "d!say \n d!quiz \n d!8ball (question) \n d!randomnumber \n d!howcoolami \n d!howcoolis (@user) \n d!react (message) \n d!meme \n d!cute \n d!cat \n d!dog \n d!funny")
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
-		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink \n d!ping")
+		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!support \n d!creator \n d!invite \n d!ping")
 		.addField(":e_mail: **Setup**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support \n d!logschannelsetup #(channel)")
 		.addField("🎵 **MUSIC**", "d!play [youtube url/search] \n d!skip \n d!stop \n d!np \n d!pause \n d!resume \n d!queue \n d!loop \n d!unloop \n ❗ **WARNING** ❗ Dindi Bot is currently running on a free host Heroku so it has a limited Rate Limit, sometimes we are out of Rate Limit and music wont work, if thats the case wait 5-20 minutes to use music commands again!")
 		.addField("**Dindi Bot needs the following permissions for all the commands to work properly:**", "Read Messages \n Send Messages \n Embed Links \n Manage Messages \n Add Reactions \n Read Message History \n Ban Members \n Kick Members")
@@ -101,7 +101,7 @@ client.on("message", async message => {
 	}
 
 	if(message.content === (prefix + "version")) {
-		message.channel.send("The current version is **0.2.2**");
+		message.channel.send("The current version is **0.2.5**");
 	}
 
 	if(message.content === (prefix + "invite")) {
@@ -229,6 +229,15 @@ client.on("message", async message => {
 		if(!serverQueue) return message.channel.send("There is nothing to unloop!");
 		islooping = !islooping;
 		message.channel.send("Queue unlooped!");
+		return undefined;
+	}else if(message.content.startsWith(`${prefix}volume`)){
+		const volumeargs = message.content.split(" ").slice(1).join(" ");
+		if(!message.member.voice.channel) return message.channel.send("You need to be in a voice channel!");
+		if(!serverQueue) return message.channel.send("There is nothing playing");
+		if(!volumeargs) return message.channel.send(`Current volume: **${serverQueue.volume}**`);
+		if(isNaN(volumeargs[1])) return message.channel.send("You can't change the volume to that!")
+		serverQueue.volume = volumeargs[1];
+		message.channel.send(`Volume changed to: ${serverQueue.volume}`);
 		return undefined;
 	}
 
