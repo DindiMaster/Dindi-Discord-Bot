@@ -2,5 +2,5 @@
     "welcomeChannel" : "",
     "goodbyeChannel" : "",
     "logsChannel" : "",
-    "islooping" : ""
+    "islooping" : "false"
 }
