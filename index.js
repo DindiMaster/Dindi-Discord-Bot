@@ -149,51 +149,27 @@ client.on("message", async message => {
 		const permissions = voiceChannel.permissionsFor(message.client.user);
 		if(!permissions.has('CONNECT') || !permissions.has('SPEAK')) return message.channel.send("I need permission to speak and connect to that channel!");
 
-		try {
-			var video = await youtube.getVideoByID(url);
-		} catch {
+		if(url.match(/https?:\/\/(www.youtube.com!youtube.com)\/playlist(.*)$/)){
+			const playlist = await youtube.getPlaylist(url);
+			const videos = await playlist.getVideos();
+			for(const video of Object.values(videos)){
+				const video2 = await youtube.getVideoByID(video.id);
+				await handleVideo(video2, message, voiceChannel, true);
+			}
+		}else {
 			try {
-				var videos = await youtube.searchVideos(searchString, 1);
-				var video = await youtube.getVideoByID(videos[0].id);
+				var video = await youtube.getVideoByID(url);
 			} catch {
-				message.channel.send("I couldn't find any search results!")
+				try {
+					var videos = await youtube.searchVideos(searchString, 1);
+					var video = await youtube.getVideoByID(videos[0].id);
+				} catch {
+					message.channel.send("I couldn't find any search results!");
+				}
 			}
+			return handleVideo(video, message, voiceChannel);
 		}
 
-		
-		const song = {
-			id: video.id,
-			title: Discord.Util.escapeMarkdown(video.title),
-			url: `https://www.youtube.com/watch?v=${video.id}/`
-		}
-		
-		if(!serverQueue){
-			const queueConstruct = {
-				textChannel: message.channel,
-				voiceChannel: voiceChannel,
-				connection: null,
-				songs: [],
-				volume: 5,
-				playing: true
-			}
-			queue.set(message.guild.id, queueConstruct);
-
-			queueConstruct.songs.push(song);
-
-			try {
-				var connection = await voiceChannel.join();
-				queueConstruct.connection = connection;
-				play(message.guild, queueConstruct.songs[0])
-			} catch (error) {
-				console.log("There was an error connecting to this channel: " + error);
-				queue.delete(message.guild.id);
-				return message.channel.send("There was an error connecting to this voice channel!");
-			}
-		} else {
-			serverQueue.songs.push(song);
-			return message.channel.send(`**${song.title}** has been added to the queue!`);
-		}
-		return undefined;
 
 	} else if(message.content.startsWith(`${prefix}stop`)){
 		if(!message.member.voice.channel) return message.channel.send("You need to be in a voice channel!");
@@ -517,6 +493,45 @@ client.on("guildMemberRemove", member => {
 		return;
 	});
 });
+
+async function handleVideo(video, message, voiceChannel, playlist = false){
+	const serverQueue = queue.get(message.guild.id);
+
+	const song = {
+		id: video.id,
+		title: Discord.Util.escapeMarkdown(video.title),
+		url: `https://www.youtube.com/watch?v=${video.id}/`
+	}
+	
+	if(!serverQueue){
+		const queueConstruct = {
+			textChannel: message.channel,
+			voiceChannel: voiceChannel,
+			connection: null,
+			songs: [],
+			volume: 5,
+			playing: true
+		}
+		queue.set(message.guild.id, queueConstruct);
+
+		queueConstruct.songs.push(song);
+
+		try {
+			var connection = await voiceChannel.join();
+			queueConstruct.connection = connection;
+			play(message.guild, queueConstruct.songs[0])
+		} catch (error) {
+			console.log("There was an error connecting to this channel: " + error);
+			queue.delete(message.guild.id);
+			return message.channel.send("There was an error connecting to this voice channel!");
+		}
+	} else {
+		serverQueue.songs.push(song);
+		if(playlist) return undefined;
+		else return message.channel.send(`**${song.title}** has been added to the queue!`);
+	}
+	return undefined;
+}
 
 
 function play(guild, song){
