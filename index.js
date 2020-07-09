@@ -13,7 +13,6 @@ const bot = new Discord.Client();
 const prefix = "d!"
 
 const youtube = new YouTube("AIzaSyAzLytewTLXeFnOSGPe1vMW8GrgZb_6JrU");
-const serverNumber = Client.guilds.cache.size;
 
 
 let { welcomeChannel } = require('./channel.json')
@@ -91,15 +90,6 @@ client.on("message", async message => {
 	// INFORMATION COMMANDS
 	if(message.content === (prefix + "creator")) {
 		message.channel.send("This bot is made by **Dindi**, you can visit his youtube channel on https://www.youtube.com/channel/UCjqnUsIVtXHGyCd3q_qvqYQ");
-	}
-
-	if(message.content === (prefix + "botinfo")){
-		const botinfoembed = new Discord.MessageEmbed()
-		.setTitle("Dindi Bot Info")
-		.addField("Public Release Date:", "16 Jun 2020")
-		.addField("Server Count", `${serverNumber} servers`)
-
-		message.channel.send(botinfoembed);
 	}
 
 	if(message.content === (prefix + "support")) {
