@@ -241,13 +241,13 @@ client.on("message", async message => {
 	}else if (message.content.startsWith(`${prefix}loop`)){
 		if(!message.member.voice.channel) return message.channel.send("You need to be in a voice channel!");
 		if(!serverQueue) return message.channel.send("There is nothing to loop!");
-		islooping.set(true);
+		islooping = "true";
 		message.channel.send("Now looping queue!");
 		return undefined;
 	} else if (message.content.startsWith(`${prefix}unloop`)){
 		if(!message.member.voice.channel) return message.channel.send("You need to be in a voice channel!");
 		if(!serverQueue) return message.channel.send("There is nothing to unloop!");
-		islooping.set(false);
+		islooping = "false";
 		message.channel.send("Queue unlooped!");
 		return undefined;
 	}
@@ -531,7 +531,7 @@ function play(guild, song){
 	console.log(islooping);
 	const dispatcher = serverQueue.connection.play(ytdl(song.url))
 	.on('finish', () => {
-		if(islooping === true) serverQueue.songs.push(serverQueue.songs.shift());
+		if(islooping === "true") serverQueue.songs.push(serverQueue.songs.shift());
 		else serverQueue.songs.shift();
 		play(guild, serverQueue.songs[0]);
 	})	
