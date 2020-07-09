@@ -18,7 +18,7 @@ const youtube = new YouTube("AIzaSyAzLytewTLXeFnOSGPe1vMW8GrgZb_6JrU");
 let { welcomeChannel } = require('./channel.json')
 let { goodbyeChannel } = require('./channel.json')
 let { logsChannel } = require('./channel.json')
-let { islooping } = require('./channel.json')
+var islooping = false;
 
 client.once("ready", () => {
 	console.log("I am online!");
@@ -138,7 +138,7 @@ client.on("message", async message => {
 	// FUN COMMANDS
 
 	// MUSIC
-	islooping = loop.get(message.guild.id) || false;
+	islooping = loop.get(message.guild.id);
 	const serverQueue = queue.get(message.guild.id);
 	if(message.content.startsWith(`${prefix}play`)){
 		const musicargs = message.content.substring(prefix.length).split(" ");
@@ -525,7 +525,7 @@ function play(guild, song){
 	console.log(islooping);
 	const dispatcher = serverQueue.connection.play(ytdl(song.url))
 	.on('finish', () => {
-		if(islooping === "true") serverQueue.songs.push(serverQueue.songs.shift());
+		if(islooping === true) serverQueue.songs.push(serverQueue.songs.shift());
 		else serverQueue.songs.shift();
 		play(guild, serverQueue.songs[0]);
 	})	
