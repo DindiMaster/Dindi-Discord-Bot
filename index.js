@@ -152,7 +152,6 @@ client.on("message", async message => {
 			try {
 				var videos = await youtube.searchVideos(searchString, 1);
 				var video = await youtube.getVideoByID(videos[0].id);
-				console.log(video);
 			} catch {
 				message.channel.send("I couldn't find any search results!")
 			}
@@ -162,7 +161,7 @@ client.on("message", async message => {
 		const song = {
 			id: video.id,
 			title: Discord.Util.escapeMarkdown(video.title),
-			url: `https://www.youtube.com/watch?v=${video.id}`
+			url: `https://www.youtube.com/watch?v=${video.id}/`
 		}
 		
 		if(!serverQueue){
