@@ -233,11 +233,12 @@ client.on("message", async message => {
 	}else if(message.content.startsWith(`${prefix}volume`)){
 		const volumeargs1 = message.content.substring(prefix.length).split(" ");
 		const volumeargs2 = volumeargs1.slice(1).join(" ");
+		const volume = volumeargs2 * 11;
 		if(!message.member.voice.channel) return message.channel.send("You need to be in a voice channel!");
 		if(!serverQueue) return message.channel.send("There is nothing playing");
 		if(!volumeargs2) return message.channel.send(`Current volume: **${serverQueue.volume}**`);
 		if(isNaN(volumeargs2[1])) return message.channel.send("You can't change the volume to that!")
-		serverQueue.volume = volumeargs2[1] * 11;
+		serverQueue.volume = volume;
 		message.channel.send(`Volume changed to: ${serverQueue.volume} \n Change will appear after the current song!`);
 		return undefined;
 	}
