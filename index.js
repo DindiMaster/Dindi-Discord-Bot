@@ -5,7 +5,7 @@ const randomPuppy = require("random-puppy");
 const ytdl = require("ytdl-core");
 const YouTube = require('simple-youtube-api');
 var queue = new Map();
-Client.loop = new Map();
+var loop = new Map();
 
 const ms = require("ms");
 
