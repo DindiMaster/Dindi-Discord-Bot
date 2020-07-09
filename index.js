@@ -152,6 +152,7 @@ client.on("message", async message => {
 			try {
 				var videos = await youtube.searchVideos(searchString, 1);
 				var video = await youtube.getVideoByID(videos[0].id);
+				console.log(video);
 			} catch {
 				message.channel.send("I couldn't find any search results!")
 			}
