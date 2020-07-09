@@ -518,10 +518,7 @@ function play(guild, song){
 		serverQueue.songs.shift();
 		play(guild, serverQueue.songs[0]);
 	})	
-<<<<<<< HEAD
 	dispatcher.setVolumeLogarithmic(5 / 5);
-=======
->>>>>>> parent of 9b8d056... fix i guess?
 	serverQueue.textChannel.send(`Now playing **${song.title}**`);
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 }
