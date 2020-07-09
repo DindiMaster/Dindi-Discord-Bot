@@ -526,6 +526,7 @@ function play(guild, song){
 		return;
 	}
 
+	console.log(islooping);
 	const dispatcher = serverQueue.connection.play(ytdl(song.url))
 	.on('finish', () => {
 		if(islooping === true) serverQueue.songs.push(serverQueue.songs.shift());
