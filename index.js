@@ -44,7 +44,7 @@ client.on("message", async message => {
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink \n d!ping")
 		.addField(":e_mail: **Setup**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support \n d!logschannelsetup #(channel)")
-		.addField("🎵 **MUSIC**", "d!play (youtube url) \n d!skip \n d!stop \n d!np \n d!pause \n d!resume \n d!queue \n d!loop \n d!unloop \n ❗ **WARNING** ❗ Dindi Bot is currently running on a free host Heroku so it has a limited Rate Limit, sometimes we are out of Rate Limit and music wont work, if thats the case wait 5-20 minutes to use music commands again!")
+		.addField("🎵 **MUSIC**", "d!play [youtube url/search] \n d!skip \n d!stop \n d!np \n d!pause \n d!resume \n d!queue \n d!loop \n d!unloop \n ❗ **WARNING** ❗ Dindi Bot is currently running on a free host Heroku so it has a limited Rate Limit, sometimes we are out of Rate Limit and music wont work, if thats the case wait 5-20 minutes to use music commands again!")
 		.addField("**Dindi Bot needs the following permissions for all the commands to work properly:**", "Read Messages \n Send Messages \n Embed Links \n Manage Messages \n Add Reactions \n Read Message History \n Ban Members \n Kick Members")
 		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website:***", "https://top.gg/bot/722395531971657738")
 		message.member.send(helpembed).catch(error =>{
@@ -61,7 +61,7 @@ client.on("message", async message => {
 		.addField(":hammer: **MODERATION**", "d!kick (user) (reason) \n d!ban (user) (reason)")
 		.addField(":scroll: **INFO**", "d!help \n d!poll (question) \n d!version \n d!discord \n d!creator \n d!invitelink \n d!ping")
 		.addField(":e_mail: **Setup**", "d!welcomechannelsetup #(channel) \n d!goodbyechannelsetup #(channel) \n d!greetings support \n d!logschannelsetup #(channel)")
-		.addField("🎵 **MUSIC**", "d!play (youtube url) \n d!skip \n d!stop \n d!np \n d!pause \n d!resume \n d!queue \n d!loop \n d!unloop \n ❗ **WARNING** ❗ Dindi Bot is currently running on a free host Heroku so it has a limited Rate Limit, sometimes we are out of Rate Limit and music wont work, if thats the case wait 5-20 minutes to use music commands again!")
+		.addField("🎵 **MUSIC**", "d!play [youtube url/search] \n d!skip \n d!stop \n d!np \n d!pause \n d!resume \n d!queue \n d!loop \n d!unloop \n ❗ **WARNING** ❗ Dindi Bot is currently running on a free host Heroku so it has a limited Rate Limit, sometimes we are out of Rate Limit and music wont work, if thats the case wait 5-20 minutes to use music commands again!")
 		.addField("**Dindi Bot needs the following permissions for all the commands to work properly:**", "Read Messages \n Send Messages \n Embed Links \n Manage Messages \n Add Reactions \n Read Message History \n Ban Members \n Kick Members")
 		.addField("***Don't forget to support the development of Dindi Bot by voting for it on the following website:***", "https://top.gg/bot/722395531971657738")
 		message.channel.send(helpembed).catch(error =>{
@@ -150,7 +150,10 @@ client.on("message", async message => {
 		if(!permissions.has('CONNECT') || !permissions.has('SPEAK')) return message.channel.send("I need permission to speak and connect to that channel!");
 
 		if(message.content.includes("https://www.youtube.com/playlist?list")){
-			const playlist = await youtube.getPlaylist(url);
+			const playlist = await youtube.getPlaylist(url).catch(error => {
+				message.channel.send("Please enter a valid youtube link!");
+				return undefined;
+			})
 			const videos = await playlist.getVideos();
 			for(const video of Object.values(videos)){
 				const video2 = await youtube.getVideoByID(video.id);
