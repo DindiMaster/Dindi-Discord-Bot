@@ -243,9 +243,9 @@ client.on("message", async message => {
 		var question = randomQuestion.question;
 		var correctAnswer = await randomQuestion.correct_answer;
 
-		message.channel.send("Answer with **True** or **False**[upper case] within the next 10 seconds. Your question is: \n" + question);
-		
-		if(message.content === correctAnswer){
+
+		message.channel.send("Answer with **True** or **False** within the next 10 seconds. Your question is: \n" + question);
+		if(message.content === correctAnswer && m.author.id === message.author.id){
 			message.channel.send("Correct answer!");
 		}
 		else{
