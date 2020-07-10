@@ -242,15 +242,11 @@ client.on("message", async message => {
 		var randomQuestion = quizdata.results[randomquiznumber];
 		var question = randomQuestion.question;
 		var correctAnswer = await randomQuestion.correct_answer;
-
-
 		message.channel.send("Answer with **True** or **False** within the next 10 seconds. Your question is: \n" + question);
-		if(message.content === correctAnswer && m.author.id === message.author.id){
-			message.channel.send("Correct answer!");
-		}
-		else{
-			message.channel.send("Incorrect answer.");
-		}
+	} else if(message.content === correctAnswer && m.author.id === message.author.id){
+		message.channel.send("Correct answer!");
+	} else if(!message.content === correctAnswer && m.author.id === message.author.id){
+		message.channel.send("Incorrect answer.");
 	}
 
 	if(message.content === (prefix + "stats")){
