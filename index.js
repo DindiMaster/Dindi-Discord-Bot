@@ -246,7 +246,8 @@ client.on("message", async message => {
 
 		message.channel.send("Answer with **true** or **false** within the next 10 seconds. Your question is: \n" + question);
 		const filter = m => m.author.id === message.author.id;
-		if(message.content.toLowerCase(correctAnswer.toLowerCase()) && filter){
+		if(!filter) return;
+		if(message.content === correctAnswer){
 			message.channel.send("Correct answer!");
 		}
 		else{
