@@ -24,7 +24,7 @@ client.once("ready", () => {
 	console.log("I am online!");
 });
 
-client.login(process.env.token);
+client.login("NzIyMzk1NTMxOTcxNjU3NzM4.XxlZFw.j0C7Aq_-91VBjRLrY4VL_51A4Dc");
 
 
 client.on("ready", () => {
